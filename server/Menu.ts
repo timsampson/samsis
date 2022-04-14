@@ -1,5 +1,4 @@
 function onOpen() {
-    // Not currently attached to a spreadsheet.
     const ss = SpreadsheetApp.getActiveSpreadsheet(),
         options = [{ name: "Show Alert", functionName: "showAlert" }];
     ss.addMenu("Notification", options);
