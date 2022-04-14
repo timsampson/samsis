@@ -2,33 +2,25 @@
   export let name;
 </script>
 
-<main>
-  <h1>Hello {name}!</h1>
-  <p>
-    Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte
-    apps.
+<main class="p-6">
+  <h1 class="text-indigo-600 text-3xl font-bold ">Hello {name}!</h1>
+  <p class="mt-1">
+    Visit the <a
+      class="underline text-blue-600 hover:text-blue-800 visited:text-purple-700"
+      href="https://svelte.dev/tutorial">Svelte tutorial</a
+    > to learn how to build Svelte apps.
   </p>
-  <p>This is running on GAPS</p>
+  <p class="mt-1">
+    Visit the <a
+      class="underline text-blue-600 hover:text-blue-800 visited:text-purple-700"
+      href="https://tailwindcss.com/blog/tailwindcss-v3">Tailwind CSS v3.0</a
+    > to learn about styling your app with TailwindCSS.
+  </p>
+  <p class="mt-1">This is running on GAPS</p>
 </main>
 
-<style>
-  main {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
-  }
-
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
-  }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
-  }
+<style global lang="postcss">
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
 </style>
