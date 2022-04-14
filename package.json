@@ -8,6 +8,8 @@
     "start": "sirv public --no-clear"
   },
   "devDependencies": {
+    "@google/clasp": "2.4.1",
+    "@types/google-apps-script": "1.0.46",
     "@rollup/plugin-commonjs": "21.0.3",
     "@rollup/plugin-node-resolve": "13.2.0",
     "rollup": "2.70.1",
