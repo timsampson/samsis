@@ -1,3 +1,7 @@
 function doGet() {
-  return HtmlService.createTemplateFromFile("index").evaluate();
+  let template = HtmlService.createTemplateFromFile("index");
+  return template.evaluate();
+}
+function getAppScriptURL() {
+  return ScriptApp.getService().getUrl();
 }
