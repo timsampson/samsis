@@ -4,6 +4,7 @@
   import About from "./routes/About.svelte";
   import NotFound from "./routes/NotFound.svelte";
   import { onMount } from "svelte";
+  import ClubSignUp from "./routes/ClubSignUp.svelte";
   onMount(async () => {
     google.script.url.getLocation(function (location) {
       if (location.hash.length > 0) {
@@ -32,6 +33,7 @@
     "/": Home,
     "/home/": Home,
     "/about/": About,
+    "/clubsignup/": ClubSignUp,
     "*": NotFound,
   };
 </script>
@@ -47,6 +49,11 @@
       href="#/about/"
       on:click={() => setURL("/about")}
       class="hover:text-gray-300 mx-2 text-sm text-blue-800">About</a
+    >
+    <a
+      href="#/clubsignup/"
+      on:click={() => setURL("/clubsignup")}
+      class="hover:text-gray-300 mx-2 text-sm text-blue-800">Club Sign Up</a
     >
   </nav>
   <body class="p-4 bg-slate-50">
