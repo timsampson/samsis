@@ -1,11 +1,21 @@
 <script>
   import Router from "svelte-spa-router";
+  import { onMount } from "svelte";
+  import { fade } from "svelte/transition";
   import Home from "./routes/Home.svelte";
   import About from "./routes/About.svelte";
   import NotFound from "./routes/NotFound.svelte";
-  import { onMount } from "svelte";
   import ClubSignUp from "./routes/ClubSignUp.svelte";
-  onMount(async () => {
+  let userEmail = "Loading...";
+  console.log(userEmail);
+
+  function setProfileEmail(email) {
+    console.log("this is the new email: " + email);
+    userEmail = email;
+  }
+  onMount(() => {
+    console.log("onMount Loaded");
+    google.script.run.withSuccessHandler(setProfileEmail).getUserEmail();
     google.script.url.getLocation(function (location) {
       if (location.hash.length > 0) {
         google.script.history.push({}, "", location.hash);
@@ -55,6 +65,14 @@
       on:click={() => setURL("/clubsignup")}
       class="hover:text-gray-300 mx-2 text-sm text-blue-800">Club Sign Up</a
     >
+    {#key userEmail}
+      <div
+        in:fade={{ duration: 1000 }}
+        class="rounded-full w-36 py-1 px-6 bg-blue-700 text-sm text-gray-300 border border-gray-300"
+      >
+        {userEmail.slice(0, userEmail.indexOf("@"))}
+      </div>
+    {/key}
   </nav>
   <body class="p-4 bg-slate-50">
     <Router {routes} />

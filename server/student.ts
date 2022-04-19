@@ -4,8 +4,6 @@ function testUserRecord() {
 function testStudentvalues() {
     Logger.log(JSON.stringify(studentValuesAsObjArray));
 }
-let studentValuesAsObjArray = ValuesToArrayOfObjects(studentValues);
-
 type studentObjValues = {
     email: string,
     phone: string,
@@ -31,21 +29,4 @@ function getStudentRecord(userEmail: string) {
 }
 function getUserEmail() {
     return Session.getActiveUser().getEmail();
-}
-function ValuesToArrayOfObjects(sheetValues: any[][] | [any, ...any[]]) {
-    // Use the spread operator to split the 2d array into headers and values
-    const [headers, ...records] = sheetValues;
-
-    //Loop through the values list
-    const arrayOfObjects = records.map(records => {
-        let objRecord = {};
-        //Since each element in values list is a list again
-        //loop through the list and add them to the `obj` object
-        records.forEach((record: any, colIndex: string | number) => {
-            objRecord[headers[colIndex]] = record
-        });
-        //return the object
-        return objRecord;
-    });
-    return arrayOfObjects;
 }
