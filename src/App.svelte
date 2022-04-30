@@ -5,7 +5,14 @@
   import NotFound from "./routes/NotFound.svelte";
   import ClubSignUp from "./routes/ClubSignUp.svelte";
   import Navigation from "./components/Navigation.svelte";
-
+  import { push } from "svelte-spa-router";
+  google.script.url.getLocation(function (location) {
+    if (location.hash.length > 0) {
+      push(location.hash);
+    } else {
+      push("/");
+    }
+  });
   const routes = {
     "/": Home,
     "/home/": Home,

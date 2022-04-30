@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
+
   let userEmail = "Loading...";
   console.log(userEmail);
 
@@ -11,13 +12,6 @@
   onMount(() => {
     console.log("onMount Loaded");
     google.script.run.withSuccessHandler(setProfileEmail).getUserEmail();
-    google.script.url.getLocation(function (location) {
-      if (location.hash.length > 0) {
-        google.script.history.push({}, "", location.hash);
-      } else {
-        google.script.history.push({}, "", "/");
-      }
-    });
   });
   google.script.history.setChangeHandler(function (e) {
     let locationHash = e.location.hash;
