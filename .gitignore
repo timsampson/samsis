@@ -1,6 +1,5 @@
 /node_modules/
 /public/build/
-/staging/bundlecss.ejs
-/staging/bundlejs.ejs
-
 .DS_Store
+staging/bundlecss.ejs
+staging/bundlejs.ejs
