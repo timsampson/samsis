@@ -10,7 +10,6 @@
     userEmail = email;
   }
   onMount(() => {
-    console.log("onMount Loaded");
     google.script.run.withSuccessHandler(setProfileEmail).getUserEmail();
   });
   google.script.history.setChangeHandler(function (e) {

@@ -8,6 +8,8 @@ let clubsSheet = schoolSpreadsheet.getSheetByName("clubs");
 let clubsValues = clubsSheet.getDataRange().getValues();
 let clubsValuesAsObjArray = ValuesToArrayOfObjects(clubsValues);
 
+let clubEnrollmentSheet = schoolSpreadsheet.getSheetByName("club_enrollment");
+
 function ValuesToArrayOfObjects(sheetValues: any[][] | [any, ...any[]]) {
     // Use the spread operator to split the 2d array into headers and values
     const [headers, ...records] = sheetValues;
@@ -25,3 +27,12 @@ function ValuesToArrayOfObjects(sheetValues: any[][] | [any, ...any[]]) {
     });
     return arrayOfObjects;
 }
+function applicationId(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
+    let lastRecordRow = sheet.getLastRow() + 1;
+    let formApplicationDate = new Date();
+    let year = formApplicationDate.getFullYear();
+    let day = formApplicationDate.getDate();
+    let recordId = "id" + year + day + lastRecordRow + Math.floor(Math.random() * 10);
+    return recordId;
+}
+
