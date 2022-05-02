@@ -14,7 +14,6 @@ function setRecordClubApplicationEntry(clubId: string | number) {
         formSubmissionDate,
         application.email,
         application.appliedClubId,
-
         application.received,
         application.processed,
     ];
