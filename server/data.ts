@@ -35,4 +35,11 @@ function applicationId(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
     let recordId = "id" + year + day + lastRecordRow + Math.floor(Math.random() * 10);
     return recordId;
 }
+// get user photo from google drive
+//AdminDirectory.Users.Photos.get(email_address)
+function getUserPhoto() {
+    let userEmail = getUserEmail();
+    let photo = AdminDirectory.Users.Photos.get(userEmail).photoData;
+    return Utilities.base64EncodeWebSafe(photo).replace(/_/g, '/').replace(/-/g, '+');
 
+}
