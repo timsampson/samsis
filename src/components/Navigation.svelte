@@ -6,11 +6,9 @@
   let userPhoto = undefined;
 
   function setProfileEmail(email) {
-    console.log("this is the new email: " + email);
     userEmail = email;
   }
   function setProfilePhoto(photo) {
-    console.log("this is the new photo: " + photo);
     userPhoto = photo;
   }
   onMount(() => {
