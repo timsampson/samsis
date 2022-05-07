@@ -72,25 +72,30 @@
   <div
     class="absolute inset-y-0 right-3 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
   >
-    {#key userEmail}
+    {#if userEmail && userPhoto !== undefined}
       <div
         in:fade={{ duration: 1000 }}
         class="rounded-full py-1 px-6 bg-blue-700 text-sm text-gray-300 border border-gray-300"
       >
         {userEmail.slice(0, userEmail.indexOf("@"))}
       </div>
-    {/key}
-    {#if userPhoto !== undefined}
       <img
         in:fade={{ duration: 1000 }}
-        class="h-10 w-10 rounded-full mr-1"
-        height="48px"
-        width="48px"
+        class="h-10 ml-2 w-10 rounded-full mr-1"
+        height="32px"
+        width="32px"
         src="data:image/jpeg;base64,{userPhoto}"
         alt="avatar"
       />
     {:else}
+      <div
+        in:fade={{ duration: 1000 }}
+        class="rounded-full py-1 px-6 bg-blue-700 text-sm text-gray-300 border border-gray-300"
+      >
+        Loading...
+      </div>
       <svg
+        class="h-10 ml-2 w-10 rounded-full mr-1"
         xmlns="http://www.w3.org/2000/svg"
         height="32px"
         viewBox="0 0 24 24"
