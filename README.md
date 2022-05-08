@@ -30,7 +30,7 @@ It may end up being an impractical Frankenstine app, but I think it will be fun 
 
 ## To Do
 
-Update the documentation so someone new to GAPS can follow along and built it themselves.
+Update the documentation so someone new to GAPS can follow along and build it themselves.
 
 ## FYI
 
