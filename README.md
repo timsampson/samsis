@@ -12,11 +12,26 @@ With this in mind, I've realized that it would be helpful to have one applicatio
 
 In the applications put to use so far, the number of accounts that are processed are less than 1000, and some of the records (tabs) have almost 4000 rows with around 20 columns. I'm sure a proper database would be more suitable and more efficient, but certainly not as flexible when you want to open a sheet and make an edit, or do some analitics.
 
-## Features
+It may end up being an impractical Frankenstine app, but I think it will be fun to build. Starting with the most basic features, with each feature branch, I will be adding functionality.
 
-- SPA built using Svelte.js and TailwindCSS
-- Forms
-- Reports
-- User Icon displayed
+## Initial Features
 
-It may end up being an impractical Frankenstine app, but I think it will be fun to build.
+- [Setup Script with Sheet Menu add on and alert](https://github.com/timsampson/samsis/tree/gaps-setup/server)
+- [Simple Web Page with doGet](https://github.com/timsampson/samsis/tree/simple-webpage)
+- [Web Page with Svelte.js](https://github.com/timsampson/samsis/tree/deploy-svelte)
+- [TailwindCSS for Styling](https://github.com/timsampson/samsis/tree/add-tailwind)
+- [Routing with ItalyPaleAle\svelte-spa-router](https://github.com/timsampson/samsis/tree/links-pages)
+- [Routing with google.script.history.push](https://github.com/timsampson/samsis/tree/url-routing)
+- [Add a page to Display Table from a sheet](https://github.com/timsampson/samsis/tree/club-signup)
+- [Add a navigation component](https://github.com/timsampson/samsis/tree/nav-component)
+- [Navigate to pasted URL](https://github.com/timsampson/samsis/tree/router-paste-url)
+- [Submit a simple form from web to a sheet](https://github.com/timsampson/samsis/tree/submit-basic-form)
+- [Username with Icon displayed](https://github.com/timsampson/samsis/tree/user-icon)
+
+## To Do
+
+Update the documentation so someone new to GAPS can follow along and built it themselves.
+
+## FYI
+
+The data is all mock data, except my email address and name, which needs to be there to actually test and use the app.
