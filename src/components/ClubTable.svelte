@@ -9,7 +9,7 @@
     name: "",
   };
   onMount(() => {
-    google.script.run.withSuccessHandler(displayClubs).getClubList();
+    google.script.run.withSuccessHandler(displayClubs).getClubsFilteredByLevel();
   });
   function displayClubs(clubsObjList) {
     clubList = clubsObjList;

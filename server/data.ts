@@ -1,14 +1,22 @@
 // https://docs.google.com/spreadsheets/d/1pNZJdnNie-JRvRXuvFJDP299Br5Rr1K1yTMSvXSKZok/edit#gid=0
 let schoolSpreadsheet = SpreadsheetApp.openById("1pNZJdnNie-JRvRXuvFJDP299Br5Rr1K1yTMSvXSKZok");
 let studentSheet = schoolSpreadsheet.getSheetByName("students");
-let studentValues = studentSheet.getDataRange().getValues();
-let studentValuesAsObjArray = ValuesToArrayOfObjects(studentValues);
+let studentValues: any[][] | [any, ...any[]];
+let studentValuesAsObjArray: any[];
 
 let clubsSheet = schoolSpreadsheet.getSheetByName("clubs");
-let clubsValues = clubsSheet.getDataRange().getValues();
-let clubsValuesAsObjArray = ValuesToArrayOfObjects(clubsValues);
+let clubsValues: any[][] | [any, ...any[]];
+let clubsValuesAsObjArray: any[];
+
+let staffSheet = schoolSpreadsheet.getSheetByName("staff");
+let staffValues: any[][] | [any, ...any[]];
+let staffValuesAsObjArray: any[];
 
 let clubEnrollmentSheet = schoolSpreadsheet.getSheetByName("club_enrollment");
+
+let hrStudentSheet = schoolSpreadsheet.getSheetByName("hr_st_join");
+let hrStudentValues: any[][] | [any, ...any[]];
+let hrStudentValuesAsObjArray: any[];
 
 function ValuesToArrayOfObjects(sheetValues: any[][] | [any, ...any[]]) {
     // Use the spread operator to split the 2d array into headers and values
@@ -41,5 +49,4 @@ function getUserPhoto() {
     let userEmail = getUserEmail();
     let photo = AdminDirectory.Users.Photos.get(userEmail).photoData;
     return Utilities.base64EncodeWebSafe(photo).replace(/_/g, '/').replace(/-/g, '+');
-
 }

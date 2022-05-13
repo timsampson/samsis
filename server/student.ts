@@ -1,10 +1,10 @@
 function testUserRecord() {
-    getStudentRecord(getUserEmail());
+    getStudentInfo();
 }
 function testStudentvalues() {
     Logger.log(JSON.stringify(studentValuesAsObjArray));
 }
-type studentObjValues = {
+type Student = {
     email: string,
     phone: string,
     passport_country: string,
@@ -20,13 +20,29 @@ type studentObjValues = {
     full_name: string,
     first_name: string,
     passport_expiry: Date
+    level: string,
+    grade: string;
+    homeroom: string;
 }
 
-function getStudentRecord(userEmail: string) {
-    let studentdetails = studentValuesAsObjArray.find((record: { email: string; }) => record.email === userEmail)
-    Logger.log(studentdetails);
-    return studentdetails;
-}
 function getUserEmail() {
     return Session.getActiveUser().getEmail();
+}
+function getStudentInfo() {
+    studentValues = studentSheet.getDataRange().getValues();
+    studentValuesAsObjArray = ValuesToArrayOfObjects(studentValues);
+    let studentInfo = studentValuesAsObjArray.find((student: Student) => student.email == getUserEmail());
+    return studentInfo;
+}
+
+function getStudentHRInfo() {
+    hrStudentValues = hrStudentSheet.getDataRange().getValues();
+    hrStudentValuesAsObjArray = ValuesToArrayOfObjects(hrStudentValues);
+    const studentHRInfo = hrStudentValuesAsObjArray.find((student) => student.email == getUserEmail());
+    return studentHRInfo;
+}
+
+function getStudentLevel() {
+    let student: Student = getStudentHRInfo();
+    return student.level;
 }
