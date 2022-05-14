@@ -6,7 +6,10 @@ type Staff = {
 
 function isTeacher() {
     let staffInfo = getStaffInfo();
-    return staffInfo.role.toLowerCase() == "teacher";
+    if (staffInfo === undefined) {
+        return false;
+    }
+    return true;
 }
 function getStaffInfo() {
     staffValues = staffSheet.getDataRange().getValues();

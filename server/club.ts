@@ -9,7 +9,9 @@ function getClubRecords() {
     return clubsValuesAsObjArray;
 }
 
-
+function sanitize(element) {
+    return element.toString().trim().toLowerCase();
+}
 function getClubsFilteredByLevel() {
     if (isTeacher()) {
         let clubs: Club[] = getClubRecords();
@@ -23,7 +25,9 @@ function getClubsFilteredByLevel() {
         function isMatch(levelOptions) {
             let isMatch = false;
             levelOptions.forEach((element) => {
-                if (element == studentHRInfo.grade || element == studentHRInfo.level || element == studentHRInfo.homeroom) {
+                if (sanitize(element) == sanitize(studentHRInfo.grade)
+                    || sanitize(element) == sanitize(studentHRInfo.level)
+                    || sanitize(element) == sanitize(studentHRInfo.homeroom)) {
                     isMatch = true;
                 }
             });
