@@ -2,7 +2,7 @@
   import { fade } from "svelte/transition";
   import { onMount } from "svelte";
 
-  let titles = ["Club Name", "Enrolled", "Capacity", "Details", "Hats"];
+  let titles = ["Club Name", "Enrolled", "Capacity", "Details", "Moderators"];
   let clubList = {};
   let selected = {
     id: 0,
