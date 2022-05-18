@@ -31,7 +31,8 @@ It may end up being an impractical Frankenstine app, but I think it will be fun 
 
 ## To Do
 
-Update the documentation so someone new to GAPS can follow along and build it themselves.
+1. Update the documentation so someone new to GAPS can follow along and build it themselves.
+2. Get it working without needing extra steps other than downloading and running npm install. Issue with it not working on Windows.
 
 ## FYI
 
