@@ -12,7 +12,7 @@ With this in mind, I've realized that it would be helpful to have one applicatio
 
 In the applications put to use so far, the number of accounts that are processed are less than 1000, and some of the records (tabs) have almost 4000 rows with around 20 columns. I'm sure a proper database would be more suitable and more efficient, but certainly not as flexible when you want to open a sheet and make an edit, or do some analitics.
 
-It may end up being an impractical Frankenstine app, but I think it will be fun to build. Starting with the most basic features, with each feature branch, I will be adding functionality.
+It may end up being an impractical Frankenstein app, but I think it will be fun to build. Starting with the most basic features, with each feature branch, I will be adding functionality.
 
 ## Initial Features
 
