@@ -1,6 +1,16 @@
 // clubs
 type Club = {
-    level: "",
+    formSubmissionDate: any;
+    level: string,
+    id: string,
+    active: boolean,
+    year: string,
+    name: string,
+    enrolled: number,
+    capacity: number,
+    moderator: string,
+    description: string,
+    location: string,
 };
 
 function getClubRecords() {
@@ -9,8 +19,21 @@ function getClubRecords() {
     return clubsValuesAsObjArray;
 }
 
-function sanitize(element) {
+function sanitize(element: string | number) {
     return element.toString().trim().toLowerCase();
+}
+// function getPendingClubs() {
+//     clubApplicationValues = studentSheet.getDataRange().getValues();
+//     clubApplicationValuesAsObjArray = ValuesToArrayOfObjects(studentValues);
+//     let pendingClubs = clubApplicationValuesAsObjArray.filter((application: Application) => application.hasPendingClub);
+// }
+function getCurrentClub() {
+    let currentClub = {} as Club;
+    clubEnrollmentValues = clubEnrollmentSheet.getDataRange().getValues();
+    clubEnrollmentValuesAsObjArray = ValuesToArrayOfObjects(clubEnrollmentValues);
+    currentClub = clubEnrollmentValuesAsObjArray.find((clubRecord) => clubRecord.email == getUserEmail());
+    let currentClubStringify = JSON.stringify(currentClub);
+    return currentClubStringify;
 }
 function getClubsFilteredByLevel() {
     if (isTeacher()) {

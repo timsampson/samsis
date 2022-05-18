@@ -23,6 +23,7 @@ type Student = {
     level: string,
     grade: string;
     homeroom: string;
+    school: string;
 }
 
 function getUserEmail() {

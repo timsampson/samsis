@@ -5,9 +5,7 @@
     name: "",
   };
   function handleSubmit() {
-    google.script.run
-      .withSuccessHandler(clubSubmissionResponse)
-      .setRecordClubApplicationEntry(selected.id);
+    google.script.run.withSuccessHandler(clubSubmissionResponse).clubApplicationEntry(selected.id);
   }
   function clubSubmissionResponse(response) {
     console.log(response);

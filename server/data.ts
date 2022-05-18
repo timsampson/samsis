@@ -12,7 +12,14 @@ let staffSheet = schoolSpreadsheet.getSheetByName("staff");
 let staffValues: any[][] | [any, ...any[]];
 let staffValuesAsObjArray: any[];
 
+
 let clubEnrollmentSheet = schoolSpreadsheet.getSheetByName("club_enrollment");
+let clubEnrollmentValues: any[][] | [any, ...any[]];
+let clubEnrollmentValuesAsObjArray: any[];
+
+let clubApplicationSheet = schoolSpreadsheet.getSheetByName("club_applications");
+let clubApplicationValues: any[][] | [any, ...any[]];
+let clubApplicationValuesAsObjArray: any[];
 
 let hrStudentSheet = schoolSpreadsheet.getSheetByName("hr_st_join");
 let hrStudentValues: any[][] | [any, ...any[]];
@@ -35,7 +42,7 @@ function ValuesToArrayOfObjects(sheetValues: any[][] | [any, ...any[]]) {
     });
     return arrayOfObjects;
 }
-function applicationId(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
+function getlogId(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
     let lastRecordRow = sheet.getLastRow() + 1;
     let formApplicationDate = new Date();
     let year = formApplicationDate.getFullYear();
@@ -49,4 +56,10 @@ function getUserPhoto() {
     let userEmail = getUserEmail();
     let photo = AdminDirectory.Users.Photos.get(userEmail).photoData;
     return Utilities.base64EncodeWebSafe(photo).replace(/_/g, '/').replace(/-/g, '+');
+}// club sheet value for sheet status
+const formStatusSheet = schoolSpreadsheet.getSheetByName("clubform_status");
+let formState = formStatusSheet.getRange(2, 1).getValue();
+function getFormState() {
+    formState = formStatusSheet.getRange(2, 1).getValue();
+    return formState;
 }
