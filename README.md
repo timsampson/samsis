@@ -29,6 +29,10 @@ It may end up being an impractical Frankenstein app, but I think it will be fun 
 - [Username with Icon displayed](https://github.com/timsampson/samsis/tree/user-icon)
 - [Separate table and form components](https://github.com/timsampson/samsis/tree/club-signup-form-comp)
 
+## Improved Features
+
+- [Form submission with entry supplimental sheet Data](linktbd)
+
 ## To Do
 
 1. Update the documentation so someone new to GAPS can follow along and build it themselves.
