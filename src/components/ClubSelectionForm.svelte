@@ -14,7 +14,7 @@
   }
 </script>
 
-<div class="ml-12 mt-6">
+<div>
   <h2 class="text-lg mb-1">Club Choices</h2>
   <form on:submit|preventDefault={handleSubmit}>
     <div class="w-80">

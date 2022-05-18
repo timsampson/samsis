@@ -15,6 +15,15 @@
   }
 </script>
 
-<h1 class="text-indigo-600 text-3xl font-bold ">Sign Up</h1>
-<ClubSelectionForm {clubList} />
-<ClubsTable {titles} {clubList} />
+<div class="ml-8">
+  <h1 class="text-indigo-600 text-3xl font-bold ">Sign Up</h1>
+  <ClubSelectionForm {clubList} />
+  <h1 class="text-2xl text-center text-blue-900">
+    {#if clubList.length > 0}
+      Below are the currently available clubs.
+    {:else}
+      Please wait for the available clubs to load.
+    {/if}
+  </h1>
+  <ClubsTable {titles} {clubList} />
+</div>
