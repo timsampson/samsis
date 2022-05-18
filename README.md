@@ -31,7 +31,7 @@ It may end up being an impractical Frankenstein app, but I think it will be fun 
 
 ## Improved Features
 
-- [Form submission with entry supplimental sheet Data](linktbd)
+- [Form submission with entry supplimental sheet Data](https://github.com/timsampson/samsis/tree/form-submission-suplimented-data)
 
 ## To Do
 
