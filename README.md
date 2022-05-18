@@ -37,4 +37,4 @@ Update the documentation so someone new to GAPS can follow along and build it th
 
 The data is all mock data, except my email address and name, which needs to be there to actually test and use the app.
 
-![Home Page View](https://raw.githubusercontent.com/timsampson/samsis/main/docs/home_page_initial.png)
+![Home Page View](https://raw.githubusercontent.com/timsampson/samsis/main/docs/loading.gif)
