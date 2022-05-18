@@ -27,6 +27,7 @@ It may end up being an impractical Frankenstine app, but I think it will be fun 
 - [Navigate to pasted URL](https://github.com/timsampson/samsis/tree/router-paste-url)
 - [Submit a simple form from web to a sheet](https://github.com/timsampson/samsis/tree/submit-basic-form)
 - [Username with Icon displayed](https://github.com/timsampson/samsis/tree/user-icon)
+- [Separate table and form components](https://github.com/timsampson/samsis/tree/club-signup-form-comp)
 
 ## To Do
 
