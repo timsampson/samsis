@@ -8,7 +8,9 @@
     google.script.run.withSuccessHandler(clubSubmissionResponse).clubApplicationEntry(selected.id);
   }
   function clubSubmissionResponse(response) {
-    console.log(response);
+    let responseDetails = JSON.parse(response);
+    responseDetails.formSubmissionDate = new Date(responseDetails.formSubmissionDate);
+    console.table(responseDetails);
   }
 </script>
 

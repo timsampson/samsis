@@ -24,7 +24,7 @@ function sanitize(element: string | number) {
 }
 // function getPendingClubs() {
 //     clubApplicationValues = studentSheet.getDataRange().getValues();
-//     clubApplicationValuesAsObjArray = ValuesToArrayOfObjects(studentValues);
+//     clubApplicationValuesAsObjArray = ValuesToArrayOfObjects(clubApplicationValues);
 //     let pendingClubs = clubApplicationValuesAsObjArray.filter((application: Application) => application.hasPendingClub);
 // }
 function getCurrentClub() {
@@ -32,8 +32,9 @@ function getCurrentClub() {
     clubEnrollmentValues = clubEnrollmentSheet.getDataRange().getValues();
     clubEnrollmentValuesAsObjArray = ValuesToArrayOfObjects(clubEnrollmentValues);
     currentClub = clubEnrollmentValuesAsObjArray.find((clubRecord) => clubRecord.email == getUserEmail());
-    let currentClubStringify = JSON.stringify(currentClub);
-    return currentClubStringify;
+    // let currentClubStringify = JSON.stringify(currentClub);
+    // return currentClubStringify;
+    return currentClub;
 }
 function getClubsFilteredByLevel() {
     if (isTeacher()) {

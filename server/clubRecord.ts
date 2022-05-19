@@ -29,10 +29,10 @@ type Application = {
     message: string,
 
 }
-function clubApplicationEntry(clubId: string) {
-    let studentDetails: Student = getStudentInfo()
-    let appliedClubDetails: Club = getClubInfo(clubId);
-    let studentHRInfo: Student = getStudentHRInfo();
+async function clubApplicationEntry(clubId: string) {
+    let studentDetails: Student = await getStudentInfo()
+    let appliedClubDetails: Club = await getClubInfo(clubId);
+    let studentHRInfo: Student = await getStudentHRInfo();
     let currentClub: Club = getCurrentClub();
 
     let application: Application = {
@@ -45,37 +45,44 @@ function clubApplicationEntry(clubId: string) {
         formSubmissionDate: new Date(),
         isApproved: false,
         name: studentDetails.full_name,
-        grade: studentDetails.grade,
+        grade: studentHRInfo.grade,
         school: studentHRInfo.school,
-        homeroom: studentDetails.homeroom,
+        homeroom: studentHRInfo.homeroom,
         appliedClubName: appliedClubDetails.name,
         appliedclubModerator: appliedClubDetails.moderator,
         appliedClubDetails: appliedClubDetails.description,
         appliedClubLocation: appliedClubDetails.location,
         canSubmit: false,
+        hasPendingClub: false,
         formState: getFormState(),
         pendingClubName: "",
-        isInClub: false,
-        currentClubId: "",
-        currentClubName: "",
-        applicationStatus: "",
+        isInClub: (currentClub.id != ""),
+        currentClubId: currentClub.id,
+        currentClubName: currentClub.name,
+        applicationStatus: "pending",
         user_role: "",
-        isStudent: false,
+        isStudent: (studentDetails.email != undefined),
         isModerator: false,
         message: ""
     };
-    let formSubmissionDate = new Date();
-    application
+
     let applicationLogRecord = [
+        //recordId	formSubmissionDate	year	isApproved	email	name	grade	school	homeroom	appliedClubId	appliedClubName 
         application.recordId,
-        formSubmissionDate,
+        application.formSubmissionDate,
+        application.formSubmissionDate.getFullYear(),
+        application.isApproved,
         application.email,
+        application.name,
+        application.grade,
+        application.school,
+        application.homeroom,
         application.appliedClubId,
-        application.received,
-        application.processed,
+        application.appliedClubName,
     ];
-    clubEnrollmentSheet.appendRow(applicationLogRecord);
-    return "Application received for " + application.appliedClubId;
+    clubApplicationSheet.appendRow(applicationLogRecord);
+    let applicationStringify = JSON.stringify(application);
+    return applicationStringify;
 }
 function getClubInfo(clubId: string) {
     clubsValues = clubsSheet.getDataRange().getValues();
