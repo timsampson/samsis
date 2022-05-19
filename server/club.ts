@@ -50,7 +50,7 @@ function getClubsFilteredByLevel() {
             let isMatch = false;
             levelOptions.forEach((element) => {
                 if (sanitize(element) == sanitize(studentHRInfo.grade)
-                    || sanitize(element) == sanitize(studentHRInfo.level)
+                    || sanitize(element) == sanitize(studentHRInfo.school)
                     || sanitize(element) == sanitize(studentHRInfo.homeroom)) {
                     isMatch = true;
                 }
