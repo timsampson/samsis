@@ -66,6 +66,11 @@
       on:click={() => setURL("/clubsignup")}
       class="hover:text-gray-300 mx-2 text-sm text-blue-800">Club Sign Up</a
     >
+    <a
+      href="#/clubadmin/"
+      on:click={() => setURL("/clubadmin")}
+      class="hover:text-gray-300 mx-2 text-sm text-blue-800">Club Admin</a
+    >
   </div>
   <div
     class="absolute inset-y-0 right-3 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"

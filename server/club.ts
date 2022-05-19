@@ -22,18 +22,12 @@ function getClubRecords() {
 function sanitize(element: string | number) {
     return element.toString().trim().toLowerCase();
 }
-// function getPendingClubs() {
-//     clubApplicationValues = studentSheet.getDataRange().getValues();
-//     clubApplicationValuesAsObjArray = ValuesToArrayOfObjects(clubApplicationValues);
-//     let pendingClubs = clubApplicationValuesAsObjArray.filter((application: Application) => application.hasPendingClub);
-// }
+
 function getCurrentClub() {
     let currentClub = {} as Club;
     clubEnrollmentValues = clubEnrollmentSheet.getDataRange().getValues();
     clubEnrollmentValuesAsObjArray = ValuesToArrayOfObjects(clubEnrollmentValues);
     currentClub = clubEnrollmentValuesAsObjArray.find((clubRecord) => clubRecord.email == getUserEmail());
-    // let currentClubStringify = JSON.stringify(currentClub);
-    // return currentClubStringify;
     return currentClub;
 }
 function getClubsFilteredByLevel() {

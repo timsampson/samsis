@@ -5,6 +5,7 @@
   import NotFound from "./routes/NotFound.svelte";
   import ClubSignUp from "./routes/ClubSignUp.svelte";
   import Navigation from "./components/Navigation.svelte";
+  import ClubAdmin from "./routes/ClubAdmin.svelte";
   import { push } from "svelte-spa-router";
   google.script.url.getLocation(function (location) {
     if (location.hash.length > 0) {
@@ -18,6 +19,7 @@
     "/home/": Home,
     "/about/": About,
     "/clubsignup/": ClubSignUp,
+    "/clubadmin/": ClubAdmin,
     "*": NotFound,
   };
 </script>
