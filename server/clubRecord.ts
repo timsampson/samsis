@@ -38,7 +38,7 @@ async function clubApplicationEntry(clubId: string) {
     let application: Application = {
         email: studentDetails.email,
         appliedClubId: clubId,
-        hasCapacity: appliedClubDetails.enrolled >= appliedClubDetails.capacity,
+        hasCapacity: appliedClubDetails.enrolled < appliedClubDetails.capacity,
         received: true,
         processed: false,
         recordId: getlogId(clubEnrollmentSheet),
