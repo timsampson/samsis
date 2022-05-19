@@ -28,7 +28,7 @@
     {#if clubList.length > 0}
       Below are the currently available clubs.
     {:else}
-      Please wait for the available clubs to load.
+      Please wait for the available clubs to load
     {/if}
   </h1>
   <ClubsTable {titles} {clubList} />
