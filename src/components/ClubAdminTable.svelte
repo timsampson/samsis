@@ -1,9 +1,12 @@
 <script>
   import { fade } from "svelte/transition";
+  import SubmitButton from "./SubmitButton.svelte";
   export let approvalRecords = [];
   export let titles;
+  export let buttonText;
 </script>
 
+<SubmitButton {buttonText} />
 <div>
   {#if approvalRecords.length > 0}
     <table
