@@ -1,5 +1,6 @@
 <script>
   import ClubsAdminTable from "../components/ClubAdminTable.svelte";
+  import Button from "../shared/Button.svelte";
   import { onMount } from "svelte";
   export let approvalRecords = [];
   export let titles = [
@@ -29,4 +30,7 @@
 
 <h1 class="text-indigo-600 text-3xl font-bold ">Club Admin Page</h1>
 <p class="mt-1">Page for approving clubs.</p>
+<Button>Approve</Button>
+<Button>Reject</Button>
+
 <ClubsAdminTable {titles} {approvalRecords} />
