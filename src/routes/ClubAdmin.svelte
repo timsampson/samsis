@@ -34,7 +34,7 @@
     if (approvals.length > 0) {
       for (var i = records.length - 1; i >= 0; i--) {
         if (approvals[i].checked) {
-          approved.push(records[i]);
+          approved.push(records[i].recordId);
           approvals[i].checked = false;
           records.splice(i, 1);
         }
@@ -42,9 +42,9 @@
         console.table(approved);
       }
     }
-    // google.script.run
-    //   .withSuccessHandler(approvalResponse)
-    //   .processReviewedClubApplications({ approved, rejected });
+    google.script.run
+      .withSuccessHandler(approvalResponse)
+      .processReviewedClubApplications({ approved, approvalType });
 
     console.log("approval type: " + approvalType);
     document.getElementById("clubAdmin").reset();
@@ -52,6 +52,10 @@
     console.log("approval type: " + approvalType);
     submitted = true;
     console.log("submitted: " + submitted);
+  }
+
+  function approvalResponse(response) {
+    console.log(response);
   }
 </script>
 
@@ -92,8 +96,6 @@
       </div>
     </div>
   </fieldset>
-
-  <!-- Language: svelte -->
   {#if records.length > 0}
     <ul class="p-2 mx-auto">
       {#each records as record, i (record.recordId)}

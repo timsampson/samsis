@@ -89,3 +89,9 @@ function getClubInfo(clubId: string) {
     let clubInfo = clubsValuesAsObjArray.find((club: Club) => club.id == clubId);
     return clubInfo;
 }
+
+function processReviewedClubApplications({ approved, approvalType }) {
+
+    return "received";
+
+}
