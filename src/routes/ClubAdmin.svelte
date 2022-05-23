@@ -1,13 +1,18 @@
 <script>
-  import ClubsAdminTable from "../components/ClubApprovalList.svelte";
-  import Button from "../shared/Button.svelte";
-  import Radio from "../components/RadioAdmin.svelte";
+  // import ClubsAdminTable from "../components/ClubApprovalList.svelte";
+  // import Button from "../shared/Button.svelte";
+  // import Radio from "../components/RadioAdmin.svelte";
   import { onMount } from "svelte";
+  import { slide } from "svelte/transition";
+  import { quintOut } from "svelte/easing";
   let submitted = false;
-  let buttonID = "submitApproval-btn";
-  let selectedRecords = [];
   let approvalType;
-  export let approvalRecords = [];
+  let buttonID = "submitApproval-btn";
+  let button_class =
+    "inline-flex items-center my-4 py-2 px-4 font-bold text-white transition-colors duration-150 rounded-lg focus:shadow-outline disabled:opacity-50";
+  let records = [];
+  let approvals = [];
+  let approved = [];
 
   onMount(() => {
     google.script.run.withSuccessHandler(displayCurrentClub).getClubApprovalRecords();
@@ -19,29 +24,124 @@
         approvalClubRecords[index].formSubmissionDate
       );
     });
-    approvalRecords = approvalClubRecords;
-    console.table(approvalRecords);
+    records = approvalClubRecords;
+    console.table(records);
   }
-  function handleSubmit(event) {
-    selectedRecords = document.getElementsByName("approvalRecord");
-    let approved = document.getElementById("approved_radio");
-    let rejected = document.getElementById("rejected_radio");
-    if (approved.checked) {
-      approvalType = "approved";
-    } else if (rejected.checked) {
-      approvalType = "rejected";
-    }
-    console.log("approval type: " + approvalType);
 
+  function handleSubmit() {
+    submitted = false;
+    approvals = document.getElementsByName("approvals");
+    if (approvals.length > 0) {
+      for (var i = records.length - 1; i >= 0; i--) {
+        if (approvals[i].checked) {
+          approved.push(records[i]);
+          approvals[i].checked = false;
+          records.splice(i, 1);
+        }
+        records = records;
+        console.table(approved);
+      }
+    }
+    // google.script.run
+    //   .withSuccessHandler(approvalResponse)
+    //   .processReviewedClubApplications({ approved, rejected });
+
+    console.log("approval type: " + approvalType);
     document.getElementById("clubAdmin").reset();
-    console.log(event);
+    approvalType = "Has been reset";
+    console.log("approval type: " + approvalType);
+    submitted = true;
+    console.log("submitted: " + submitted);
   }
 </script>
 
 <h1 class="text-indigo-600 text-3xl font-bold ">Club Admin Page</h1>
 <p class="mt-1">Page for approving clubs.</p>
 <form on:submit|preventDefault={handleSubmit} id="clubAdmin">
-  <Radio />
-  <ClubsAdminTable {approvalRecords} />
-  <Button {submitted} {handleSubmit} {buttonID}>Submit</Button>
+  <fieldset>
+    <div class="flex mt-2 ml-4">
+      <div class="form-check form-check-inline mr-4">
+        <input
+          class="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-600 bg-grey-200 checked:bg-green-600 checked:border-green-800 focus:outline-none transition duration-200 mt-1 align-top cursor-pointer"
+          type="radio"
+          name="approvalType"
+          id="approved_radio"
+          value="approved"
+          bind:group={approvalType}
+        />
+        <label
+          class="form-check-label inline-block cursor-pointer"
+          class:text-green-800={approvalType == "approved"}
+          for="approved_radio">Approved</label
+        >
+      </div>
+      <div class="form-check form-check-inline mr-4">
+        <input
+          class="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-600 bg-grey-200 checked:bg-red-600 checked:border-red-800 focus:outline-none transition duration-200 mt-1 align-top cursor-pointer"
+          type="radio"
+          name="approvalType"
+          id="rejected_radio"
+          value="rejected"
+          bind:group={approvalType}
+        />
+        <label
+          class="form-check-label inline-block cursor-pointer"
+          class:text-red-500={approvalType == "rejected"}
+          for="rejected_radio">Rejected</label
+        >
+      </div>
+    </div>
+  </fieldset>
+
+  <!-- Language: svelte -->
+  {#if records.length > 0}
+    <ul class="p-2 mx-auto">
+      {#each records as record, i (record.recordId)}
+        <li
+          id={record.recordId}
+          class="border-b-2 border-blue-200 pt-2 pb-1"
+          transition:slide|local={{ delay: 250, duration: 300, easing: quintOut }}
+        >
+          <input
+            id={i + "approve"}
+            type="checkbox"
+            class="text-green-500 rounded border-2 border-green-500 focus:ring-green-500 mr-2"
+            name="approvals"
+          />
+          <label for={record.recordId} class="ml-2 py-1 text-sm" class:italic={!record.hasCapacity}
+            >{record.name} in homeroom {record.homeroom} grade
+            {record.grade} would like to join the
+            <strong class="text-red-500">{record.hasCapacity ? "" : "full"}</strong>
+            {record.appliedClubName} club.</label
+          >
+        </li>
+      {/each}
+    </ul>
+  {/if}
+
+  <button
+    type="submit"
+    id={buttonID}
+    class={button_class}
+    class:bg-green-500={submitted}
+    class:hover:bg-green-700={submitted}
+    class:bg-blue-500={!submitted}
+    class:hover:bg-blue-700={!submitted}
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-6 w-6"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+      />
+    </svg>
+    submit
+  </button>
 </form>

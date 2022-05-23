@@ -1,5 +1,5 @@
 <script>
-  let approvalType = "";
+  export let approvalType;
 </script>
 
 <fieldset>
