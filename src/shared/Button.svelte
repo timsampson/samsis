@@ -1,10 +1,16 @@
 <script>
+  let button_class =
+    "inline-flex items-center my-4 py-2 px-4 font-bold text-white transition-colors duration-150 rounded-lg focus:shadow-outline disabled:opacity-50";
+  export let submitted;
 </script>
 
 <button
   type="submit"
-  class="bg-blue-500 inline-flex items-center my-4 py-2 px-4 font-bold text-white transition-colors duration-150 
-      hover:bg-blue-700 rounded-lg focus:shadow-outline disabled:opacity-50 disabled:bg-blue-300"
+  class={button_class}
+  class:bg-green-500={submitted}
+  class:hover:bg-green-700={submitted}
+  class:bg-blue-500={!submitted}
+  class:hover:bg-blue-700={!submitted}
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"

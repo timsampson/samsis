@@ -1,18 +1,11 @@
 <script>
-  import ClubsAdminTable from "../components/ClubAdminTable.svelte";
+  import ClubsAdminTable from "../components/ClubApprovalList.svelte";
   import Button from "../shared/Button.svelte";
+  import Radio from "../components/RadioAdmin.svelte";
   import { onMount } from "svelte";
+  let submitted = false;
+
   export let approvalRecords = [];
-  export let titles = [
-    "Name",
-    "Student Id",
-    "Date",
-    "Club ID",
-    "Club Name",
-    "Approved",
-    "Grade",
-    "Homeroom",
-  ];
 
   onMount(() => {
     google.script.run.withSuccessHandler(displayCurrentClub).getClubApprovalRecords();
@@ -25,12 +18,17 @@
       );
     });
     approvalRecords = approvalClubRecords;
+    console.table(approvalRecords);
+  }
+  function handleSubmit(event) {
+    console.log(event);
   }
 </script>
 
 <h1 class="text-indigo-600 text-3xl font-bold ">Club Admin Page</h1>
 <p class="mt-1">Page for approving clubs.</p>
-<Button>Approve</Button>
-<Button>Reject</Button>
-
-<ClubsAdminTable {titles} {approvalRecords} />
+<form on:submit|preventDefault={handleSubmit}>
+  <Radio />
+  <ClubsAdminTable {approvalRecords} />
+  <Button {submitted} {handleSubmit} id="submit">Submit</Button>
+</form>

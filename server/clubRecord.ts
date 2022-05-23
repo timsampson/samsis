@@ -65,9 +65,7 @@ async function clubApplicationEntry(clubId: string) {
         isModerator: false,
         message: ""
     };
-
     let applicationLogRecord = [
-        //recordId	formSubmissionDate	year	isApproved	email	name	grade	school	homeroom	appliedClubId	appliedClubName 
         application.recordId,
         application.formSubmissionDate,
         application.formSubmissionDate.getFullYear(),
@@ -79,6 +77,7 @@ async function clubApplicationEntry(clubId: string) {
         application.homeroom,
         application.appliedClubId,
         application.appliedClubName,
+        application.hasCapacity
     ];
     clubApplicationSheet.appendRow(applicationLogRecord);
     let applicationStringify = JSON.stringify(application);
