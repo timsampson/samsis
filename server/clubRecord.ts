@@ -92,6 +92,5 @@ function getClubInfo(clubId: string) {
 
 function processReviewedClubApplications({ approved, approvalType }) {
 
-    return "received";
-
+    return { approved, approvalType, message: "received", error: false };
 }
