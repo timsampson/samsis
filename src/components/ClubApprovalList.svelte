@@ -1,5 +1,4 @@
 <script>
-  import { fade } from "svelte/transition";
   import { slide } from "svelte/transition";
   import { quintOut } from "svelte/easing";
   export let approvalRecords = [];
@@ -12,6 +11,7 @@
       {#each approvalRecords as record, i (record.recordId)}
         <li
           id={record.recordId}
+          name="approvalRecord"
           class="border-b-2 border-blue-200 pt-2 pb-1"
           transition:slide|local={{ delay: 250, duration: 300, easing: quintOut }}
         >
