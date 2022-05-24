@@ -90,7 +90,9 @@
           <input
             id={i + "approve"}
             type="checkbox"
-            class="text-green-500 rounded border-2 border-green-500 focus:ring-green-500 mr-2 cursor-pointer"
+            class="mr-2 cursor-pointer text-white"
+            class:accent-red-700={approvalType == "rejected"}
+            class:accent-green-700={approvalType == "approved"}
             name="approvals"
             bind:group={selectedRecords}
             value={record}
