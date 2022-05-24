@@ -5,6 +5,7 @@
   import { onMount } from "svelte";
   import { slide } from "svelte/transition";
   import { quintOut } from "svelte/easing";
+  import RadioAdmin from "../components/RadioAdmin.svelte";
   let submitted = false;
   let approvalType;
   let approvalObj = {
@@ -63,6 +64,7 @@
     submitted = true;
     console.log("submitted: " + submitted);
     approved = [];
+    selectedRecords = [];
   }
 
   function approvalResponse(response) {
@@ -70,11 +72,13 @@
     response.approved.forEach((element) => console.table(element));
     console.table(response);
   }
+  let selectedRecords = [];
 </script>
 
 <h1 class="text-indigo-600 text-3xl font-bold ">Club Admin Page</h1>
 <p class="mt-1">Page for approving clubs.</p>
 <form on:submit|preventDefault={handleSubmit} id="clubAdmin">
+  <RadioAdmin />
   <fieldset>
     <div class="flex mt-2 ml-4">
       <div class="form-check form-check-inline mr-4">
@@ -121,10 +125,15 @@
           <input
             id={i + "approve"}
             type="checkbox"
-            class="text-green-500 rounded border-2 border-green-500 focus:ring-green-500 mr-2"
+            class="text-green-500 rounded border-2 border-green-500 focus:ring-green-500 mr-2 cursor-pointer"
             name="approvals"
+            bind:group={selectedRecords}
+            value={record}
           />
-          <label for={record.recordId} class="ml-2 py-1 text-sm" class:italic={!record.hasCapacity}
+          <label
+            for={i + "approve"}
+            class="ml-2 py-1 text-sm cursor-pointer"
+            class:italic={!record.hasCapacity}
             >{record.name} in homeroom {record.homeroom} grade
             {record.grade} would like to join the
             <strong class="text-red-500">{record.hasCapacity ? "" : "full"}</strong>
@@ -136,3 +145,21 @@
   {/if}
   <Button {buttonID} {button_class} {submitted}>Submit</Button>
 </form>
+
+<h2 class="m-4 underline text-blue-700 text-xl">Selected Records:</h2>
+{#if selectedRecords.length > 0}
+  <ul>
+    {#each selectedRecords as record}
+      <li
+        class="my-2"
+        class:text-red-500={approvalType == "rejected"}
+        class:text-green-800={approvalType == "approved"}
+      >
+        {record.name} in homeroom {record.homeroom} grade
+        {record.grade} would like to join the
+        <strong class="text-red-500">{record.hasCapacity ? "" : "full"}</strong>
+        {record.appliedClubName} club.
+      </li>
+    {/each}
+  </ul>
+{/if}
