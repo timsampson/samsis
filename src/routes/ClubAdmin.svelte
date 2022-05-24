@@ -3,6 +3,8 @@
   import Button from "../shared/Button.svelte";
   // import Radio from "../components/RadioAdmin.svelte";
   import { onMount } from "svelte";
+  import { fly } from "svelte/transition";
+  import { fade } from "svelte/transition";
   import { slide } from "svelte/transition";
   import { quintOut } from "svelte/easing";
   import RadioAdmin from "../components/RadioAdmin.svelte";
@@ -80,7 +82,7 @@
 <form on:submit|preventDefault={handleSubmit} id="clubAdmin">
   <RadioAdmin bind:approvalType />
   {#if records.length > 0}
-    <ul class="p-2 mx-auto" required>
+    <ul transition:fly class="p-2 mx-auto" required>
       {#each records as record, i (record.recordId)}
         <li
           id={record.recordId}
@@ -113,9 +115,11 @@
   <Button {buttonID} {button_class} {submitted}>Submit</Button>
 </form>
 
-<h2 class="m-4 underline text-blue-700 text-xl">Selected Records:</h2>
+<h2 transition:fade class="m-2 text-blue-800 text-lg">
+  {selectedRecords.length <= 0 ? "No Records Selected" : "Selected Records"}
+</h2>
 {#if selectedRecords.length > 0}
-  <ul>
+  <ul transition:fade>
     {#each selectedRecords as record}
       <li
         class="my-2"
