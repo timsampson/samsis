@@ -11,7 +11,7 @@
     recordId: "",
     email: "",
   };
-  let = "submitApproval-btn";
+  let buttonID = "submitApproval-btn";
   let button_class =
     "inline-flex items-center my-4 py-2 px-4 font-bold text-white transition-colors duration-150 rounded-lg focus:shadow-outline disabled:opacity-50";
   let records = [];
