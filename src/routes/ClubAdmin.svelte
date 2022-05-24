@@ -7,6 +7,10 @@
   import { quintOut } from "svelte/easing";
   let submitted = false;
   let approvalType;
+  let approvalObj = {
+    recordId: "",
+    email: "",
+  };
   let buttonID = "submitApproval-btn";
   let button_class =
     "inline-flex items-center my-4 py-2 px-4 font-bold text-white transition-colors duration-150 rounded-lg focus:shadow-outline disabled:opacity-50";
@@ -31,16 +35,22 @@
   function handleSubmit() {
     submitted = false;
     approvals = document.getElementsByName("approvals");
+    console.log(approvals.length);
     if (approvals.length > 0) {
       for (var i = records.length - 1; i >= 0; i--) {
         if (approvals[i].checked) {
-          approved.push(records[i].recordId);
+          approvalObj.recordId = records[i].recordId;
+          approvalObj.email = records[i].email;
+          console.table(approvalObj);
+          approved.push(approvalObj);
           approvals[i].checked = false;
           records.splice(i, 1);
         }
         records = records;
-        console.table(approved);
       }
+    } else {
+      alert("Please select at least one record to approve");
+      return;
     }
     google.script.run
       .withSuccessHandler(approvalResponse)
@@ -52,10 +62,13 @@
     console.log("approval type: " + approvalType);
     submitted = true;
     console.log("submitted: " + submitted);
+    approved = [];
   }
 
   function approvalResponse(response) {
-    console.log(response);
+    console.log("approved elements");
+    response.approved.forEach((element) => console.table(element));
+    console.table(response);
   }
 </script>
 
@@ -72,6 +85,7 @@
           id="approved_radio"
           value="approved"
           bind:group={approvalType}
+          required
         />
         <label
           class="form-check-label inline-block cursor-pointer"
@@ -97,7 +111,7 @@
     </div>
   </fieldset>
   {#if records.length > 0}
-    <ul class="p-2 mx-auto">
+    <ul class="p-2 mx-auto" required>
       {#each records as record, i (record.recordId)}
         <li
           id={record.recordId}
