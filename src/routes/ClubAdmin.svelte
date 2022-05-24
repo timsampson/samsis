@@ -11,8 +11,7 @@
     recordId: "",
     email: "",
   };
-  let buttonID = "submitApproval-btn";
-  let buttonIDComp = "submitApproval-btn-comp";
+  let = "submitApproval-btn";
   let button_class =
     "inline-flex items-center my-4 py-2 px-4 font-bold text-white transition-colors duration-150 rounded-lg focus:shadow-outline disabled:opacity-50";
   let records = [];
@@ -135,5 +134,5 @@
       {/each}
     </ul>
   {/if}
-  <Button {buttonIDComp} {button_class} {submitted}>Submit</Button>
+  <Button {buttonID} {button_class} {submitted}>Submit</Button>
 </form>
