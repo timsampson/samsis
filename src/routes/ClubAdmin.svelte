@@ -13,13 +13,14 @@
   let approvalObj = {
     recordId: "",
     email: "",
+    approvalStatus: "",
   };
   let buttonID = "submitApproval-btn";
   let button_class =
     "inline-flex items-center my-4 py-2 px-4 font-bold text-white transition-colors duration-150 rounded-lg focus:shadow-outline disabled:opacity-50";
-  let records = [];
-  let approvals = [];
-  let approved = [];
+  let recordsForApproval = [];
+  let approvalElementList = [];
+  let approvedArr = [];
 
   onMount(() => {
     google.script.run.withSuccessHandler(displayCurrentClub).getClubApprovalRecords();
@@ -31,47 +32,52 @@
         approvalClubRecords[index].formSubmissionDate
       );
     });
-    records = approvalClubRecords;
-    console.table(records);
+    recordsForApproval = approvalClubRecords;
+    console.table(recordsForApproval);
   }
 
   function handleSubmit() {
     submitted = false;
-    approvals = document.getElementsByName("approvals");
-    console.log(approvals.length);
-    if (approvals.length > 0) {
-      for (var i = records.length - 1; i >= 0; i--) {
-        if (approvals[i].checked) {
-          approvalObj.recordId = records[i].recordId;
-          approvalObj.email = records[i].email;
-          console.table(approvalObj);
-          approved.push(approvalObj);
-          approvals[i].checked = false;
-          records.splice(i, 1);
-        }
-        records = records;
-      }
-    } else {
+    approvalElementList = document.getElementsByName("approvals");
+    let numChecked = 0;
+    for (let i = 0; i < approvalElementList.length; i++) {
+      if (approvalElementList[i].checked) numChecked++;
+    }
+    if (numChecked === 0) {
       alert("Please select at least one record to approve");
       return;
     }
+    if (approvalElementList.length > 0) {
+      for (var i = approvalElementList.length - 1; i >= 0; i--) {
+        if (approvalElementList[i].checked) {
+          console.table(recordsForApproval[i]);
+          approvalObj.recordId = recordsForApproval[i].recordId;
+          approvalObj.email = recordsForApproval[i].email;
+          approvalObj.approvalStatus = approvalType;
+          console.table(approvalObj);
+          approvedArr.push(approvalObj);
+          console.table(approvedArr);
+          approvalElementList[i].checked = false;
+          recordsForApproval.splice(i, 1);
+        }
+        recordsForApproval = recordsForApproval;
+      }
+    }
+    console.table(approvedArr);
     google.script.run
       .withSuccessHandler(approvalResponse)
-      .processReviewedClubApplications({ approved, approvalType });
+      .processReviewedClubApplications(approvedArr);
 
     console.log("approval type: " + approvalType);
     document.getElementById("clubAdmin").reset();
-    approvalType = "Has been reset";
-    console.log("approval type: " + approvalType);
     submitted = true;
     console.log("submitted: " + submitted);
-    approved = [];
+    approvedArr = [];
     selectedRecords = [];
   }
 
   function approvalResponse(response) {
     console.log("approved elements");
-    response.approved.forEach((element) => console.table(element));
     console.table(response);
   }
   let selectedRecords = [];
@@ -81,9 +87,9 @@
 <p class="mt-1">Page for approving clubs.</p>
 <form on:submit|preventDefault={handleSubmit} id="clubAdmin">
   <RadioAdmin bind:approvalType />
-  {#if records.length > 0}
+  {#if recordsForApproval.length > 0}
     <ul transition:fly class="p-2 mx-auto" required>
-      {#each records as record, i (record.recordId)}
+      {#each recordsForApproval as record, i (record.recordId)}
         <li
           id={record.recordId}
           class="border-b-2 border-blue-200 pt-2 pb-1"
