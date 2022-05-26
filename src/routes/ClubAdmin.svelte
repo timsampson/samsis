@@ -8,13 +8,11 @@
   import { slide } from "svelte/transition";
   import { quintOut } from "svelte/easing";
   import RadioAdmin from "../components/RadioAdmin.svelte";
+  let selectedRecords = [];
   let submitted = false;
   let approvalType;
-  let approvalObj = {
-    recordId: "",
-    email: "",
-    approvalStatus: "",
-  };
+  $: console.log(approvalType);
+
   let buttonID = "submitApproval-btn";
   let button_class =
     "inline-flex items-center my-4 py-2 px-4 font-bold text-white transition-colors duration-150 rounded-lg focus:shadow-outline disabled:opacity-50";
@@ -49,38 +47,36 @@
     }
     if (approvalElementList.length > 0) {
       for (var i = approvalElementList.length - 1; i >= 0; i--) {
+        // starting with last element
         if (approvalElementList[i].checked) {
-          console.table(recordsForApproval[i]);
-          approvalObj.recordId = recordsForApproval[i].recordId;
-          approvalObj.email = recordsForApproval[i].email;
-          approvalObj.approvalStatus = approvalType;
-          console.table(approvalObj);
+          let approvalObj = {
+            recordId: recordsForApproval[i].recordId,
+            email: recordsForApproval[i].email,
+            approvalStatus: approvalType,
+          };
           approvedArr.push(approvalObj);
-          console.table(approvedArr);
           approvalElementList[i].checked = false;
           recordsForApproval.splice(i, 1);
+          recordsForApproval = recordsForApproval;
         }
-        recordsForApproval = recordsForApproval;
       }
     }
+    console.log("approved Array for submission is: ");
     console.table(approvedArr);
     google.script.run
       .withSuccessHandler(approvalResponse)
       .processReviewedClubApplications(approvedArr);
-
-    console.log("approval type: " + approvalType);
     document.getElementById("clubAdmin").reset();
     submitted = true;
-    console.log("submitted: " + submitted);
     approvedArr = [];
     selectedRecords = [];
+    approvalType = "";
   }
 
   function approvalResponse(response) {
-    console.log("approved elements");
+    submitted = false;
     console.table(response);
   }
-  let selectedRecords = [];
 </script>
 
 <h1 class="text-indigo-600 text-3xl font-bold ">Club Admin Page</h1>

@@ -1,5 +1,3 @@
-import App from "../src/App.svelte";
-
 type Application = {
     recordId: string,
     formSubmissionDate: Date,
@@ -101,25 +99,37 @@ type Approved = {
     processed: boolean
 }
 function testPRCA() {
-
-    let approved1: Approved = {
-        recordId: "id2022197301",
+    let approved1 = {
+        recordId: "id202126608",
         email: "tsampson@dishs.tp.edu.tw",
         approvalStatus: "approved",
         processed: true
     };
-    let approved2: Approved = {
+    let approved2 = {
+        recordId: "id202126609",
+        email: "scawte@niceschool.edu",
+        approvalStatus: "approved",
+        processed: true
+    };
+    let approved3 = {
+        recordId: "id202126610",
+        email: "scawte@niceschool.edu",
+        approvalStatus: "rejected",
+        processed: true
+    };
+    let approved4 = {
         recordId: "id202126611",
         email: "scawte@niceschool.edu",
         approvalStatus: "approved",
         processed: true
-
     };
-    let approvedList = [approved1, approved2];
+    let approvedList = [approved1, approved2, approved3, approved4];
     let application = processReviewedClubApplications(approvedList);
     Logger.log(application);
 }
 function processReviewedClubApplications(approvedList: Approved[]) {
+    let userProcessing = getUserEmail();
+    let processingDate = new Date();
     let processedApplications = 0;
     clubApplicationValues = clubApplicationSheet.getDataRange().getValues();
     let clubApplicationValuesAsObjArray = ValuesToArrayOfObjects(clubApplicationValues);
@@ -129,21 +139,21 @@ function processReviewedClubApplications(approvedList: Approved[]) {
     let colIndex = clubApplicationValues[0].indexOf("approvalStatus");
     let rowIndex;
     approvedList.forEach(applicationRecord => {
-        Logger.log(applicationRecord);
         rowIndex = clubApplicationValuesAsObjArray.findIndex((record: Application) => {
             return record.recordId == applicationRecord.recordId;
         });
         // sheet row number starts at 1, so add 1 to rowIndex and colIndex
         // missing header row, so add 1 to rowIndex
+        let updateRange = clubApplicationSheet.getRange(rowIndex + 2, colIndex, 1, 4);
         if (rowIndex > 0) { // if the record was found
             if (applicationRecord.approvalStatus == "approved") {
-                clubApplicationSheet.getRange(rowIndex + 2, colIndex + 1).setValue("approved");
+                // these records are getting written contiguously, so this will be a problem if the columns are moved.
+                // this can be updated to use 4 column indexes and 4 separate writes to be less brittle
+                updateRange.setValues([[true, "approved", processingDate, userProcessing]]);
             }
             else {
-                clubApplicationSheet.getRange(rowIndex + 2, colIndex + 1).setValue("rejected");
+                updateRange.setValues([[true, "rejected", processingDate, userProcessing]]);
             }
-            clubApplicationSheet.getRange(rowIndex + 2, colIndex + 2).setValue(new Date());
-            clubApplicationSheet.getRange(rowIndex + 2, colIndex + 3).setValue(getUserEmail());
             processedApplications++;
         }
         rowIndex = 0;
