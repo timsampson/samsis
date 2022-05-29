@@ -19,7 +19,11 @@
   <form on:submit|preventDefault={handleSubmit}>
     <div class="w-80">
       <!-- svelte-ignore a11y-no-onchange -->
-      <select required bind:value={selected} class="w-full border rounded-lg focus:shadow-outline">
+      <select
+        required
+        bind:value={selected}
+        class="pl-2 h-8 w-full border rounded-lg focus:shadow-outline"
+      >
         <option value={() => (selected.name = "")} />
         {#each clubList as club}
           <option value={club}>
