@@ -12,6 +12,7 @@
         id="approved_radio"
         value="approved"
         bind:group={approvalType}
+        required
       />
       <label
         class="form-check-label inline-block cursor-pointer"

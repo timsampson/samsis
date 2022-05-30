@@ -10,6 +10,7 @@
   function clubSubmissionResponse(response) {
     let responseDetails = JSON.parse(response);
     responseDetails.formSubmissionDate = new Date(responseDetails.formSubmissionDate);
+    console.log(responseDetails.message);
     console.table(responseDetails);
   }
 </script>

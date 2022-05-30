@@ -16,6 +16,11 @@ let staffValuesAsObjArray: any[];
 let clubEnrollmentSheet = schoolSpreadsheet.getSheetByName("club_enrollment");
 let clubEnrollmentValues: any[][] | [any, ...any[]];
 let clubEnrollmentValuesAsObjArray: any[];
+function getClubEnrollmentValuesAsObjArray() {
+    clubEnrollmentValues = clubEnrollmentSheet.getDataRange().getValues();
+    clubEnrollmentValuesAsObjArray = ValuesToArrayOfObjects(clubEnrollmentValues);
+    return clubEnrollmentValuesAsObjArray;
+}
 
 let clubApplicationSheet = schoolSpreadsheet.getSheetByName("club_applications");
 let clubApplicationValues: any[][] | [any, ...any[]];

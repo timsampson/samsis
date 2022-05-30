@@ -22,13 +22,24 @@ function getClubRecords() {
 function sanitize(element: string | number) {
     return element.toString().trim().toLowerCase();
 }
-
+type currentClub = {
+    isInClub: boolean,
+    currentClubId: string,
+    currentClubName: string,
+}
 function getCurrentClub() {
-    let currentClub = {} as Club;
     clubEnrollmentValues = clubEnrollmentSheet.getDataRange().getValues();
     clubEnrollmentValuesAsObjArray = ValuesToArrayOfObjects(clubEnrollmentValues);
-    currentClub = clubEnrollmentValuesAsObjArray.find((clubRecord) => clubRecord.email == getUserEmail());
-    return currentClub;
+    let currentClubDetails: currentClub;
+    currentClubDetails = clubEnrollmentValuesAsObjArray.find((clubRecord) => clubRecord.email == getUserEmail());
+    if (currentClubDetails == undefined) {
+        currentClubDetails = {
+            isInClub: false,
+            currentClubId: "0",
+            currentClubName: "",
+        }
+    }
+    return currentClubDetails;
 }
 function getClubsFilteredByLevel() {
     if (isTeacher()) {
