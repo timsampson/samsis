@@ -13,7 +13,7 @@ function isTeacher() {
 }
 function getStaffInfo() {
     staffValues = staffSheet.getDataRange().getValues();
-    staffValuesAsObjArray = ValuesToArrayOfObjects(staffValues);
+    staffValuesAsObjArray = valuesToArrayOfObjects(staffValues);
     let staffInfo = staffValuesAsObjArray.find((staff: Staff) => staff.email == getUserEmail());
     return staffInfo;
 }

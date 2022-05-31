@@ -18,7 +18,7 @@ let clubEnrollmentValues: any[][] | [any, ...any[]];
 let clubEnrollmentValuesAsObjArray: any[];
 function getClubEnrollmentValuesAsObjArray() {
     clubEnrollmentValues = clubEnrollmentSheet.getDataRange().getValues();
-    clubEnrollmentValuesAsObjArray = ValuesToArrayOfObjects(clubEnrollmentValues);
+    clubEnrollmentValuesAsObjArray = valuesToArrayOfObjects(clubEnrollmentValues);
     return clubEnrollmentValuesAsObjArray;
 }
 
@@ -26,11 +26,16 @@ let clubApplicationSheet = schoolSpreadsheet.getSheetByName("club_applications")
 let clubApplicationValues: any[][] | [any, ...any[]];
 let clubApplicationValuesAsObjArray: any[];
 
+function getClubApplicationValuesAsObjArray() {
+    clubApplicationValues = clubApplicationSheet.getDataRange().getValues();
+    clubApplicationValuesAsObjArray = valuesToArrayOfObjects(clubApplicationValues);
+    return clubApplicationValuesAsObjArray;
+}
 let hrStudentSheet = schoolSpreadsheet.getSheetByName("hr_st_join");
 let hrStudentValues: any[][] | [any, ...any[]];
 let hrStudentValuesAsObjArray: any[];
 
-function ValuesToArrayOfObjects(sheetValues: any[][] | [any, ...any[]]) {
+function valuesToArrayOfObjects(sheetValues: any[][] | [any, ...any[]]) {
     // Use the spread operator to split the 2d array into headers and values
     const [headers, ...records] = sheetValues;
 
