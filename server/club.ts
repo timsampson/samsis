@@ -15,7 +15,7 @@ type Club = {
 
 function getClubRecords() {
     clubsValues = clubsSheet.getDataRange().getValues();
-    clubsValuesAsObjArray = ValuesToArrayOfObjects(clubsValues);
+    clubsValuesAsObjArray = valuesToArrayOfObjects(clubsValues);
     return clubsValuesAsObjArray;
 }
 
@@ -27,20 +27,22 @@ type currentClub = {
     currentClubId: string,
     currentClubName: string,
 }
-function getCurrentClub() {
+function getCurrentClub(email) {
+    if (email == undefined) {
+        email = getUserEmail();
+    }
     clubEnrollmentValues = clubEnrollmentSheet.getDataRange().getValues();
-    clubEnrollmentValuesAsObjArray = ValuesToArrayOfObjects(clubEnrollmentValues);
+    clubEnrollmentValuesAsObjArray = valuesToArrayOfObjects(clubEnrollmentValues);
     let currentClubDetails: currentClub;
-    currentClubDetails = clubEnrollmentValuesAsObjArray.find((clubRecord) => clubRecord.email == getUserEmail());
-    if (currentClubDetails == undefined) {
-        currentClubDetails = {
-            isInClub: false,
-            currentClubId: "0",
-            currentClubName: "",
-        }
+    currentClubDetails = clubEnrollmentValuesAsObjArray.find((clubRecord) => clubRecord.email == email);
+    if (Boolean(currentClubDetails)) {
+        currentClubDetails.isInClub = true;
+    } else {
+        currentClubDetails.isInClub = false;
     }
     return currentClubDetails;
 }
+
 function getClubsFilteredByLevel() {
     if (isTeacher()) {
         let clubs: Club[] = getClubRecords();

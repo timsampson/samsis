@@ -52,7 +52,7 @@
           let approvalObj = {
             recordId: recordsForApproval[i].recordId,
             email: recordsForApproval[i].email,
-            isApproved: approvalType.toLowerCase().trim() === "approved" ? true : false,
+            approvalStatus: approvalType,
           };
           approvedArr.push(approvalObj);
           approvalElementList[i].checked = false;

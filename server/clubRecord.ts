@@ -35,7 +35,7 @@ async function clubApplicationEntry(clubId: string) {
     let studentDetails: Student = await getStudentInfo()
     let appliedClubDetails: Club = await getClubInfo(clubId);
     let studentHRInfo: Student = await getStudentHRInfo();
-    let currentClubDetails: currentClub = getCurrentClub();
+    let currentClubDetails: currentClub = getCurrentClub(getUserEmail());
 
     let application: Application = {
         formState: "submission",
@@ -74,7 +74,7 @@ async function clubApplicationEntry(clubId: string) {
     if (application.formState == "submission" && application.isInClub == false) {
         application.message = "Your club application has been approved.";
         application.isApproved = true;
-        let approvedRecord = [
+        let reviewedRecord = [
             application.recordId,
             application.formSubmissionDate,
             application.formSubmissionDate.getFullYear(),
@@ -87,7 +87,7 @@ async function clubApplicationEntry(clubId: string) {
             application.appliedClubId,
             application.appliedClubName,
         ];
-        clubEnrollmentSheet.appendRow(approvedRecord);
+        clubEnrollmentSheet.appendRow(reviewedRecord);
     }
     else {
         application.message = "Your club application status is pending review."
@@ -114,57 +114,86 @@ async function clubApplicationEntry(clubId: string) {
     let applicationStringify = JSON.stringify(application);
     return applicationStringify;
 }
-
-function clubEnrollmentEntry(pendingEnrollmentRecords: Application[]) {
-    // get the clubEnrollmentSheet values
-    let enrollmentValuesAsObjArray = getClubEnrollmentValuesAsObjArray();
-    // check to see if the record is already in the sheet if not append it.
-    // loop though all records
-    pendingEnrollmentRecords.forEach((pendingEnrollmentRecord) => {
-        let indexOfApproved = enrollmentValuesAsObjArray.findIndex((enrollment: Application) => enrollment.email === pendingEnrollmentRecord.email);
-        // check to see if the record is already in the enrollment sheet if not append it.
-        let approvedRecord;
-        if (indexOfApproved < 0) {
-            pendingEnrollmentRecord.isApproved = true;
-            approvedRecord = [
-                pendingEnrollmentRecord.recordId,
-                pendingEnrollmentRecord.formSubmissionDate,
-                pendingEnrollmentRecord.formSubmissionDate.getFullYear(),
-                pendingEnrollmentRecord.isApproved,
-                pendingEnrollmentRecord.email,
-                pendingEnrollmentRecord.name,
-                pendingEnrollmentRecord.grade,
-                pendingEnrollmentRecord.school,
-                pendingEnrollmentRecord.homeroom,
-                pendingEnrollmentRecord.appliedClubId,
-                pendingEnrollmentRecord.appliedClubName,
-                indexOfApproved
-            ];
-            clubEnrollmentSheet.appendRow(approvedRecord);
+function getClubApplicationRecord(recordId: any) {
+    let updatedClubEnrollmentValuesAsObjArray = getClubApplicationValuesAsObjArray();
+    let applicationRecord = updatedClubEnrollmentValuesAsObjArray.find((application) => application.recordId == recordId);
+    return applicationRecord;
+}
+function testProcessed() {
+    let reviewedRecords = [{
+        recordId: `id2022307285`,
+        email: 'tsampson@dishs.tp.edu.tw',
+        approvalStatus: "approved",
+    }];
+    Logger.log(reviewedRecords);
+    return processReviewedClubApplications(reviewedRecords);
+}
+function processReviewedClubApplications(reviewedRecords: any[]) {
+    reviewedRecords.forEach((application) => {
+        // get the current club for the user in the application
+        let currentClubDetails: currentClub = getCurrentClub(application.email);
+        // get the current application record by id for the individual in the application
+        let clubApplicationRecord = getClubApplicationRecord(application.recordId);
+        application.isApproved = application.approvalStatus == "approved" ? true : false;
+        let reviewedRecord = [
+            clubApplicationRecord.recordId,
+            clubApplicationRecord.formSubmissionDate,
+            clubApplicationRecord.formSubmissionDate.getFullYear(),
+            application.isApproved,
+            clubApplicationRecord.email,
+            clubApplicationRecord.name,
+            clubApplicationRecord.grade,
+            clubApplicationRecord.school,
+            clubApplicationRecord.homeroom,
+            clubApplicationRecord.appliedClubId,
+            clubApplicationRecord.appliedClubName,
+        ];
+        if (application.isApproved == true && currentClubDetails.isInClub == false) {
+            Logger.log(`application.isApproved == true && currentClubDetails.isInClub == false`);
+            clubEnrollmentSheet.appendRow(reviewedRecord);
+            updateApplicationRecord(application);
+        }
+        else if (application.isApproved == true && currentClubDetails.isInClub == true) {
+            Logger.log(`This should be updating the record`);
+            let enrollmentValuesAsObjArray = getClubEnrollmentValuesAsObjArray();
+            let index = enrollmentValuesAsObjArray.findIndex((enrollment: Application) => enrollment.email == application.email);
+            clubEnrollmentSheet.getRange(index + 2, 1, 1, clubEnrollmentSheet.getLastColumn()).setValues([reviewedRecord]);
+            updateApplicationRecord(application);
         }
         else {
-            approvedRecord = [
-                pendingEnrollmentRecord.recordId,
-                pendingEnrollmentRecord.formSubmissionDate,
-                pendingEnrollmentRecord.formSubmissionDate.getFullYear(),
-                pendingEnrollmentRecord.isApproved,
-                pendingEnrollmentRecord.email,
-                pendingEnrollmentRecord.name,
-                pendingEnrollmentRecord.grade,
-                pendingEnrollmentRecord.school,
-                pendingEnrollmentRecord.homeroom,
-                pendingEnrollmentRecord.appliedClubId,
-                pendingEnrollmentRecord.appliedClubName
-            ];
-            // if the user has a previous club Enrollment record 
-            // use the current index to replace it with the new record
-            clubEnrollmentSheet.getRange(indexOfApproved + 2, 1, 1, clubEnrollmentSheet.getLastColumn()).setValues([approvedRecord]);
+            updateApplicationRecord(application);
         }
     });
+    reviewedRecords.forEach((record, index) => {
+        reviewedRecords[index] = JSON.stringify(record);
+    });
+    return reviewedRecords;
 }
+function updateApplicationRecord(applicationRecord: Application) {
+    let userProcessing = getUserEmail();
+    let processingDate = new Date();
+    let colIndex = clubApplicationValues[0].indexOf("approvalStatus");
+    let rowIndex = clubApplicationValuesAsObjArray.findIndex((record: Application) => {
+        return record.recordId == applicationRecord.recordId;
+    });
+    // sheet row number starts at 1, so add 1 to rowIndex and colIndex
+    // missing header row, so add 1 to rowIndex
+    let updateRange = clubApplicationSheet.getRange(rowIndex + 2, colIndex, 1, 4);
+    if (rowIndex > 0) { // if the record was found
+        if (applicationRecord.approvalStatus == "approved") {
+            // these records are getting written contiguously, so this will be a problem if the columns are moved.
+            // this can be updated to use 4 column indexes and 4 separate writes to be less brittle
+            updateRange.setValues([[true, "approved", processingDate, userProcessing]]);
+        }
+        else {
+            updateRange.setValues([[true, "rejected", processingDate, userProcessing]]);
+        }
+    }
+}
+
 function getClubApprovalRecords() {
     clubApplicationValues = clubApplicationSheet.getDataRange().getValues();
-    clubApplicationValuesAsObjArray = ValuesToArrayOfObjects(clubApplicationValues);
+    clubApplicationValuesAsObjArray = valuesToArrayOfObjects(clubApplicationValues);
     let pendingClubs = clubApplicationValuesAsObjArray.filter((application) => application.processed == false);
     pendingClubs.forEach((record, index) => {
         pendingClubs[index] = JSON.stringify(record);
@@ -173,7 +202,7 @@ function getClubApprovalRecords() {
 }
 function getClubInfo(clubId: string) {
     clubsValues = clubsSheet.getDataRange().getValues();
-    clubsValuesAsObjArray = ValuesToArrayOfObjects(clubsValues);
+    clubsValuesAsObjArray = valuesToArrayOfObjects(clubsValues);
     let clubInfo = clubsValuesAsObjArray.find((club: Club) => club.id == clubId);
     return clubInfo;
 }
