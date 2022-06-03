@@ -137,7 +137,7 @@ function processReviewedClubApplications(approvedList: Approved[]) {
     // for each of the objects in the array, find the record in the club application sheet
     // and update the record with the approver's email and approval status
     let colIndex = clubApplicationValues[0].indexOf("approvalStatus");
-    let rowIndex;
+    let rowIndex: number;
     approvedList.forEach(applicationRecord => {
         rowIndex = clubApplicationValuesAsObjArray.findIndex((record: Application) => {
             return record.recordId == applicationRecord.recordId;
@@ -146,15 +146,20 @@ function processReviewedClubApplications(approvedList: Approved[]) {
         // missing header row, so add 1 to rowIndex
         let updateRange = clubApplicationSheet.getRange(rowIndex + 2, colIndex, 1, 4);
         if (rowIndex > 0) { // if the record was found
+            let emailTemplateRecordValues;
             if (applicationRecord.approvalStatus == "approved") {
+                emailTemplateRecordValues = clubApplicationValuesAsObjArray[rowIndex];
                 // these records are getting written contiguously, so this will be a problem if the columns are moved.
                 // this can be updated to use 4 column indexes and 4 separate writes to be less brittle
                 updateRange.setValues([[true, "approved", processingDate, userProcessing]]);
+                emailTemplateRecordValues.message = `Your application to join ${emailTemplateRecordValues.appliedClubName} has been approved.`;
             }
             else {
                 updateRange.setValues([[true, "rejected", processingDate, userProcessing]]);
+                emailTemplateRecordValues.message = `Your application to join ${emailTemplateRecordValues.appliedClubName} has been rejected.`;
             }
             processedApplications++;
+            sendApplicationEmail(emailTemplateRecordValues);
         }
         rowIndex = 0;
     });
