@@ -84,7 +84,7 @@
 <form on:submit|preventDefault={handleSubmit} id="clubAdmin">
   <RadioAdmin bind:approvalType />
   {#if recordsForApproval.length > 0}
-    <ul transition:fly class="p-2 mx-auto" required>
+    <ul transition:fly|local class="p-2 mx-auto" required>
       {#each recordsForApproval as record, i (record.recordId)}
         <li
           id={record.recordId}
@@ -117,11 +117,11 @@
   <Button {buttonID} {button_class} {submitted}>Submit</Button>
 </form>
 
-<h2 transition:fade class="m-2 text-blue-800 text-lg">
+<h2 transition:|local class="m-2 text-blue-800 text-lg">
   {selectedRecords.length <= 0 ? "No Records Selected" : "Selected Records"}
 </h2>
 {#if selectedRecords.length > 0}
-  <ul transition:fade>
+  <ul transition:fade|local>
     {#each selectedRecords as record}
       <li
         class="my-2"
