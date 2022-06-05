@@ -5,7 +5,7 @@
     name: "",
   };
   function handleSubmit() {
-    google.script.run.withSuccessHandler(clubSubmissionResponse).clubApplicationEntry(selected.id);
+    google.script.run.withSuccessHandler(clubSubmissionResponse).clubApplicationSubmission(selected.id);
   }
   function clubSubmissionResponse(response) {
     let responseDetails = JSON.parse(response);
