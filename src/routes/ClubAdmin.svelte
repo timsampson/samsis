@@ -117,7 +117,7 @@
   <Button {buttonID} {button_class} {submitted}>Submit</Button>
 </form>
 
-<h2 transition:|local class="m-2 text-blue-800 text-lg">
+<h2 transition:fade|local class="m-2 text-blue-800 text-lg">
   {selectedRecords.length <= 0 ? "No Records Selected" : "Selected Records"}
 </h2>
 {#if selectedRecords.length > 0}
