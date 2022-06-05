@@ -108,7 +108,7 @@
             >{record.name} in homeroom {record.homeroom} grade
             {record.grade} would like to join the
             <strong class="text-red-500">{record.hasCapacity ? "" : "full"}</strong>
-            {record.appliedClubName} club.</label
+            {record.clubName} club.</label
           >
         </li>
       {/each}
@@ -131,7 +131,7 @@
         {record.name} in homeroom {record.homeroom} grade
         {record.grade} would like to join the
         <strong class="text-red-500">{record.hasCapacity ? "" : "full"}</strong>
-        {record.appliedClubName} club.
+        {record.clubName} club.
       </li>
     {/each}
   </ul>

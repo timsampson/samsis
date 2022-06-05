@@ -1,13 +1,13 @@
 function sendApplicationEmail(emailTemplateRecordValues) {
-  const htmlBody = HtmlService.createTemplateFromFile("email_templates/welcome-mail.html");
+  const htmlBody = HtmlService.createTemplateFromFile("email_templates/club_application_mail.html");
   htmlBody.stuName = emailTemplateRecordValues.name;
-  htmlBody.clubName = emailTemplateRecordValues.appliedClubName;
-  htmlBody.clubDetails = emailTemplateRecordValues.appliedClubDetails;
-  htmlBody.clubModerator = emailTemplateRecordValues.appliedclubModerator;
+  htmlBody.clubName = emailTemplateRecordValues.clubName;
+  htmlBody.clubDetails = emailTemplateRecordValues.clubDetails;
+  htmlBody.clubModerator = emailTemplateRecordValues.clubModerator;
   htmlBody.message = emailTemplateRecordValues.message;
   const emailHtml = htmlBody.evaluate().getContent();
   // const toEmail = application.email;
-  let welcomeMessage = `Dear ${emailTemplateRecordValues.email} Notice for your application to the ${emailTemplateRecordValues.appliedClubName} club!`;
+  let welcomeMessage = `Dear ${emailTemplateRecordValues.email} Notice for your application to the ${emailTemplateRecordValues.clubName} club!`;
   MailApp.sendEmail({
     // bcc: 'tsampson@dishs.tp.edu.tw', not needed for testing
     // cc:

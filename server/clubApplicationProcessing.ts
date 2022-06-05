@@ -1,24 +1,23 @@
 type Application = {
     recordId: string,
     formSubmissionDate: Date,
+    approvalDate: Date,
     approvedBy: string,
     email: string,
     name: string,
     grade: string,
     school: string,
     homeroom: string,
-    appliedClubId: string,
-    appliedClubName: string,
-    appliedclubModerator: string,
-    appliedClubDetails: string,
-    appliedClubLocation: string,
+    clubId: string,
+    clubName: string,
+    clubModerator: string,
+    clubDetails: string,
+    clubLocation: string,
     approvalStatus: string,
     hasCapacity: boolean,
     canSubmit: boolean,
     formState: string,
     received: boolean,
-    hasPendingClub: boolean,
-    pendingClubName: string,
     isInClub: boolean,
     currentClubId: string,
     currentClubName: string,
@@ -38,27 +37,26 @@ async function clubApplicationEntry(clubId: string) {
 
     let application: Application = {
         email: studentDetails.email,
-        appliedClubId: clubId,
+        clubId: clubId,
         approvedBy: "",
         hasCapacity: appliedClubDetails.enrolled < appliedClubDetails.capacity,
         received: true,
         processed: false,
         recordId: getlogId(clubEnrollmentSheet),
         formSubmissionDate: new Date(),
+        approvalDate: undefined,
         name: studentDetails.full_name,
         grade: studentHRInfo.grade,
         school: studentHRInfo.school,
         homeroom: studentHRInfo.homeroom,
-        appliedClubName: appliedClubDetails.name,
-        appliedclubModerator: appliedClubDetails.moderator,
-        appliedClubDetails: appliedClubDetails.description,
-        appliedClubLocation: appliedClubDetails.location,
+        clubModerator: appliedClubDetails.moderator,
+        clubName: appliedClubDetails.name,
+        clubDetails: appliedClubDetails.description,
+        clubLocation: appliedClubDetails.location,
         approvalStatus: "pending",
         canSubmit: false,
-        hasPendingClub: false,
         formState: getFormState(),
-        pendingClubName: "",
-        isInClub: (currentClub.id != ""),
+        isInClub: (currentClub != undefined),
         currentClubId: currentClub.id,
         currentClubName: currentClub.name,
         applicationStatus: "pending",
@@ -67,23 +65,36 @@ async function clubApplicationEntry(clubId: string) {
         isModerator: false,
         message: ""
     };
+    if (application.hasCapacity && !application.isInClub) {
+        // these records are getting written contiguously, so this will be a problem if the columns are moved.
+        // this can be updated to use 4 column indexes and 4 separate writes to be less brittle
+        application.message = `Welcome! Your application to join ${application.clubName} has been approved.`;
+    }
+    else {
+        application.message = `Unfortunately your application to join ${application.clubName} has been rejected. The club is full or the moderator has not yet approved your application.`;
+    }
     let applicationLogRecord = [
         application.recordId,
         application.formSubmissionDate,
         application.formSubmissionDate.getFullYear(),
         application.processed,
         application.approvalStatus,
+        application.approvalDate,
+        application.approvedBy,
         application.email,
         application.name,
         application.grade,
         application.school,
         application.homeroom,
-        application.appliedClubId,
-        application.appliedClubName,
-        application.hasCapacity
+        application.clubId,
+        application.clubName,
+        application.clubModerator,
+        application.hasCapacity,
+        application.isInClub,
     ];
     clubApplicationSheet.appendRow(applicationLogRecord);
     let applicationStringify = JSON.stringify(application);
+    sendApplicationEmail(application);
     return applicationStringify;
 }
 function getClubInfo(clubId: string) {
@@ -133,30 +144,33 @@ function processReviewedClubApplications(approvedList: Approved[]) {
     let processedApplications = 0;
     clubApplicationValues = clubApplicationSheet.getDataRange().getValues();
     let clubApplicationValuesAsObjArray = ValuesToArrayOfObjects(clubApplicationValues);
-    // approved is an array of objects.
-    // for each of the objects in the array, find the record in the club application sheet
-    // and update the record with the approver's email and approval status
+    // get index of the approval status from the header row of the club application sheet.
     let colIndex = clubApplicationValues[0].indexOf("approvalStatus");
+    // initialize the row index variable which will hold the value of the row index of the club application sheet.
     let rowIndex: number;
+    // iterate through the approved list and update associated records in the club application sheet.
     approvedList.forEach(applicationRecord => {
+        // return the index of the row that contains the email of the current application record.
         rowIndex = clubApplicationValuesAsObjArray.findIndex((record: Application) => {
             return record.recordId == applicationRecord.recordId;
         });
-        // sheet row number starts at 1, so add 1 to rowIndex and colIndex
-        // missing header row, so add 1 to rowIndex
+        // Google Sheets rows and columns start their index at 1, findIndex starts at 0.
+        // Add 1 to account for the difference in indexing
+        // Add 1 to the row index to account for the header row.
+        // Get the range to be updated.
         let updateRange = clubApplicationSheet.getRange(rowIndex + 2, colIndex, 1, 4);
+        let emailTemplateRecordValues: { message?: any; clubName?: any; };
         if (rowIndex > 0) { // if the record was found
-            let emailTemplateRecordValues;
+            emailTemplateRecordValues = clubApplicationValuesAsObjArray[rowIndex];
             if (applicationRecord.approvalStatus == "approved") {
-                emailTemplateRecordValues = clubApplicationValuesAsObjArray[rowIndex];
                 // these records are getting written contiguously, so this will be a problem if the columns are moved.
                 // this can be updated to use 4 column indexes and 4 separate writes to be less brittle
                 updateRange.setValues([[true, "approved", processingDate, userProcessing]]);
-                emailTemplateRecordValues.message = `Your application to join ${emailTemplateRecordValues.appliedClubName} has been approved.`;
+                emailTemplateRecordValues.message = `Your application to join ${emailTemplateRecordValues.clubName} has been approved.`;
             }
             else {
                 updateRange.setValues([[true, "rejected", processingDate, userProcessing]]);
-                emailTemplateRecordValues.message = `Your application to join ${emailTemplateRecordValues.appliedClubName} has been rejected.`;
+                emailTemplateRecordValues.message = `Your application to join ${emailTemplateRecordValues.clubName} has been rejected.`;
             }
             processedApplications++;
             sendApplicationEmail(emailTemplateRecordValues);
