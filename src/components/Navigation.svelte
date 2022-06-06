@@ -76,10 +76,7 @@
     class="absolute inset-y-0 right-3 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
   >
     {#if userEmail && userPhoto !== undefined}
-      <div
-        in:fade={{ duration: 1000 }}
-        class="rounded-full py-1 px-6 bg-blue-700 text-sm text-gray-300 border border-gray-300"
-      >
+      <div class="rounded-full py-1 px-6 bg-blue-700 text-sm text-gray-300 border border-gray-300">
         {userEmail.slice(0, userEmail.indexOf("@"))}
       </div>
       <img

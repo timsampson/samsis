@@ -1,12 +1,7 @@
 <script>
-  // import ClubsAdminTable from "../components/ClubApprovalList.svelte";
-  import Button from "../shared/Button.svelte";
-  // import Radio from "../components/RadioAdmin.svelte";
-  import { onMount } from "svelte";
-  import { fly } from "svelte/transition";
   import { fade } from "svelte/transition";
-  import { slide } from "svelte/transition";
-  import { quintOut } from "svelte/easing";
+  import Button from "../shared/Button.svelte";
+  import { onMount } from "svelte";
   import RadioAdmin from "../components/RadioAdmin.svelte";
   let selectedRecords = [];
   let submitted = false;
@@ -15,7 +10,7 @@
 
   let buttonID = "submitApproval-btn";
   let button_class =
-    "inline-flex items-center my-4 py-2 px-4 font-bold text-white transition-colors duration-150 rounded-lg focus:shadow-outline disabled:opacity-50";
+    "inline-flex items-center my-4 py-2 px-4 font-bold text-white rounded-lg focus:shadow-outline disabled:opacity-50";
   let recordsForApproval = [];
   let approvalElementList = [];
   let approvedArr = [];
@@ -84,13 +79,9 @@
 <form on:submit|preventDefault={handleSubmit} id="clubAdmin">
   <RadioAdmin bind:approvalType />
   {#if recordsForApproval.length > 0}
-    <ul transition:fly|local class="p-2 mx-auto" required>
+    <ul in:fade|local={{ duration: 1000 }} class="p-2 mx-auto" required>
       {#each recordsForApproval as record, i (record.recordId)}
-        <li
-          id={record.recordId}
-          class="border-b-2 border-blue-200 pt-2 pb-1"
-          transition:slide|local={{ delay: 250, duration: 300, easing: quintOut }}
-        >
+        <li id={record.recordId} class="border-b-2 border-blue-200 pt-2 pb-1">
           <input
             id={i + "approve"}
             type="checkbox"
@@ -117,11 +108,11 @@
   <Button {buttonID} {button_class} {submitted}>Submit</Button>
 </form>
 
-<h2 transition:fade|local class="m-2 text-blue-800 text-lg">
+<h2 class="m-2 text-blue-800 text-lg">
   {selectedRecords.length <= 0 ? "No Records Selected" : "Selected Records"}
 </h2>
 {#if selectedRecords.length > 0}
-  <ul transition:fade|local>
+  <ul in:fade|local={{ duration: 1000 }}>
     {#each selectedRecords as record}
       <li
         class="my-2"

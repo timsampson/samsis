@@ -1,6 +1,4 @@
 <script>
-  import { slide } from "svelte/transition";
-  import { quintOut } from "svelte/easing";
   export let approvalRecords = [];
 </script>
 
@@ -9,12 +7,7 @@
   {#if approvalRecords.length > 0}
     <ul class="p-2 mx-auto">
       {#each approvalRecords as record, i (record.recordId)}
-        <li
-          id={record.recordId}
-          name="approvalRecord"
-          class="border-b-2 border-blue-200 pt-2 pb-1"
-          transition:slide|local={{ delay: 250, duration: 300, easing: quintOut }}
-        >
+        <li id={record.recordId} name="approvalRecord" class="border-b-2 border-blue-200 pt-2 pb-1">
           <input
             id={i + "approve"}
             type="checkbox"

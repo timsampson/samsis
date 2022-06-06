@@ -7,7 +7,7 @@
 <div>
   {#if clubList.length > 0}
     <table
-      in:fade={{ duration: 1000 }}
+      in:fade|local={{ duration: 1000 }}
       class="table table-auto mx-auto text-sm border-blue-800 border-4"
     >
       <thead>
@@ -23,7 +23,7 @@
             <td class="mx-2 px-2 border border-blue-800">{club.name}</td>
             <td class="px-2 border border-blue-800 text-center">{club.enrolled}</td>
             <td class="px-2 border border-blue-800 text-center">{club.capacity}</td>
-            <td class="mx-2  px-2 border border-blue-800">{club.description}</td>
+            <td class="mx-2 px-2 border border-blue-800">{club.description}</td>
             <td class="mx-2 px-2 border border-blue-800">{club.moderator}</td>
           </tr>
         {/each}
