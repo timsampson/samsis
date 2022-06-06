@@ -1,8 +1,9 @@
-// clubs
 type Club = {
+    isInClub: boolean;
+    id: number,
     formSubmissionDate: any;
     level: string,
-    id: string,
+    clubId: number,
     active: boolean,
     year: string,
     name: string,
@@ -23,12 +24,12 @@ function sanitize(element: string | number) {
     return element.toString().trim().toLowerCase();
 }
 
-function getCurrentClub() {
-    let currentClub = {} as Club;
+function getCurrentClubRecord() {
+    let currentClubRecord = {} as Club;
     clubEnrollmentValues = clubEnrollmentSheet.getDataRange().getValues();
     clubEnrollmentValuesAsObjArray = ValuesToArrayOfObjects(clubEnrollmentValues);
-    currentClub = clubEnrollmentValuesAsObjArray.find((clubRecord) => clubRecord.email == getUserEmail());
-    return currentClub;
+    currentClubRecord = clubEnrollmentValuesAsObjArray.find((clubRecord) => clubRecord.email == getUserEmail());
+    return currentClubRecord;
 }
 function getClubsFilteredByLevel() {
     if (isTeacher()) {

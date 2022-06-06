@@ -1,17 +1,16 @@
 type Application = {
     recordId: string,
     formSubmissionDate: Date,
-    approvalDate: Date,
-    approvedBy: string,
+    reviewedDate: Date,
+    reviewedBy: string,
     email: string,
     name: string,
     grade: string,
     school: string,
     homeroom: string,
-    clubId: string,
+    clubId: number,
     clubName: string,
     clubModerator: string,
-    clubDetails: string,
     clubLocation: string,
     approvalStatus: string,
     hasCapacity: boolean,
@@ -19,7 +18,7 @@ type Application = {
     formState: string,
     received: boolean,
     isInClub: boolean,
-    currentClubId: string,
+    currentClubId: number,
     currentClubName: string,
     applicationStatus: string,
     processed: boolean,
@@ -27,54 +26,62 @@ type Application = {
     isStudent: boolean,
     isModerator: boolean,
     message: string,
-
+    description: string,
 }
-async function clubApplicationSubmission(clubId: string) {
+async function clubApplicationSubmission(clubId: number) {
     let studentDetails: Student = await getStudentInfo()
     let appliedClubDetails: Club = await getClubInfo(clubId);
     let studentHRInfo: Student = await getStudentHRInfo();
-    let currentClub: Club = getCurrentClub();
-
+    let currentClubRecord: Club = getCurrentClubRecord();
+    if (currentClubRecord == null) {
+        currentClubRecord = {} as Club;
+        currentClubRecord.clubId;
+        currentClubRecord.name;
+        currentClubRecord.isInClub = false;
+    } else {
+        currentClubRecord.isInClub = true;
+    }
     let application: Application = {
         email: studentDetails.email,
         clubId: clubId,
-        approvedBy: "",
+        reviewedBy: "",
         hasCapacity: appliedClubDetails.enrolled < appliedClubDetails.capacity,
         received: true,
         processed: false,
         recordId: getlogId(clubEnrollmentSheet),
         formSubmissionDate: new Date(),
-        approvalDate: undefined,
+        reviewedDate: new Date(),
         name: studentDetails.full_name,
         grade: studentHRInfo.grade,
         school: studentHRInfo.school,
         homeroom: studentHRInfo.homeroom,
         clubModerator: appliedClubDetails.moderator,
         clubName: appliedClubDetails.name,
-        clubDetails: appliedClubDetails.description,
+        description: appliedClubDetails.description,
         clubLocation: appliedClubDetails.location,
         approvalStatus: "pending",
         canSubmit: undefined,
         formState: getFormState(),
-        isInClub: (currentClub != undefined),
-        currentClubId: currentClub.id,
-        currentClubName: currentClub.name,
+        isInClub: (currentClubRecord != undefined),
+        currentClubId: currentClubRecord.clubId,
+        currentClubName: currentClubRecord.name,
         applicationStatus: "pending",
         user_role: "",
         isStudent: (studentDetails.email != undefined),
         isModerator: false,
-        message: ""
+        message: "",
     };
     if (application.hasCapacity && !application.isInClub) {
         // these records are getting written contiguously, so this will be a problem if the columns are moved.
         // this can be updated to use 4 column indexes and 4 separate writes to be less brittle
         application.message = `Welcome! Your application to join ${application.clubName} has been approved.`;
         application.approvalStatus = "approved";
-        application.approvalDate = new Date();
-        application.approvedBy = "club_moderator";
+        application.reviewedBy = "Automatic Review";
     }
     else {
         application.message = `Unfortunately your application to join ${application.clubName} has been rejected. The club is full or the moderator has not yet approved your application.`;
+        application.approvalStatus = "pending";
+        application.reviewedBy = "Automatic Review";
     }
     let applicationLogRecord = [
         application.recordId,
@@ -82,8 +89,8 @@ async function clubApplicationSubmission(clubId: string) {
         application.formSubmissionDate.getFullYear(),
         application.processed,
         application.approvalStatus,
-        application.approvalDate,
-        application.approvedBy,
+        application.reviewedDate,
+        application.reviewedBy,
         application.email,
         application.name,
         application.grade,
@@ -92,6 +99,7 @@ async function clubApplicationSubmission(clubId: string) {
         application.clubId,
         application.clubName,
         application.clubModerator,
+        application.description,
         application.hasCapacity,
         application.isInClub,
     ];
@@ -103,7 +111,7 @@ async function clubApplicationSubmission(clubId: string) {
     sendApplicationEmail(application);
     return applicationStringify;
 }
-function getClubInfo(clubId: string) {
+function getClubInfo(clubId: number) {
     clubsValues = clubsSheet.getDataRange().getValues();
     clubsValuesAsObjArray = ValuesToArrayOfObjects(clubsValues);
     let clubInfo = clubsValuesAsObjArray.find((club: Club) => club.id == clubId);
@@ -130,26 +138,26 @@ function processReviewedClubApplications(approvedList: Approved[]) {
         // Add 1 to the row index to account for the header row.
         // Get the range to be updated.
         let updateRange = clubApplicationSheet.getRange(rowIndex + 2, colIndex, 1, 4);
-        let emailTemplateRecordValues: Application;
+        let recordsForEmail: Application;
         if (rowIndex > 0) { // if the record was found
-            emailTemplateRecordValues = clubApplicationValuesAsObjArray[rowIndex] as Application;
+            recordsForEmail = clubApplicationValuesAsObjArray[rowIndex] as Application;
             if (applicationRecord.approvalStatus == "approved") {
                 // these records are getting written contiguously, so this will be a problem if the columns are moved.
                 // this can be updated to use 4 column indexes and 4 separate writes to be less brittle
                 updateRange.setValues([[true, "approved", processingDate, userProcessing]]);
-                emailTemplateRecordValues.message = `Your application to join ${emailTemplateRecordValues.clubName} has been approved.`;
-                updateEnrollmentEntry(emailTemplateRecordValues);
+                recordsForEmail.message = `Your application to join ${recordsForEmail.clubName} has been approved.`;
+                updateEnrollmentEntry(recordsForEmail);
             }
             else {
                 updateRange.setValues([[true, "rejected", processingDate, userProcessing]]);
-                emailTemplateRecordValues.message = `Your application to join ${emailTemplateRecordValues.clubName} has been rejected.`;
+                recordsForEmail.message = `Your application to join ${recordsForEmail.clubName} has been rejected.`;
             }
+            recordsForEmail.reviewedDate = processingDate;
             processedApplications++;
-            sendApplicationEmail(emailTemplateRecordValues);
+            sendApplicationEmail(recordsForEmail);
         }
         rowIndex = 0;
     });
-    Logger.log(`Number of processsed Records: ${processedApplications}`);
     return `Number of processsed Records: ${processedApplications}`;
 }
 function updateEnrollmentEntry(application: Application) {
@@ -165,11 +173,11 @@ function updateEnrollmentEntry(application: Application) {
         // add one to account for header row
         clubEnrollmentSheet.deleteRow(enrollmentRecordIndex + 2);
     }
-    // recordId	approvalDate	year	isApproved	email	name	grade	school	homeroom	 clubId	 clubName	clubModerator
+    // recordId	reviewedDate	year	isApproved	email	name	grade	school	homeroom	 clubId	 clubName	clubModerator description
     let enrollmentRecord = [
         application.recordId,
-        application.approvalDate,
-        application.approvalDate.getFullYear(),
+        application.reviewedDate,
+        application.reviewedDate.getFullYear(),
         true,
         application.email,
         application.name,
@@ -179,6 +187,8 @@ function updateEnrollmentEntry(application: Application) {
         application.clubId,
         application.clubName,
         application.clubModerator,
+        application.description
+
     ];
     clubEnrollmentSheet.appendRow(enrollmentRecord);
 }
@@ -218,3 +228,7 @@ function testPRCA() {
     let application = processReviewedClubApplications(approvedList);
     Logger.log(application);
 }
+function testApplication() {
+    clubApplicationSubmission(4);
+}
+
