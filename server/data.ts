@@ -57,7 +57,7 @@ function getUserPhoto() {
     let photo = AdminDirectory.Users.Photos.get(userEmail).photoData;
     return Utilities.base64EncodeWebSafe(photo).replace(/_/g, '/').replace(/-/g, '+');
 }// club sheet value for sheet status
-const formStatusSheet = schoolSpreadsheet.getSheetByName("clubform_status");
+const formStatusSheet = schoolSpreadsheet.getSheetByName("club_form_state");
 let formState = formStatusSheet.getRange(2, 1).getValue();
 function getFormState() {
     formState = formStatusSheet.getRange(2, 1).getValue();

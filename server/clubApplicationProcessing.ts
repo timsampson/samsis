@@ -14,13 +14,11 @@ type Application = {
     clubLocation: string,
     reviewStatus: string,
     hasCapacity: boolean,
-    canSubmit: boolean,
     formState: string,
     received: boolean,
     isInClub: boolean,
     currentClubId: number,
     currentClubName: string,
-    applicationStatus: string,
     processed: boolean,
     user_role: string,
     isStudent: boolean,
@@ -33,14 +31,9 @@ async function clubApplicationSubmission(clubId: number) {
     let appliedClubDetails: Club = await getClubInfo(clubId);
     let studentHRInfo: Student = await getStudentHRInfo();
     let currentClubRecord: Club = getCurrentClubRecord();
-    if (currentClubRecord == null) {
-        currentClubRecord = {} as Club;
-        currentClubRecord.clubId;
-        currentClubRecord.name;
-        currentClubRecord.isInClub = false;
-    } else {
-        currentClubRecord.isInClub = true;
-    }
+    let formState = getFormState();
+    Logger.log(`currentclubrecord is: ${JSON.stringify(currentClubRecord)}`);
+    Logger.log(` currentclubrecord.isInClub is: ${currentClubRecord.isInClub}`);
     let application: Application = {
         email: studentDetails.email,
         clubId: clubId,
@@ -60,23 +53,31 @@ async function clubApplicationSubmission(clubId: number) {
         description: appliedClubDetails.description,
         clubLocation: appliedClubDetails.location,
         reviewStatus: "pending",
-        canSubmit: undefined,
         formState: getFormState(),
-        isInClub: (currentClubRecord != undefined),
+        isInClub: currentClubRecord.isInClub,
         currentClubId: currentClubRecord.clubId,
         currentClubName: currentClubRecord.name,
-        applicationStatus: "pending",
         user_role: "",
         isStudent: (studentDetails.email != undefined),
         isModerator: false,
         message: "",
     };
-    if (application.hasCapacity && !application.isInClub) {
+    if (formState == "closed" || formState == "view") {
+        // these records are getting written contiguously, so this will be a problem if the columns are moved.
+        // this can be updated to use 4 column indexes and 4 separate writes to be less brittle
+        application.message = `The club form is not open for submissions at this time.`;
+        application.reviewStatus = "rejected";
+        application.reviewedBy = "Automatic Review";
+        let applicationStringify = JSON.stringify(application);
+        return applicationStringify;
+    } else if
+        (application.hasCapacity && !application.isInClub && formState == "submit") {
         // these records are getting written contiguously, so this will be a problem if the columns are moved.
         // this can be updated to use 4 column indexes and 4 separate writes to be less brittle
         application.message = `Welcome! Your application to join ${application.clubName} has been approved.`;
         application.reviewStatus = "approved";
         application.reviewedBy = "Automatic Review";
+        application.processed = true;
     }
     else {
         application.message = `Unfortunately your application to join ${application.clubName} is still pending. The club is full or the moderator has not yet approved your application.`;

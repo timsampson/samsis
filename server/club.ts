@@ -29,6 +29,14 @@ function getCurrentClubRecord() {
     clubEnrollmentValues = clubEnrollmentSheet.getDataRange().getValues();
     clubEnrollmentValuesAsObjArray = valuesToArrayOfObjects(clubEnrollmentValues);
     currentClubRecord = clubEnrollmentValuesAsObjArray.find((clubRecord) => clubRecord.email == getUserEmail());
+    if (currentClubRecord == null || currentClubRecord == undefined) {
+        currentClubRecord = {} as Club;
+        currentClubRecord.clubId;
+        currentClubRecord.name;
+        currentClubRecord.isInClub = false;
+    } else {
+        currentClubRecord.isInClub = true;
+    }
     return currentClubRecord;
 }
 function getCurrentClubRecordIndex(applicationEmail) {
