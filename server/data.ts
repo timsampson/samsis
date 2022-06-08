@@ -25,7 +25,7 @@ let hrStudentSheet = schoolSpreadsheet.getSheetByName("hr_st_join");
 let hrStudentValues: any[][] | [any, ...any[]];
 let hrStudentValuesAsObjArray: any[];
 
-function ValuesToArrayOfObjects(sheetValues: any[][] | [any, ...any[]]) {
+function valuesToArrayOfObjects(sheetValues: any[][] | [any, ...any[]]) {
     // Use the spread operator to split the 2d array into headers and values
     const [headers, ...records] = sheetValues;
 

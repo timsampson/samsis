@@ -16,7 +16,7 @@ type Club = {
 
 function getClubRecords() {
     clubsValues = clubsSheet.getDataRange().getValues();
-    clubsValuesAsObjArray = ValuesToArrayOfObjects(clubsValues);
+    clubsValuesAsObjArray = valuesToArrayOfObjects(clubsValues);
     return clubsValuesAsObjArray;
 }
 
@@ -27,9 +27,16 @@ function sanitize(element: string | number) {
 function getCurrentClubRecord() {
     let currentClubRecord = {} as Club;
     clubEnrollmentValues = clubEnrollmentSheet.getDataRange().getValues();
-    clubEnrollmentValuesAsObjArray = ValuesToArrayOfObjects(clubEnrollmentValues);
+    clubEnrollmentValuesAsObjArray = valuesToArrayOfObjects(clubEnrollmentValues);
     currentClubRecord = clubEnrollmentValuesAsObjArray.find((clubRecord) => clubRecord.email == getUserEmail());
     return currentClubRecord;
+}
+function getCurrentClubRecordIndex(applicationEmail) {
+    let currentClubRecordIndex: number;
+    clubEnrollmentValues = clubEnrollmentSheet.getDataRange().getValues();
+    clubEnrollmentValuesAsObjArray = valuesToArrayOfObjects(clubEnrollmentValues);
+    currentClubRecordIndex = clubEnrollmentValuesAsObjArray.findIndex((clubRecord) => clubRecord.email == applicationEmail);
+    return currentClubRecordIndex;
 }
 function getClubsFilteredByLevel() {
     if (isTeacher()) {

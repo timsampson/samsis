@@ -31,14 +31,14 @@ function getUserEmail() {
 }
 function getStudentInfo() {
     studentValues = studentSheet.getDataRange().getValues();
-    studentValuesAsObjArray = ValuesToArrayOfObjects(studentValues);
+    studentValuesAsObjArray = valuesToArrayOfObjects(studentValues);
     let studentInfo = studentValuesAsObjArray.find((student: Student) => student.email == getUserEmail());
     return studentInfo;
 }
 
 function getStudentHRInfo() {
     hrStudentValues = hrStudentSheet.getDataRange().getValues();
-    hrStudentValuesAsObjArray = ValuesToArrayOfObjects(hrStudentValues);
+    hrStudentValuesAsObjArray = valuesToArrayOfObjects(hrStudentValues);
     const studentHRInfo = hrStudentValuesAsObjArray.find((student) => student.email == getUserEmail());
     return studentHRInfo;
 }

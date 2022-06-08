@@ -47,7 +47,7 @@
           let approvalObj = {
             recordId: recordsForApproval[i].recordId,
             email: recordsForApproval[i].email,
-            approvalStatus: approvalType,
+            reviewStatus: approvalType,
           };
           approvedArr.push(approvalObj);
           approvalElementList[i].checked = false;

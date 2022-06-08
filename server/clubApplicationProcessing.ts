@@ -12,7 +12,7 @@ type Application = {
     clubName: string,
     clubModerator: string,
     clubLocation: string,
-    approvalStatus: string,
+    reviewStatus: string,
     hasCapacity: boolean,
     canSubmit: boolean,
     formState: string,
@@ -59,7 +59,7 @@ async function clubApplicationSubmission(clubId: number) {
         clubName: appliedClubDetails.name,
         description: appliedClubDetails.description,
         clubLocation: appliedClubDetails.location,
-        approvalStatus: "pending",
+        reviewStatus: "pending",
         canSubmit: undefined,
         formState: getFormState(),
         isInClub: (currentClubRecord != undefined),
@@ -75,12 +75,12 @@ async function clubApplicationSubmission(clubId: number) {
         // these records are getting written contiguously, so this will be a problem if the columns are moved.
         // this can be updated to use 4 column indexes and 4 separate writes to be less brittle
         application.message = `Welcome! Your application to join ${application.clubName} has been approved.`;
-        application.approvalStatus = "approved";
+        application.reviewStatus = "approved";
         application.reviewedBy = "Automatic Review";
     }
     else {
         application.message = `Unfortunately your application to join ${application.clubName} has been rejected. The club is full or the moderator has not yet approved your application.`;
-        application.approvalStatus = "pending";
+        application.reviewStatus = "pending";
         application.reviewedBy = "Automatic Review";
     }
     let applicationLogRecord = [
@@ -88,7 +88,7 @@ async function clubApplicationSubmission(clubId: number) {
         application.formSubmissionDate,
         application.formSubmissionDate.getFullYear(),
         application.processed,
-        application.approvalStatus,
+        application.reviewStatus,
         application.reviewedDate,
         application.reviewedBy,
         application.email,
@@ -113,7 +113,7 @@ async function clubApplicationSubmission(clubId: number) {
 }
 function getClubInfo(clubId: number) {
     clubsValues = clubsSheet.getDataRange().getValues();
-    clubsValuesAsObjArray = ValuesToArrayOfObjects(clubsValues);
+    clubsValuesAsObjArray = valuesToArrayOfObjects(clubsValues);
     let clubInfo = clubsValuesAsObjArray.find((club: Club) => club.id == clubId);
     return clubInfo;
 }
@@ -122,9 +122,9 @@ function processReviewedClubApplications(approvedList: Approved[]) {
     let processingDate = new Date();
     let processedApplications = 0;
     clubApplicationValues = clubApplicationSheet.getDataRange().getValues();
-    let clubApplicationValuesAsObjArray = ValuesToArrayOfObjects(clubApplicationValues);
+    let clubApplicationValuesAsObjArray = valuesToArrayOfObjects(clubApplicationValues);
     // get index of the approval status from the header row of the club application sheet.
-    let colIndex = clubApplicationValues[0].indexOf("approvalStatus");
+    let colIndex = clubApplicationValues[0].indexOf("reviewStatus");
     // initialize the row index variable which will hold the value of the row index of the club application sheet.
     let rowIndex: number;
     // iterate through the approved list and update associated records in the club application sheet.
@@ -138,23 +138,23 @@ function processReviewedClubApplications(approvedList: Approved[]) {
         // Add 1 to the row index to account for the header row.
         // Get the range to be updated.
         let updateRange = clubApplicationSheet.getRange(rowIndex + 2, colIndex, 1, 4);
-        let recordsForEmail: Application;
+        let recordToProcess: Application;
         if (rowIndex > 0) { // if the record was found
-            recordsForEmail = clubApplicationValuesAsObjArray[rowIndex] as Application;
-            if (applicationRecord.approvalStatus == "approved") {
+            recordToProcess = clubApplicationValuesAsObjArray[rowIndex] as Application;
+            if (applicationRecord.reviewStatus == "approved") {
                 // these records are getting written contiguously, so this will be a problem if the columns are moved.
                 // this can be updated to use 4 column indexes and 4 separate writes to be less brittle
                 updateRange.setValues([[true, "approved", processingDate, userProcessing]]);
-                recordsForEmail.message = `Your application to join ${recordsForEmail.clubName} has been approved.`;
-                updateEnrollmentEntry(recordsForEmail);
+                recordToProcess.message = `Your application to join ${recordToProcess.clubName} has been approved.`;
+                updateEnrollmentEntry(recordToProcess);
             }
             else {
                 updateRange.setValues([[true, "rejected", processingDate, userProcessing]]);
-                recordsForEmail.message = `Your application to join ${recordsForEmail.clubName} has been rejected.`;
+                recordToProcess.message = `Your application to join ${recordToProcess.clubName} has been rejected.`;
             }
-            recordsForEmail.reviewedDate = processingDate;
+            recordToProcess.reviewedDate = processingDate;
             processedApplications++;
-            sendApplicationEmail(recordsForEmail);
+            sendApplicationEmail(recordToProcess);
         }
         rowIndex = 0;
     });
@@ -163,22 +163,17 @@ function processReviewedClubApplications(approvedList: Approved[]) {
 function updateEnrollmentEntry(application: Application) {
     // approved list.id should end up being the enrolled id
     clubEnrollmentValues = clubEnrollmentSheet.getDataRange().getValues();
-    let clubEnrollmentValuesAsObjArray = ValuesToArrayOfObjects(clubEnrollmentValues);
-    let enrollmentRecordIndex = clubEnrollmentValuesAsObjArray.findIndex((record: Application) => {
-        return record.email == application.email;
-    });
-    if (enrollmentRecordIndex > 0) {
-        // https://developers.google.com/apps-script/reference/spreadsheet/sheet#deleterowrowposition
-        // add one because Rows start at "1" and not "0"
-        // add one to account for header row
-        clubEnrollmentSheet.deleteRow(enrollmentRecordIndex + 2);
+    clubEnrollmentValuesAsObjArray = valuesToArrayOfObjects(clubEnrollmentValues);
+    for (let index = clubEnrollmentValuesAsObjArray.length - 1; index > 0; index--) {
+        if (clubEnrollmentValuesAsObjArray[index].email == application.email) {
+            clubEnrollmentSheet.deleteRow(index + 2);
+            clubEnrollmentValuesAsObjArray.splice(index, 1);
+        }
     }
-    // recordId	reviewedDate	year	isApproved	email	name	grade	school	homeroom	 clubId	 clubName	clubModerator description
     let enrollmentRecord = [
         application.recordId,
         application.reviewedDate,
         application.reviewedDate.getFullYear(),
-        true,
         application.email,
         application.name,
         application.grade,
@@ -188,7 +183,6 @@ function updateEnrollmentEntry(application: Application) {
         application.clubName,
         application.clubModerator,
         application.description
-
     ];
     clubEnrollmentSheet.appendRow(enrollmentRecord);
 }
@@ -196,32 +190,32 @@ function updateEnrollmentEntry(application: Application) {
 type Approved = {
     recordId: string,
     email: string,
-    approvalStatus: string,
+    reviewStatus: string,
     processed: boolean
 }
 function testPRCA() {
     let approved1 = {
         recordId: "id202126608",
         email: "tsampson@dishs.tp.edu.tw",
-        approvalStatus: "approved",
+        reviewStatus: "approved",
         processed: true
     };
     let approved2 = {
         recordId: "id202126609",
         email: "scawte@niceschool.edu",
-        approvalStatus: "approved",
+        reviewStatus: "approved",
         processed: true
     };
     let approved3 = {
         recordId: "id202126610",
         email: "scawte@niceschool.edu",
-        approvalStatus: "rejected",
+        reviewStatus: "rejected",
         processed: true
     };
     let approved4 = {
-        recordId: "id202126611",
-        email: "scawte@niceschool.edu",
-        approvalStatus: "approved",
+        recordId: "id202126608",
+        email: "traske@niceschool.edu",
+        reviewStatus: "approved",
         processed: true
     };
     let approvedList = [approved1, approved2, approved3, approved4];
