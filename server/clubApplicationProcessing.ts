@@ -79,7 +79,7 @@ async function clubApplicationSubmission(clubId: number) {
         application.reviewedBy = "Automatic Review";
     }
     else {
-        application.message = `Unfortunately your application to join ${application.clubName} has been rejected. The club is full or the moderator has not yet approved your application.`;
+        application.message = `Unfortunately your application to join ${application.clubName} is still pending. The club is full or the moderator has not yet approved your application.`;
         application.reviewStatus = "pending";
         application.reviewedBy = "Automatic Review";
     }
