@@ -8,7 +8,7 @@
   let approvalType;
   $: console.log(approvalType);
 
-  let buttonID = "submitApproval-btn";
+  let buttonID = "submitAdminApproval-btn";
   let button_class =
     "inline-flex items-center my-4 py-2 px-4 font-bold text-white rounded-lg focus:shadow-outline disabled:opacity-50";
   let recordsForApproval = [];
