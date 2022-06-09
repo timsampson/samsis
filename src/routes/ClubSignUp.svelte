@@ -5,24 +5,25 @@
 
   export let titles = ["Club Name", "Enrolled", "Capacity", "Details", "Moderators"];
   export let clubList = {};
-
+  export let clubState = {};
   onMount(() => {
     google.script.run.withSuccessHandler(displayClubs).getClubsFilteredByLevel();
-    google.script.run.withSuccessHandler(displayCurrentClub).getUserClubState();
+    google.script.run.withSuccessHandler(displayUserClubState).getUserClubState();
   });
   function displayClubs(clubsObjList) {
     clubList = clubsObjList;
     console.table(clubsObjList);
   }
-  function displayCurrentClub(currentClub) {
-    console.log("currentClub");
-    console.table(currentClub);
+  function displayUserClubState(updatedclubState) {
+    clubState = updatedclubState;
+    console.log("clubState");
+    console.table(clubState);
   }
 </script>
 
 <div class="ml-8">
   <h1 class="text-indigo-600 text-3xl font-bold ">Sign Up</h1>
-  <ClubSelectionForm {clubList} />
+  <ClubSelectionForm {clubList} {clubState} />
   <h1 class="text-2xl text-center text-blue-900">
     {#if clubList.length > 0}
       Below are the currently available clubs.

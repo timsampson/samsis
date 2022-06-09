@@ -1,10 +1,16 @@
 <script>
   export let clubList;
+  export let clubState = {};
+  let canSubmit = false;
+  let submitted = false;
+  isFormClosed();
+
   let selected = {
     id: 0,
     name: "",
   };
   function handleSubmit() {
+    submitted = true;
     google.script.run
       .withSuccessHandler(clubSubmissionResponse)
       .clubApplicationSubmission(selected.id);
@@ -13,6 +19,20 @@
     let responseDetails = JSON.parse(response);
     responseDetails.formSubmissionDate = new Date(responseDetails.formSubmissionDate);
     console.table(responseDetails);
+  }
+  function isFormClosed() {
+    if (
+      clubState.formState == "closed" ||
+      clubState == "view" ||
+      submitted == true ||
+      clubState.formState == "" ||
+      clubState.formState == null ||
+      clubState.formState == undefined
+    ) {
+      canSubmit = true;
+    } else {
+      canSubmit = false;
+    }
   }
 </script>
 
@@ -35,6 +55,7 @@
       type="submit"
       class="bg-blue-500 inline-flex items-center my-4 py-2 px-4 font-bold text-white
       hover:bg-blue-700 rounded-lg focus:shadow-outline disabled:opacity-50 disabled:bg-blue-300"
+      disabled={canSubmit}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
