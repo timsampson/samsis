@@ -23,10 +23,12 @@ type Application = {
     user_role: string,
     isStudent: boolean,
     isModerator: boolean,
-    message: string,
+    applicationMessage: string,
     description: string,
 }
 async function clubApplicationSubmission(clubId: number) {
+    let applicationRecordId = getlogId(clubEnrollmentSheet);
+    let applicationFormState = getFormState();
     let studentDetails: Student = await getStudentInfo()
     let appliedClubDetails: Club = await getClubInfo(clubId);
     let studentHRInfo: Student = await getStudentHRInfo();
@@ -41,7 +43,7 @@ async function clubApplicationSubmission(clubId: number) {
         hasCapacity: appliedClubDetails.enrolled < appliedClubDetails.capacity,
         received: true,
         processed: false,
-        recordId: getlogId(clubEnrollmentSheet),
+        recordId: applicationRecordId,
         formSubmissionDate: new Date(),
         reviewedDate: new Date(),
         name: studentDetails.full_name,
@@ -53,19 +55,19 @@ async function clubApplicationSubmission(clubId: number) {
         description: appliedClubDetails.description,
         clubLocation: appliedClubDetails.location,
         reviewStatus: "pending",
-        formState: getFormState(),
+        formState: applicationFormState,
         isInClub: currentClubRecord.isInClub,
         currentClubId: currentClubRecord.clubId,
         currentClubName: currentClubRecord.name,
         user_role: "",
         isStudent: (studentDetails.email != undefined),
         isModerator: false,
-        message: "",
+        applicationMessage: "",
     };
     if (formState == "closed" || formState == "view") {
         // these records are getting written contiguously, so this will be a problem if the columns are moved.
         // this can be updated to use 4 column indexes and 4 separate writes to be less brittle
-        application.message = `The club form is not open for submissions at this time.`;
+        application.applicationMessage = `The club form is not open for submissions at this time.`;
         application.reviewStatus = "rejected";
         application.reviewedBy = "Automatic Review";
         let applicationStringify = JSON.stringify(application);
@@ -74,13 +76,13 @@ async function clubApplicationSubmission(clubId: number) {
         (application.hasCapacity && !application.isInClub && formState == "submit") {
         // these records are getting written contiguously, so this will be a problem if the columns are moved.
         // this can be updated to use 4 column indexes and 4 separate writes to be less brittle
-        application.message = `Welcome! Your application to join ${application.clubName} has been approved.`;
+        application.applicationMessage = `Welcome! Your application to join ${application.clubName} has been approved.`;
         application.reviewStatus = "approved";
         application.reviewedBy = "Automatic Review";
         application.processed = true;
     }
     else {
-        application.message = `Unfortunately your application to join ${application.clubName} is still pending. The club is full or the moderator has not yet approved your application.`;
+        application.applicationMessage = `Unfortunately your application to join ${application.clubName} is still pending. The club is full or the moderator has not yet approved your application.`;
         application.reviewStatus = "pending";
         application.reviewedBy = "Automatic Review";
     }
@@ -146,12 +148,12 @@ function processReviewedClubApplications(approvedList: Approved[]) {
                 // these records are getting written contiguously, so this will be a problem if the columns are moved.
                 // this can be updated to use 4 column indexes and 4 separate writes to be less brittle
                 updateRange.setValues([[true, "approved", processingDate, userProcessing]]);
-                recordToProcess.message = `Your application to join ${recordToProcess.clubName} has been approved.`;
+                recordToProcess.applicationMessage = `Your application to join ${recordToProcess.clubName} has been approved.`;
                 updateEnrollmentEntry(recordToProcess);
             }
             else {
                 updateRange.setValues([[true, "rejected", processingDate, userProcessing]]);
-                recordToProcess.message = `Your application to join ${recordToProcess.clubName} has been rejected.`;
+                recordToProcess.applicationMessage = `Your application to join ${recordToProcess.clubName} has been rejected.`;
             }
             recordToProcess.reviewedDate = processingDate;
             processedApplications++;
@@ -187,7 +189,6 @@ function updateEnrollmentEntry(application: Application) {
     ];
     clubEnrollmentSheet.appendRow(enrollmentRecord);
 }
-
 type Approved = {
     recordId: string,
     email: string,

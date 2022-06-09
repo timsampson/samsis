@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   export let clubList;
   export let clubState = {};
-  let formIsDisabled = false;
+  let formIsClosed = true;
   let submitted = false;
   onMount(() => {
     isFormClosed();
@@ -33,9 +33,9 @@
       clubState.formState == null ||
       clubState.formState == undefined
     ) {
-      formIsDisabled = true;
+      formIsClosed = true;
     } else {
-      formIsDisabled = false;
+      formIsClosed = false;
     }
   }
 </script>
@@ -64,7 +64,7 @@
       type="submit"
       class="bg-blue-500 inline-flex items-center my-4 py-2 px-4 font-bold text-white
       hover:bg-blue-700 rounded-lg focus:shadow-outline disabled:opacity-50 disabled:bg-blue-300"
-      disabled={formIsDisabled}
+      disabled={formIsClosed}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
