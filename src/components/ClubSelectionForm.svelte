@@ -49,7 +49,7 @@
         required
         on:change={() => isFormClosed()}
         bind:value={selected}
-        class="w-full border rounded-lg focus:shadow-outline"
+        class="w-full pl-1 py-1 border rounded-lg focus:shadow-outline"
       >
         <option value={() => (selected.name = "")} />
         {#each clubList as club}
