@@ -8,17 +8,16 @@
 
   onMount(() => {
     google.script.run.withSuccessHandler(displayClubs).getClubsFilteredByLevel();
-    // google.script.run.withSuccessHandler(displayCurrentClub).getCurrentClub();
+    google.script.run.withSuccessHandler(displayCurrentClub).getUserClubState();
   });
   function displayClubs(clubsObjList) {
     clubList = clubsObjList;
     console.table(clubsObjList);
   }
-  // function displayCurrentClub(currentClubJSON) {
-  //   let currentClub = JSON.parse(currentClubJSON);
-  //   currentClub.formSubmissionDate = new Date(currentClub.formSubmissionDate);
-  //   console.table(currentClub);
-  // }
+  function displayCurrentClub(currentClub) {
+    console.log("currentClub");
+    console.table(currentClub);
+  }
 </script>
 
 <div class="ml-8">

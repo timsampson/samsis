@@ -1,5 +1,4 @@
 type Club = {
-    isInClub: boolean;
     id: number,
     formSubmissionDate: any;
     level: string,
@@ -12,6 +11,24 @@ type Club = {
     moderator: string,
     description: string,
     location: string,
+    isInClub: boolean;
+
+};
+type ClubEnrollment = {
+    // recordId	approvalDate	year	email	name	grade	school	homeroom	 clubId	 clubName	clubModerator	description
+    recordId: number,
+    approvalDate: any,
+    year: string,
+    email: string,
+    name: string,
+    grade: string,
+    school: string,
+    homeroom: string,
+    clubId: number,
+    clubName: string,
+    clubModerator: string,
+    description: string,
+    isInClub: boolean;
 };
 
 function getClubRecords() {
@@ -25,18 +42,18 @@ function sanitize(element: string | number) {
 }
 
 function getCurrentClubRecord() {
-    let currentClubRecord = {} as Club;
-    clubEnrollmentValues = clubEnrollmentSheet.getDataRange().getValues();
-    clubEnrollmentValuesAsObjArray = valuesToArrayOfObjects(clubEnrollmentValues);
-    currentClubRecord = clubEnrollmentValuesAsObjArray.find((clubRecord) => clubRecord.email == getUserEmail());
-    if (currentClubRecord == null || currentClubRecord == undefined) {
-        currentClubRecord = {} as Club;
+    let currentClubRecord = {} as ClubEnrollment;
+    clubEnrollmentValuesAsObjArray = valuesToArrayOfObjects(clubEnrollmentSheet.getDataRange().getValues());
+    let clubRecord = clubEnrollmentValuesAsObjArray.find((clubRecord) => clubRecord.email == getUserEmail());
+    if (clubRecord == null || clubRecord == undefined) {
         currentClubRecord.clubId;
-        currentClubRecord.name;
+        currentClubRecord.clubName;
         currentClubRecord.isInClub = false;
-    } else {
-        currentClubRecord.isInClub = true;
     }
+    currentClubRecord.clubId = clubRecord.clubId;
+    currentClubRecord.clubName = clubRecord.clubName;
+    currentClubRecord.isInClub = true;
+    Logger.log(JSON.stringify(currentClubRecord));
     return currentClubRecord;
 }
 function getCurrentClubRecordIndex(applicationEmail) {
@@ -74,4 +91,25 @@ function getClubsFilteredByLevel() {
         });
         return clubsByLevel;
     }
+}
+async function getUserClubState() {
+    let studentDetails = await getStudentInfo();
+    let studentHRInfo = await getStudentHRInfo();
+    let currentClubRecord = getCurrentClubRecord();
+    let userClubState = {
+        email: studentDetails.email,
+        name: studentDetails.full_name,
+        grade: studentHRInfo.grade,
+        school: studentHRInfo.school,
+        homeroom: studentHRInfo.homeroom,
+        formState: getFormState(),
+        isInClub: currentClubRecord.isInClub,
+        currentClubId: currentClubRecord.clubId,
+        currentClubName: currentClubRecord.clubName,
+        user_role: "",
+        isStudent: (studentDetails.email != undefined),
+        isModerator: false,
+        clubMessage: "",
+    };
+    return userClubState;
 }

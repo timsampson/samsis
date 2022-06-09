@@ -30,7 +30,7 @@ async function clubApplicationSubmission(clubId: number) {
     let studentDetails: Student = await getStudentInfo()
     let appliedClubDetails: Club = await getClubInfo(clubId);
     let studentHRInfo: Student = await getStudentHRInfo();
-    let currentClubRecord: Club = getCurrentClubRecord();
+    let currentClubRecord: ClubEnrollment = getCurrentClubRecord();
     let formState = getFormState();
     Logger.log(`currentclubrecord is: ${JSON.stringify(currentClubRecord)}`);
     Logger.log(` currentclubrecord.isInClub is: ${currentClubRecord.isInClub}`);
