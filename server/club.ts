@@ -11,11 +11,8 @@ type Club = {
     moderator: string,
     description: string,
     location: string,
-    isInClub: boolean;
-
 };
 type ClubEnrollment = {
-    // recordId	approvalDate	year	email	name	grade	school	homeroom	 clubId	 clubName	clubModerator	description
     recordId: number,
     approvalDate: any,
     year: string,
@@ -30,17 +27,14 @@ type ClubEnrollment = {
     description: string,
     isInClub: boolean;
 };
-
 function getClubRecords() {
     clubsValues = clubsSheet.getDataRange().getValues();
     clubsValuesAsObjArray = valuesToArrayOfObjects(clubsValues);
     return clubsValuesAsObjArray;
 }
-
 function sanitize(element: string | number) {
     return element.toString().trim().toLowerCase();
 }
-
 function getCurrentClubRecord() {
     let currentClubRecord = {} as ClubEnrollment;
     clubEnrollmentValuesAsObjArray = valuesToArrayOfObjects(clubEnrollmentSheet.getDataRange().getValues());
