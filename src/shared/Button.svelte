@@ -13,6 +13,7 @@
   class:hover:bg-green-700={submitted}
   class:bg-blue-500={!submitted}
   class:hover:bg-blue-700={!submitted}
+  disabled={submitted}
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"
