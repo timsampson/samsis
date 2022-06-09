@@ -1,9 +1,12 @@
 <script>
+  import { onMount } from "svelte";
   export let clubList;
   export let clubState = {};
-  let canSubmit = false;
+  let formIsDisabled = false;
   let submitted = false;
-  isFormClosed();
+  onMount(() => {
+    isFormClosed();
+  });
 
   let selected = {
     id: 0,
@@ -11,6 +14,7 @@
   };
   function handleSubmit() {
     submitted = true;
+    isFormClosed();
     google.script.run
       .withSuccessHandler(clubSubmissionResponse)
       .clubApplicationSubmission(selected.id);
@@ -29,9 +33,9 @@
       clubState.formState == null ||
       clubState.formState == undefined
     ) {
-      canSubmit = true;
+      formIsDisabled = true;
     } else {
-      canSubmit = false;
+      formIsDisabled = false;
     }
   }
 </script>
@@ -41,7 +45,12 @@
   <form on:submit|preventDefault={handleSubmit}>
     <div class="w-80">
       <!-- svelte-ignore a11y-no-onchange -->
-      <select required bind:value={selected} class="w-full border rounded-lg focus:shadow-outline">
+      <select
+        required
+        on:change={() => isFormClosed()}
+        bind:value={selected}
+        class="w-full border rounded-lg focus:shadow-outline"
+      >
         <option value={() => (selected.name = "")} />
         {#each clubList as club}
           <option value={club}>
@@ -55,7 +64,7 @@
       type="submit"
       class="bg-blue-500 inline-flex items-center my-4 py-2 px-4 font-bold text-white
       hover:bg-blue-700 rounded-lg focus:shadow-outline disabled:opacity-50 disabled:bg-blue-300"
-      disabled={canSubmit}
+      disabled={formIsDisabled}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
