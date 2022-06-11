@@ -41,11 +41,6 @@
   }
 </script>
 
-<Accordion>
-  <AccordionItem title="Section 1" class="bg-red-100" open>Content 1</AccordionItem>
-  <AccordionItem title="Section 2">Content 2</AccordionItem>
-  <AccordionItem title="Section 3">Content 3</AccordionItem>
-</Accordion>
 <div>
   <h2 class="text-lg mb-1">Club Choices</h2>
   <form on:submit|preventDefault={handleSubmit}>
