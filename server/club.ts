@@ -44,9 +44,11 @@ function getCurrentClubRecord() {
         currentClubRecord.clubName;
         currentClubRecord.isInClub = false;
     }
-    currentClubRecord.clubId = clubRecord.clubId;
-    currentClubRecord.clubName = clubRecord.clubName;
-    currentClubRecord.isInClub = true;
+    else {
+        currentClubRecord.clubId = clubRecord.clubId;
+        currentClubRecord.clubName = clubRecord.clubName;
+        currentClubRecord.isInClub = true;
+    }
     Logger.log(JSON.stringify(currentClubRecord));
     return currentClubRecord;
 }
