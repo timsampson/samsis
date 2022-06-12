@@ -1,20 +1,29 @@
 <script>
   import { onMount } from "svelte";
-  import { Accordion, AccordionItem } from "carbon-components-svelte";
+  import { InlineNotification } from "carbon-components-svelte";
   export let clubList;
-  export let clubState = {};
-  let formIsClosed = true;
-  let submitted = false;
-  onMount(() => {
-    isFormClosed();
-  });
+  let clubFormState = {
+    showNotice: false,
+    formIsClosed: true,
+    submitted: false,
+  };
 
+  onMount(() => {
+    google.script.run.withSuccessHandler(displayUserClubFormState).getUserClubState();
+  });
+  function displayUserClubFormState(updatedclubFormState) {
+    clubFormState = updatedclubFormState;
+    isFormClosed();
+    console.log("clubFormState");
+    console.table(clubFormState);
+  }
   let selected = {
     id: 0,
     name: "",
   };
   function handleSubmit() {
-    submitted = true;
+    clubFormState.showNotice = true;
+    clubFormState.submitted = true;
     isFormClosed();
     google.script.run
       .withSuccessHandler(clubSubmissionResponse)
@@ -26,21 +35,42 @@
     console.table(responseDetails);
   }
   function isFormClosed() {
+    console.log(`clubFormState.formIsClosed: ${clubFormState.formIsClosed}`);
+    console.log(`clubFormState.isInClub: ${clubFormState.isInClub}`);
+    console.log(`clubFormState.formState: ${clubFormState.formState}`);
     if (
-      clubState.formState == "closed" ||
-      clubState == "view" ||
-      submitted == true ||
-      clubState.formState == "" ||
-      clubState.formState == null ||
-      clubState.formState == undefined
+      clubFormState.formState == "closed" ||
+      clubFormState.formState == "view" ||
+      clubFormState.submitted == true ||
+      clubFormState.formState == "" ||
+      clubFormState.formState == null ||
+      clubFormState.formState == undefined
     ) {
-      formIsClosed = true;
+      clubFormState.formIsClosed = true;
+      clubFormState.showNotice = true;
+      clubFormState.applicationMessage = "The form is currently closed.";
+      console.log("formIsClosed");
+    } else if (clubFormState.formState == "submit" && clubFormState.isInClub == true) {
+      console.log("isInClub is true");
+      clubFormState.showNotice = true;
+      clubFormState.formIsClosed = true;
+      clubFormState.applicationMessage = `You are currently enrolled in the ${clubFormState.currentClubName}.`;
     } else {
-      formIsClosed = false;
+      console.log("form is not closed");
+      clubFormState.showNotice = false;
+      clubFormState.formIsClosed = false;
     }
   }
 </script>
 
+{#if clubFormState.showNotice}
+  <InlineNotification
+    lowContrast
+    kind="info"
+    title="Notice:"
+    subtitle={clubFormState.applicationMessage}
+  />
+{/if}
 <div>
   <h2 class="text-lg mb-1">Club Choices</h2>
   <form on:submit|preventDefault={handleSubmit}>
@@ -60,12 +90,11 @@
         {/each}
       </select>
     </div>
-
     <button
       type="submit"
       class="bg-blue-500 inline-flex items-center my-4 py-2 px-4 font-bold text-white
       hover:bg-blue-700 rounded-lg focus:shadow-outline disabled:opacity-50 disabled:bg-blue-300"
-      disabled={formIsClosed}
+      disabled={clubFormState.formIsClosed}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

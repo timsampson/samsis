@@ -32,6 +32,7 @@ function serve() {
 
 export default {
   input: "src/main.js",
+  inlineDynamicImports: true,
   output: {
     sourcemap: true,
     format: "iife",
