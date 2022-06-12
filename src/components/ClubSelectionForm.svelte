@@ -49,14 +49,11 @@
       clubFormState.formIsClosed = true;
       clubFormState.showNotice = true;
       clubFormState.applicationMessage = "The form is currently closed.";
-      console.log("formIsClosed");
     } else if (clubFormState.formState == "submit" && clubFormState.isInClub == true) {
-      console.log("isInClub is true");
       clubFormState.showNotice = true;
       clubFormState.formIsClosed = true;
-      clubFormState.applicationMessage = `You are currently enrolled in the ${clubFormState.currentClubName}.`;
+      clubFormState.applicationMessage = `You are currently enrolled in the ${clubFormState.currentClubName} club.`;
     } else {
-      console.log("form is not closed");
       clubFormState.showNotice = false;
       clubFormState.formIsClosed = false;
     }
