@@ -60,6 +60,5 @@ function getUserPhoto() {
 const formStatusSheet = schoolSpreadsheet.getSheetByName("club_form_state");
 let formState = formStatusSheet.getRange(2, 1).getValue();
 function getFormState() {
-    formState = formStatusSheet.getRange(2, 1).getValue();
-    return formState;
+    return formStatusSheet.getRange(2, 1).getValue();
 }
