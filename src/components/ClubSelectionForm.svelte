@@ -39,7 +39,12 @@
     console.log(`clubFormState.formIsClosed: ${clubFormState.formIsClosed}`);
     console.log(`clubFormState.isInClub: ${clubFormState.isInClub}`);
     console.log(`clubFormState.formState: ${clubFormState.formState}`);
-    if (
+    if (clubFormState.submitted == true) {
+      clubFormState.showNotice = true;
+      clubFormState.notificationKind = "success";
+      clubFormState.formIsClosed = true;
+      clubFormState.applicationMessage = `Thanks for your application to the ${selected.name} club!`;
+    } else if (
       clubFormState.formState == "closed" ||
       clubFormState.formState == "view" ||
       clubFormState.submitted == true ||
