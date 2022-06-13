@@ -6,6 +6,7 @@
     showNotice: false,
     formIsClosed: true,
     submitted: false,
+    notificationKind: "info",
   };
 
   onMount(() => {
@@ -46,16 +47,46 @@
       clubFormState.formState == null ||
       clubFormState.formState == undefined
     ) {
+      clubFormState.notificationKind = "error";
       clubFormState.formIsClosed = true;
       clubFormState.showNotice = true;
       clubFormState.applicationMessage = "The form is currently closed.";
-    } else if (clubFormState.formState == "submit" && clubFormState.isInClub == true) {
+    } else if (clubFormState.formState == "submit") {
+      clubFormState.notificationKind = "success";
       clubFormState.showNotice = true;
-      clubFormState.formIsClosed = true;
-      clubFormState.applicationMessage = `You are currently enrolled in the ${clubFormState.currentClubName} club.`;
+      if (clubFormState.isInClub == true) {
+        clubFormState.formIsClosed = true;
+        clubFormState.applicationMessage = `You are currently enrolled in the ${clubFormState.currentClubName} club. Changes are not allowed at this time.`;
+      } else {
+        clubFormState.formIsClosed = false;
+        clubFormState.applicationMessage = `Please choose a club from the list below.`;
+      }
+    } else if (clubFormState.formState == "edit") {
+      clubFormState.notificationKind = "success";
+      clubFormState.showNotice = true;
+      clubFormState.notificationKind = "info";
+      if (clubFormState.isInClub == true) {
+        clubFormState.formIsClosed = false;
+        clubFormState.applicationMessage = `You are currently enrolled in the ${clubFormState.currentClubName} club. You may choose a new club from the list below as long as it is not full.`;
+      } else {
+        clubFormState.formIsClosed = false;
+        clubFormState.applicationMessage = `Please choose a club from the list below.`;
+      }
+    } else if (clubFormState.formState == "approval") {
+      clubFormState.notificationKind = "warning";
+      clubFormState.showNotice = true;
+      if (clubFormState.isInClub == true) {
+        clubFormState.formIsClosed = false;
+        clubFormState.applicationMessage = `You are currently enrolled in the ${clubFormState.currentClubName} club. If you choose a new club, it needs to be approved by the administrator before you can join.`;
+      } else {
+        clubFormState.formIsClosed = false;
+        clubFormState.applicationMessage = `Please choose a club from the list below. It needs to be approved by the administrator before you can join.`;
+      }
     } else {
-      clubFormState.showNotice = false;
+      clubFormState.showNotice = true;
       clubFormState.formIsClosed = false;
+      clubFormState.applicationMessage = `Please contact your club administrator.`;
+      clubFormState.notificationKind = "error";
     }
   }
 </script>
@@ -63,7 +94,7 @@
 {#if clubFormState.showNotice}
   <InlineNotification
     lowContrast
-    kind="info"
+    kind={clubFormState.notificationKind}
     title="Notice:"
     subtitle={clubFormState.applicationMessage}
   />
