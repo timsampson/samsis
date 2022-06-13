@@ -34,6 +34,7 @@ async function clubApplicationSubmission(clubId: number) {
     let studentHRInfo: Student = await getStudentHRInfo();
     let currentClubRecord: ClubEnrollment = getCurrentClubRecord();
     let formState = getFormState();
+    let isStudent = (studentDetails.email != undefined);
     Logger.log(`currentclubrecord is: ${JSON.stringify(currentClubRecord)}`);
     Logger.log(` currentclubrecord.isInClub is: ${currentClubRecord.isInClub}`);
     let application: Application = {
@@ -60,7 +61,7 @@ async function clubApplicationSubmission(clubId: number) {
         currentClubId: currentClubRecord.clubId,
         currentClubName: currentClubRecord.name,
         user_role: "",
-        isStudent: (studentDetails.email != undefined),
+        isStudent: isStudent,
         isModerator: false,
         applicationMessage: "",
     };

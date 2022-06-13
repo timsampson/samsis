@@ -12,7 +12,6 @@ let staffSheet = schoolSpreadsheet.getSheetByName("staff");
 let staffValues: any[][] | [any, ...any[]];
 let staffValuesAsObjArray: any[];
 
-
 let clubEnrollmentSheet = schoolSpreadsheet.getSheetByName("club_enrollment");
 let clubEnrollmentValues: any[][] | [any, ...any[]];
 let clubEnrollmentValuesAsObjArray: any[];
