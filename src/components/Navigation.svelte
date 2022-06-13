@@ -57,6 +57,11 @@
       class="hover:text-gray-300 mx-2 text-sm text-blue-800">Club Sign Up</a
     >
     <a
+      href="#/merit/"
+      on:click={() => setURL("/merit")}
+      class="hover:text-gray-300 mx-2 text-sm text-blue-800">Merit</a
+    >
+    <a
       href="#/clubadmin/"
       on:click={() => setURL("/clubadmin")}
       class="hover:text-gray-300 mx-2 text-sm text-blue-800">Club Admin</a

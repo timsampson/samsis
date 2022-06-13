@@ -7,6 +7,7 @@
   import ClubSignUp from "./routes/ClubSignUp.svelte";
   import Navigation from "./components/Navigation.svelte";
   import ClubAdmin from "./routes/ClubAdmin.svelte";
+  import Merit from "./routes/Merit.svelte";
   import { push } from "svelte-spa-router";
   google.script.url.getLocation(function (location) {
     if (location.hash.length > 0) {
@@ -20,6 +21,7 @@
     "/home/": Home,
     "/about/": About,
     "/clubsignup/": ClubSignUp,
+    "/merit": Merit,
     "/clubadmin/": ClubAdmin,
     "*": NotFound,
   };
