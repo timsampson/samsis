@@ -4,27 +4,24 @@
   export let titles;
 </script>
 
-<div>
+<div class="overflow-x-auto">
   {#if clubList.length > 0}
-    <table
-      in:fade|local={{ duration: 1000 }}
-      class="table table-auto mx-auto text-sm border-blue-800 border-4"
-    >
+    <table class="table table-compact w-full" in:fade|local={{ duration: 1000 }}>
       <thead>
-        <tr class="bg-gradient-to-r from-blue-500 to-blue-600">
+        <tr>
           {#each titles as title, i (titles[i])}
-            <th class="capitalize text-white px-2 border border-blue-800">{title}</th>
+            <th>{title}</th>
           {/each}
         </tr>
       </thead>
       <tbody>
         {#each clubList as club}
           <tr class="odd:bg-gray-200">
-            <td class="mx-2 px-2 border border-blue-800">{club.name}</td>
-            <td class="px-2 border border-blue-800 text-center">{club.enrolled}</td>
-            <td class="px-2 border border-blue-800 text-center">{club.capacity}</td>
-            <td class="mx-2 px-2 border border-blue-800">{club.description}</td>
-            <td class="mx-2 px-2 border border-blue-800">{club.moderator}</td>
+            <td>{club.name}</td>
+            <td>{club.enrolled}</td>
+            <td>{club.capacity}</td>
+            <td>{club.description}</td>
+            <td>{club.moderator}</td>
           </tr>
         {/each}
       </tbody>
