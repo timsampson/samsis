@@ -1,5 +1,4 @@
 <script>
-  import "carbon-components-svelte/css/white.css";
   import Router from "svelte-spa-router";
   import Home from "./routes/Home.svelte";
   import About from "./routes/About.svelte";

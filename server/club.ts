@@ -92,18 +92,20 @@ async function getUserClubState() {
     let studentDetails = await getStudentInfo();
     let studentHRInfo = await getStudentHRInfo();
     let currentClubRecord = getCurrentClubRecord();
+    let isStudent = (studentDetails.email != undefined);
+    let formState = getFormState();
     let userClubState = {
         email: studentDetails.email,
         name: studentDetails.full_name,
         grade: studentHRInfo.grade,
         school: studentHRInfo.school,
         homeroom: studentHRInfo.homeroom,
-        formState: getFormState(),
+        formState: formState,
         isInClub: currentClubRecord.isInClub,
         currentClubId: currentClubRecord.clubId,
         currentClubName: currentClubRecord.clubName,
         user_role: "",
-        isStudent: (studentDetails.email != undefined),
+        isStudent: isStudent,
         isModerator: false,
         clubMessage: "",
     };

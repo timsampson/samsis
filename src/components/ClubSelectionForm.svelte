@@ -1,6 +1,5 @@
 <script>
   import { onMount } from "svelte";
-  import { InlineNotification } from "carbon-components-svelte";
   export let clubList;
   let clubFormState = {
     showNotice: false,
@@ -97,12 +96,23 @@
 </script>
 
 {#if clubFormState.showNotice}
-  <InlineNotification
-    lowContrast
-    kind={clubFormState.notificationKind}
-    title="Notice:"
-    subtitle={clubFormState.applicationMessage}
-  />
+  <div class="alert alert-info shadow-lg">
+    <div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        class="stroke-current flex-shrink-0 w-6 h-6"
+        ><path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        /></svg
+      >
+      <span>clubFormState.applicationMessage</span>
+    </div>
+  </div>
 {/if}
 <div>
   <h2 class="text-lg mb-1">Club Choices</h2>
