@@ -26,12 +26,12 @@
   };
 </script>
 
-<main>
+<body>
   <Navigation />
-  <body class="p-4 bg-slate-50">
+  <main class="ml-4">
     <Router {routes} />
-  </body>
-</main>
+  </main>
+</body>
 
 <style global lang="postcss">
   @tailwind base;
