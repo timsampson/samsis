@@ -28,7 +28,7 @@
 
 <body>
   <Navigation />
-  <main class="ml-4">
+  <main class="m-2">
     <Router {routes} />
   </main>
 </body>
