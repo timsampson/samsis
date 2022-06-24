@@ -8,6 +8,7 @@
   import ClubAdmin from "./routes/ClubAdmin.svelte";
   import Merit from "./routes/Merit.svelte";
   import { push } from "svelte-spa-router";
+  import MeritAdmin from "./routes/MeritAdmin.svelte";
   google.script.url.getLocation(function (location) {
     if (location.hash.length > 0) {
       push(location.hash);
@@ -20,8 +21,9 @@
     "/home/": Home,
     "/about/": About,
     "/clubsignup/": ClubSignUp,
-    "/merit": Merit,
     "/clubadmin/": ClubAdmin,
+    "/merit": Merit,
+    "/meritadmin/": MeritAdmin,
     "*": NotFound,
   };
 </script>

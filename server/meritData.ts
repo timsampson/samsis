@@ -48,8 +48,11 @@ function getAllMeritInfo() {
 function getSingeUserMeritInfo() {
     meritValues = meritSheet.getDataRange().getValues();
     meritValuesAsObjArray = valuesToArrayOfObjects(meritValues);
-    let studentInfo = studentValuesAsObjArray.find((student: Student) => student.email == getUserEmail());
-    return studentInfo;
+    let studentMeritInfo = meritValuesAsObjArray.filter((merit: Merit) => merit.studentEmail == getUserEmail());
+    studentMeritInfo.forEach((record, index) => {
+        studentMeritInfo[index] = JSON.stringify(record);
+    });
+    return studentMeritInfo;
 }
 // To be used when an admin gets up a single user's records... might just do this filtered client side.
 function getUserMeritInfoByEmail(email: string) {

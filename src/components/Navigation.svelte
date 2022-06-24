@@ -44,28 +44,18 @@
       <li>
         <a href="#/about/" on:click={() => setURL("/about")}>About</a>
       </li>
-      <li tabindex="0">
-        <a href="#/clubsignup/" on:click={() => setURL("/clubSignup")}>
-          Clubs
-          <svg
-            class="fill-current"
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            ><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg
-          >
-        </a>
-        <ul class="p-2 bg-white">
-          <li>
-            <a href="#/clubsignup/" on:click={() => setURL("/clubsignup")}>Club Sign Up</a>
-          </li>
-          <li>
-            <a href="#/clubadmin/" on:click={() => setURL("/clubadmin")}>Club Admin</a>
-          </li>
-        </ul>
+      <li>
+        <a href="#/clubsignup/" on:click={() => setURL("/clubsignup")}>Club Sign Up</a>
       </li>
-      <li><a href="#/merit/" on:click={() => setURL("/merit")}>Merit</a></li>
+      <li>
+        <a href="#/clubadmin/" on:click={() => setURL("/clubadmin")}>Club Admin</a>
+      </li>
+      <li>
+        <a href="#/merit/" on:click={() => setURL("/merit")}>Merit</a>
+      </li>
+      <li>
+        <a href="#/meritadmin/" on:click={() => setURL("/meritadmin")}>Merit Admin</a>
+      </li>
     </ul>
   </div>
   <div class="justify-self-end">

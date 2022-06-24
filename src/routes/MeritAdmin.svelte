@@ -1,12 +1,11 @@
 <script>
   import { onMount } from "svelte";
   import MeritTable from "../components/MeritTable.svelte";
-  export let meritValues = [];
+  let meritValues = [];
   onMount(() => {
-    google.script.run.withSuccessHandler(displayUserMerits).getSingeUserMeritInfo();
+    google.script.run.withSuccessHandler(displayMerits).getAllMeritInfo();
   });
-  function displayUserMerits(meritData) {
-    console.log(`it works!`);
+  function displayMerits(meritData) {
     meritData.forEach((record, index) => {
       meritData[index] = JSON.parse(record);
       meritData[index].timestamp = new Date(meritData[index].timestamp);
@@ -15,14 +14,11 @@
         .trim();
     });
     meritValues = meritData;
-    console.table(meritValues);
   }
 </script>
 
-<h1 class="text-indigo-600 text-3xl font-bold ">Merit Page</h1>
-<p class="mt-1 py-2">
-  If you have any Merits or Demerits entered by teachers or administrators, you will see them here.
-</p>
+<h1 class="text-indigo-600 text-3xl font-bold ">Merit Admin Page</h1>
+<p class="mt-1 py-2">The list below will display all the Merits and Demerits.</p>
 <div class="overflow-x-auto">
   <table class="table table-compact w-full">
     <h1 class="text-2xl text-center text-blue-900">
