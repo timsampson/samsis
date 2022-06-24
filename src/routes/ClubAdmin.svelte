@@ -1,16 +1,11 @@
 <script>
   import { fade } from "svelte/transition";
-  import Button from "../shared/Button.svelte";
   import { onMount } from "svelte";
   import RadioAdmin from "../components/RadioAdmin.svelte";
   let selectedRecords = [];
   let submitted = false;
   let approvalType;
   $: console.log(approvalType);
-
-  let buttonID = "submitAdminApproval-btn";
-  let button_class =
-    "inline-flex items-center my-4 py-2 px-4 font-bold text-white rounded-lg focus:shadow-outline disabled:opacity-50";
   let recordsForApproval = [];
   let approvalElementList = [];
   let approvedArr = [];
@@ -105,7 +100,7 @@
       {/each}
     </ul>
   {/if}
-  <Button {buttonID} {button_class} {submitted}>Submit</Button>
+  <button type="submit" class="btn btn-primary btn-sm mt-3" disabled={submitted}>submit</button>
 </form>
 
 <h2 class="m-2 text-blue-800 text-lg">

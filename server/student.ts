@@ -42,6 +42,14 @@ function getStudentHRInfo() {
     const studentHRInfo = hrStudentValuesAsObjArray.find((student) => student.email == getUserEmail());
     return studentHRInfo;
 }
+function getAllStudentsHRInfo() {
+    hrStudentValues = hrStudentSheet.getDataRange().getValues();
+    let hrData = valuesToArrayOfObjects(hrStudentValues);
+    hrData.forEach((record, index) => {
+        hrData[index] = JSON.stringify(record);
+    });
+    return hrData;
+}
 
 function getStudentLevel() {
     let student: Student = getStudentHRInfo();

@@ -56,6 +56,9 @@
       <li>
         <a href="#/meritadmin/" on:click={() => setURL("/meritadmin")}>Merit Admin</a>
       </li>
+      <li>
+        <a href="#/meritform/" on:click={() => setURL("/meritform")}>Merit Form</a>
+      </li>
     </ul>
   </div>
   <div class="justify-self-end">

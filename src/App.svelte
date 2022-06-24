@@ -1,5 +1,6 @@
 <script>
   import Router from "svelte-spa-router";
+  import { push } from "svelte-spa-router";
   import Home from "./routes/Home.svelte";
   import About from "./routes/About.svelte";
   import NotFound from "./routes/NotFound.svelte";
@@ -7,8 +8,8 @@
   import Navigation from "./components/Navigation.svelte";
   import ClubAdmin from "./routes/ClubAdmin.svelte";
   import Merit from "./routes/Merit.svelte";
-  import { push } from "svelte-spa-router";
   import MeritAdmin from "./routes/MeritAdmin.svelte";
+  import MeritForm from "./routes/MeritForm.svelte";
   google.script.url.getLocation(function (location) {
     if (location.hash.length > 0) {
       push(location.hash);
@@ -23,6 +24,7 @@
     "/clubsignup/": ClubSignUp,
     "/clubadmin/": ClubAdmin,
     "/merit": Merit,
+    "/meritform/": MeritForm,
     "/meritadmin/": MeritAdmin,
     "*": NotFound,
   };
