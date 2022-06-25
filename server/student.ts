@@ -1,9 +1,3 @@
-function testUserRecord() {
-    getStudentInfo();
-}
-function testStudentvalues() {
-    Logger.log(JSON.stringify(studentValuesAsObjArray));
-}
 type Student = {
     email: string,
     phone: string,
@@ -25,7 +19,18 @@ type Student = {
     homeroom: string;
     school: string;
 }
-
+type HRinfo = {
+    // id	student_id	hr_id	student_email	student_name	hr_teacher	homeroom	grade	school
+    id: string,
+    student_id: string,
+    hr_id: string,
+    student_email: string,
+    student_name: string,
+    hr_teacher: string,
+    homeroom: string,
+    grade: string,
+    school: string
+}
 function getUserEmail() {
     return Session.getActiveUser().getEmail();
 }
@@ -39,7 +44,7 @@ function getStudentInfo() {
 function getStudentHRInfo() {
     hrStudentValues = hrStudentSheet.getDataRange().getValues();
     hrStudentValuesAsObjArray = valuesToArrayOfObjects(hrStudentValues);
-    const studentHRInfo = hrStudentValuesAsObjArray.find((student) => student.email == getUserEmail());
+    const studentHRInfo = hrStudentValuesAsObjArray.find((record: HRinfo) => record.student_email == getUserEmail());
     return studentHRInfo;
 }
 function getAllStudentsHRInfo() {
@@ -54,4 +59,10 @@ function getAllStudentsHRInfo() {
 function getStudentLevel() {
     let student: Student = getStudentHRInfo();
     return student.level;
+}
+function testUserRecord() {
+    getStudentInfo();
+}
+function testStudentvalues() {
+    Logger.log(JSON.stringify(studentValuesAsObjArray));
 }
