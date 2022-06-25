@@ -111,3 +111,18 @@ async function getUserClubState() {
     };
     return userClubState;
 }
+
+function testClubs() {
+    let studentDetails = getStudentInfo();
+    Logger.log(`studentDetails: ${JSON.stringify(studentDetails)}`);
+    let studentHRInfo = getStudentHRInfo();
+    Logger.log(`studentHRInfo: ${JSON.stringify(studentHRInfo)}`);
+    let currentClubRecord = getCurrentClubRecord();
+    Logger.log(`currentClubRecord: ${JSON.stringify(currentClubRecord)}`);
+    let isStudent = (studentDetails.email != undefined);
+    Logger.log(`isStudent: ${isStudent}`);
+    let formState = getFormState();
+    Logger.log(`formState: ${formState}`);
+    let userClubState = getUserClubState();
+    Logger.log(`userClubState: ${JSON.stringify(userClubState)}`);
+}
