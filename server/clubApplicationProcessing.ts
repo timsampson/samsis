@@ -223,9 +223,10 @@ function testPRCA() {
     };
     let approvedList = [approved1, approved2, approved3, approved4];
     let application = processReviewedClubApplications(approvedList);
-    Logger.log(application);
+    Logger.log(`application: ${application}`);
 }
 function testApplication() {
-    clubApplicationSubmission(4);
+    let applicationtest = clubApplicationSubmission(4);
+    Logger.log(`application: ${applicationtest}`);
 }
 
