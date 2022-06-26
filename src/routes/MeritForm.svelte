@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { items } from "../stores/meritStore.js";
   import MeritSearch from "../components/MeritSearch.svelte";
-  import StudentHRTable from "../components/StudentHRTable.svelte";
+  import StudentHRTable from "../components/MeritSearchTable.svelte";
 
   onMount(() => {
     google.script.run.withSuccessHandler(loadStudentsHRData).getAllStudentsHRInfo();
