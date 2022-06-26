@@ -4,8 +4,12 @@
   import { selected } from "../stores/meritStore.js";
   let titleValues = ["Id", "Name", "Homeroom", "Teacher", "Grade", "School"];
 
-  const addToSelected = (student) => {
-    console.log(`id: ${JSON.stringify(student)}`);
+  const addToSelected = (index, student, obj) => {
+    console.log(`obj: ${JSON.stringify(obj)}`);
+    console.log(`i: ${JSON.stringify(index)}`);
+    console.log(`student: ${JSON.stringify(student)}`);
+    $selected = [...$selected, student];
+    console.log(`selected: ${JSON.stringify($selected)}`);
   };
 </script>
 
@@ -14,6 +18,7 @@
     <thead>
       <tr>
         <th>Add</th>
+        <th>#</th>
         {#each titleValues as title}
           <th>{title}</th>
         {/each}
@@ -31,13 +36,9 @@
             <td>{select.school}</td>
           </tr>
         {/each}
-        {#each $filtered as student (student.student_id)}
-          <tr>
-            <button
-              type="button"
-              class="ml-2 btn btn-circle btn-success btn-sm"
-              on:click={() => addToSelected(student)}
-            >
+        {#each $filtered as student, i (student.student_id)}
+          <tr on:click={addToSelected.bind(this, i, student)}>
+            <button type="button" class="ml-2 btn btn-circle btn-success btn-sm">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-6 w-6"
@@ -52,7 +53,8 @@
                 /></svg
               >
             </button>
-            <td contenteditable="true">{student.student_id}</td>
+            <td>{i + 1}</td>
+            <td>{student.student_id}</td>
             <td>{student.student_name}</td>
             <td>{student.homeroom}</td>
             <td>{student.hr_teacher}</td>
