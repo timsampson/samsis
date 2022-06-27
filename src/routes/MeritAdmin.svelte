@@ -20,14 +20,12 @@
 <h1 class="text-indigo-600 text-3xl font-bold ">Merit Admin Page</h1>
 <p class="mt-1 py-2">The list below will display all the Merits and Demerits.</p>
 <div class="overflow-x-auto">
-  <table class="table table-compact w-full">
-    <h1 class="text-2xl text-center text-blue-900">
-      {#if meritValues.length > 0}
-        Below are the current Merits and Demerits.
-      {:else}
-        Please wait for the available Merits and Demerits to load.
-      {/if}
-    </h1>
-    <MeritTable {meritValues} />
-  </table>
+  <h1 class="text-2xl text-center text-blue-900">
+    {#if meritValues.length > 0}
+      Below are the current Merits and Demerits.
+    {:else}
+      Please wait for the available Merits and Demerits to load.
+    {/if}
+  </h1>
+  <MeritTable {meritValues} />
 </div>

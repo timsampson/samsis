@@ -2,29 +2,38 @@
   import { fade } from "svelte/transition";
   import { filtered } from "../stores/meritStore.js";
   import { selected } from "../stores/meritStore.js";
+  import { studentsData } from "../stores/meritStore.js";
   let titleValues = ["Id", "Name", "Homeroom", "Teacher", "Grade", "School"];
-
   const addToSelected = (index, student, obj) => {
-    console.log(`obj: ${JSON.stringify(obj)}`);
-    console.log(`i: ${JSON.stringify(index)}`);
-    console.log(`student: ${JSON.stringify(student)}`);
+    console.log(`$studentsData[index]: ${JSON.stringify($studentsData[index])}`);
+    $studentsData = $studentsData.filter((e, i) => i !== index);
+
+    console.log(`$studentsData[index]: ${JSON.stringify($studentsData[index])}`);
+    // console.log(`obj: ${JSON.stringify(obj)}`);
+    // console.log(`student: ${JSON.stringify(student)}`);
     $selected = [...$selected, student];
-    console.log(`selected: ${JSON.stringify($selected)}`);
+    // console.log(`selected: ${JSON.stringify($studentsData)}`);
   };
 </script>
 
 <div class="overflow-x-auto">
+  <h1 class="my-2">Selected</h1>
+  <p class="mt-2">
+    {#if $selected.length > 0}
+      Below are the selected students.
+    {:else}
+      Please select a student.
+    {/if}
+  </p>
   <table class="table table-compact w-full" in:fade|local={{ duration: 1000 }}>
-    <thead>
-      <tr>
-        <th>Add</th>
-        <th>#</th>
-        {#each titleValues as title}
-          <th>{title}</th>
-        {/each}
-      </tr>
-    </thead>
-    {#if $filtered.length > 0 || $selected.length > 0}
+    {#if $selected.length > 0}
+      <thead>
+        <tr>
+          {#each titleValues as title}
+            <th>{title}</th>
+          {/each}
+        </tr>
+      </thead>
       <tbody>
         {#each $selected as select}
           <tr>
@@ -36,6 +45,30 @@
             <td>{select.school}</td>
           </tr>
         {/each}
+      </tbody>
+    {/if}
+  </table>
+</div>
+<div class="overflow-x-auto">
+  <p class="mt-2">
+    {#if $filtered.length > 0}
+      Below are the available students.
+    {:else}
+      Please wait for the available students to load.
+    {/if}
+  </p>
+  <table class="table table-compact w-full" in:fade|local={{ duration: 1000 }}>
+    <thead>
+      <tr>
+        <th>Add</th>
+        <th>#</th>
+        {#each titleValues as title}
+          <th>{title}</th>
+        {/each}
+      </tr>
+    </thead>
+    {#if $filtered.length > 0}
+      <tbody>
         {#each $filtered as student, i (student.student_id)}
           <tr on:click={addToSelected.bind(this, i, student)}>
             <button type="button" class="ml-2 btn btn-circle btn-success btn-sm">
