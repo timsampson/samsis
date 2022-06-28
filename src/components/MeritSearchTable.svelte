@@ -12,16 +12,16 @@
     });
     studentsData.set(studentsHRData);
   }
-  const addToSelected = (index, student, obj) => {
-    term.set($term);
-    // console.log(`$studentsData[index]: ${JSON.stringify($studentsData[index])}`);
-    $studentsData = $studentsData.filter((currentValue, idx) => idx !== index);
-    // console.log(`$studentsData[index]: ${JSON.stringify($studentsData[index])}`);
+  const addToSelected = (student_id, student) => {
     $selectedData = [...$selectedData, student];
+    // console.log(`$studentsData[index]: ${JSON.stringify($studentsData[index])}`);
+    $studentsData = $studentsData.filter((student) => student.student_id !== student_id);
+    // console.log(`$studentsData[index]: ${JSON.stringify($studentsData[index])}`);
+    term.set($term);
   };
-  const removeFromSelected = (index, student, obj) => {
+  const removeFromSelected = (student_id, student) => {
     // console.log(`$selected[index]: ${JSON.stringify($selected[index])}`);
-    $selectedData = $selectedData.filter((currentValue, idx) => idx !== index);
+    $selectedData = $selectedData.filter((student) => student.student_id !== student_id);
     // console.log(`$selected[index]: ${JSON.stringify($selected[index])}`);
     $studentsData = [...$studentsData, student];
   };
@@ -51,7 +51,7 @@
         {#each $selectedData as student, i (student.student_id)}
           <tr>
             <button
-              on:click={removeFromSelected.bind(this, i, student)}
+              on:click={() => removeFromSelected(student.student_id, student)}
               type="button"
               class="ml-2 btn btn-circle btn-error btn-sm"
             >
@@ -106,7 +106,7 @@
         {#each $filtered as student, i (student.student_id)}
           <tr>
             <button
-              on:click={addToSelected.bind(this, i, student)}
+              on:click={() => addToSelected(student.student_id, student)}
               type="button"
               class="ml-2 btn btn-circle btn-success btn-sm"
             >
