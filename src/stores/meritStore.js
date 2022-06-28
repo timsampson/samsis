@@ -1,6 +1,7 @@
 import { writable, derived } from 'svelte/store';
 export const term = writable('');
 export const studentsData = writable([]);
+export const selectedData = writable([]);
 export const filtered = derived(
 	[term, studentsData], 
 	([$term, $studentsData]) => $studentsData.filter(record => {
@@ -13,4 +14,3 @@ export const filtered = derived(
 			);
 	})
 );
-export const selected = writable([]);
