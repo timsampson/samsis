@@ -1,18 +1,6 @@
 <script>
-  import { onMount } from "svelte";
-  import { studentsData } from "../stores/meritStore.js";
   import MeritSearch from "../components/MeritSearch.svelte";
   import StudentHRTable from "../components/MeritSearchTable.svelte";
-
-  onMount(() => {
-    google.script.run.withSuccessHandler(loadStudentsHRData).getAllStudentsHRInfo();
-  });
-  function loadStudentsHRData(studentsHRData) {
-    studentsHRData.forEach((record, index) => {
-      studentsHRData[index] = JSON.parse(record);
-    });
-    studentsData.set(studentsHRData);
-  }
 </script>
 
 <h1>Merit Form Page</h1>
@@ -20,5 +8,14 @@
   Start by searching for the student below, either by name or by homeroom. Then select and add the
   students in Add Students section..
 </p>
-<MeritSearch />
-<StudentHRTable />
+<div class="container mx-auto">
+  <form>
+    <section>
+      <MeritSearch />
+      <button type="button" class="ml-2 btn btn-primary">Next</button>
+    </section>
+    <section>
+      <StudentHRTable />
+    </section>
+  </form>
+</div>

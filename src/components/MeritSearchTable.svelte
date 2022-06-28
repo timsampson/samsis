@@ -1,10 +1,19 @@
 <script>
   import { fade } from "svelte/transition";
-  import { filtered, term } from "../stores/meritStore.js";
-  import { selectedData } from "../stores/meritStore.js";
-  import { studentsData } from "../stores/meritStore.js";
+  import { onMount } from "svelte";
+  import { filtered, selectedData, studentsData, term } from "../stores/meritStore.js";
   let titleValues = ["Id", "Name", "Homeroom", "Teacher", "Grade", "School"];
+  onMount(() => {
+    google.script.run.withSuccessHandler(loadStudentsHRData).getAllStudentsHRInfo();
+  });
+  function loadStudentsHRData(studentsHRData) {
+    studentsHRData.forEach((record, index) => {
+      studentsHRData[index] = JSON.parse(record);
+    });
+    studentsData.set(studentsHRData);
+  }
   const addToSelected = (index, student, obj) => {
+    term.set($term);
     // console.log(`$studentsData[index]: ${JSON.stringify($studentsData[index])}`);
     $studentsData = $studentsData.filter((currentValue, idx) => idx !== index);
     // console.log(`$studentsData[index]: ${JSON.stringify($studentsData[index])}`);
