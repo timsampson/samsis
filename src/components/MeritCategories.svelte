@@ -1,5 +1,5 @@
 <script>
-  import { selectedCategory, behaviorKind } from "../stores/meritStore.js";
+  import { selectedCategory, behaviorKinds, behaviors } from "../stores/meritStore.js";
   const categories = [
     "Merit",
     "Information",
@@ -15,30 +15,20 @@
   const OCList = ["fighting", "screaming", "thowing objects"];
   const RCList = ["smoking", "fireworks", "swearing"];
   $: console.log(`selectedCategory: ${$selectedCategory}`);
+  $: console.log(`behaviors: ${$behaviors}`);
 
-  let response = {
-    behaviorKind: [],
-    behaviorCategory: [],
-    positive: [],
-    information: [],
-    level: [],
-    YC: [],
-    OC: [],
-    RC: [],
-  };
   function displayBehaviorKinds() {
     if ($selectedCategory === "Information") {
-      $behaviorKind = informationList;
+      $behaviorKinds = informationList;
     } else if ($selectedCategory === "Level 1") {
-      $behaviorKind = level1List;
+      $behaviorKinds = level1List;
     } else if ($selectedCategory === "Yellow Level") {
-      $behaviorKind = YCList;
+      $behaviorKinds = YCList;
     } else if ($selectedCategory === "Orange Level") {
-      $behaviorKind = OCList;
+      $behaviorKinds = OCList;
     } else if ($selectedCategory === "Red Level") {
-      $behaviorKind = RCList;
-    } else $behaviorKind = positiveList;
-    response = response;
+      $behaviorKinds = RCList;
+    } else $behaviorKinds = positiveList;
     uncheckBehaviorList();
   }
   function uncheckBehaviorList() {
@@ -76,20 +66,21 @@
     </div>
   </div>
   <div class="ml-4">
-    {#if $behaviorKind.length > 0}
+    {#if $behaviorKinds.length > 0}
       <div class="card w-64 h-72 bg-info-400 shadow-xl">
         <div class="card-body">
           <h2 class="card-title">Behavior Category</h2>
           <fieldset>
             <legend>Select behavior:</legend>
-            {#each $behaviorKind as behavior}
+            {#each $behaviorKinds as behavior}
               <div class=" ml-2">
                 <label>
                   <input
+                    bind:group={$behaviors}
                     type="checkbox"
                     id={"merit" + behavior}
-                    name="behaviorList"
-                    bind:value={behavior}
+                    name="behaviors"
+                    value={behavior}
                   />
                   {behavior}</label
                 >

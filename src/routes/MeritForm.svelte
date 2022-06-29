@@ -9,13 +9,26 @@
     selectedCategory,
     meritFormComplete,
   } from "../stores/meritStore.js";
+
+  let meritResponse = {
+    behaviorCategory: $selectedCategory,
+    positive: [],
+    information: [],
+    level: [],
+    YC: [],
+    OC: [],
+    RC: [],
+  };
   $: console.log(` meritFormStepOneSelect: ${$meritFormStepOneSelect}`);
   $: console.log(`Details: ${$details}`);
+  function handleSubmit() {
+    console.log("handleSubmit");
+  }
 </script>
 
 <h1 class="text-xl">Merit Form Page</h1>
 <div class="container mx-auto">
-  <form>
+  <form on:submit|preventDefault={handleSubmit}>
     {#if $meritFormStepOneSelect}
       <section>
         <MeritSearch />
@@ -50,5 +63,5 @@
   </section>
 {/if}
 {#if $meritFormComplete}
-  <button type="button" class="ml-2 mt-2 btn btn-primary">Submit</button>
+  <button type="sumbit" class="ml-2 mt-2 btn btn-primary">Submit</button>
 {/if}

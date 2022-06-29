@@ -1,8 +1,8 @@
 import { writable, derived } from 'svelte/store';
 export const meritFormStepOneSelect = writable(true);
 export const selectedCategory = writable('');
-export const behaviorKind = writable('');
-export const behavior = writable('');
+export const behaviorKinds = writable('');
+export const behaviors = writable([]);
 export const details = writable('');
 export const term = writable('');
 export const studentsData = writable([]);
