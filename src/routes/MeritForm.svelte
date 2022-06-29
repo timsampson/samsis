@@ -2,8 +2,15 @@
   import MeritSearch from "../components/MeritSearch.svelte";
   import StudentHRTable from "../components/MeritSearchTable.svelte";
   import MeritCategories from "../components/MeritCategories.svelte";
-  import { meritFormStepOneSelect, selectedData } from "../stores/meritStore.js";
+  import {
+    meritFormStepOneSelect,
+    selectedData,
+    details,
+    selectedCategory,
+    meritFormComplete,
+  } from "../stores/meritStore.js";
   $: console.log(` meritFormStepOneSelect: ${$meritFormStepOneSelect}`);
+  $: console.log(`Details: ${$details}`);
 </script>
 
 <h1 class="text-xl">Merit Form Page</h1>
@@ -31,3 +38,17 @@
     {/if}
   </form>
 </div>
+{#if $selectedCategory.length > 1}
+  <section>
+    <div class="ml-2 mt-4">
+      <textarea
+        class="textarea textarea-primary min-w-full"
+        placeholder="Details"
+        bind:value={$details}
+      />
+    </div>
+  </section>
+{/if}
+{#if $meritFormComplete}
+  <button type="button" class="ml-2 mt-2 btn btn-primary">Submit</button>
+{/if}

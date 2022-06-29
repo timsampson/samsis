@@ -7,7 +7,7 @@
 
 <input
   type="search"
-  placeholder="Type ID or Name"
-  class="m-2 input-bordered input-accent input-md input w-full max-w-xs"
+  placeholder="Type here"
+  class="input input-bordered input-primary w-full max-w-xs"
   bind:value={val}
 />

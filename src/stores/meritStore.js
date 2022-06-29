@@ -1,6 +1,9 @@
 import { writable, derived } from 'svelte/store';
 export const meritFormStepOneSelect = writable(true);
 export const selectedCategory = writable('');
+export const behaviorKind = writable('');
+export const behavior = writable('');
+export const details = writable('');
 export const term = writable('');
 export const studentsData = writable([]);
 export const selectedData = writable([]);
@@ -15,4 +18,10 @@ export const filtered = derived(
 			record.grade.toString().toLowerCase().trim().includes($term)
 			);
 	})
+);
+export const meritFormComplete = derived(
+	[details, selectedCategory]
+	, ([$details, $selectedCategory]) => {
+		return $details.length > 0 && $selectedCategory.length > 0;
+	}
 );
