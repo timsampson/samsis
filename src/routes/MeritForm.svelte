@@ -8,20 +8,24 @@
     details,
     selectedCategory,
     meritFormComplete,
+    behaviors,
   } from "../stores/meritStore.js";
 
-  let meritResponse = {
-    behaviorCategory: $selectedCategory,
-    positive: [],
-    information: [],
-    level: [],
-    YC: [],
-    OC: [],
-    RC: [],
+  const meritResponse = {
+    behaviorCategory: "",
+    behaviors: [],
+    details: "",
+    selectedStudents: [],
   };
-  $: console.log(` meritFormStepOneSelect: ${$meritFormStepOneSelect}`);
+  $: console.log(`meritFormStepOneSelect: ${$meritFormStepOneSelect}`);
   $: console.log(`Details: ${$details}`);
   function handleSubmit() {
+    meritResponse.behaviorCategory = $selectedCategory;
+    meritResponse.behaviors = $behaviors;
+    meritResponse.details = $details;
+    meritResponse.selectedStudents = $selectedData;
+    console.log(`meritResponse:`);
+    console.table(meritResponse);
     console.log("handleSubmit");
   }
 </script>
@@ -49,19 +53,20 @@
         <MeritCategories />
       </section>
     {/if}
+
+    {#if $selectedCategory.length > 1}
+      <section>
+        <div class="ml-2 mt-4">
+          <textarea
+            class="textarea textarea-primary min-w-full"
+            placeholder="Details"
+            bind:value={$details}
+          />
+        </div>
+      </section>
+    {/if}
+    {#if $meritFormComplete}
+      <button type="submit" class="ml-2 mt-2 btn btn-primary">Submit</button>
+    {/if}
   </form>
 </div>
-{#if $selectedCategory.length > 1}
-  <section>
-    <div class="ml-2 mt-4">
-      <textarea
-        class="textarea textarea-primary min-w-full"
-        placeholder="Details"
-        bind:value={$details}
-      />
-    </div>
-  </section>
-{/if}
-{#if $meritFormComplete}
-  <button type="sumbit" class="ml-2 mt-2 btn btn-primary">Submit</button>
-{/if}
