@@ -14,46 +14,38 @@
   }
   const addToSelected = (student_id, student) => {
     $selectedData = [...$selectedData, student];
-    // console.log(`$studentsData[index]: ${JSON.stringify($studentsData[index])}`);
     $studentsData = $studentsData.filter((student) => student.student_id !== student_id);
-    // console.log(`$studentsData[index]: ${JSON.stringify($studentsData[index])}`);
-    term.set($term);
   };
   const removeFromSelected = (student_id, student) => {
-    // console.log(`$selected[index]: ${JSON.stringify($selected[index])}`);
-    $selectedData = $selectedData.filter((student) => student.student_id !== student_id);
-    // console.log(`$selected[index]: ${JSON.stringify($selected[index])}`);
     $studentsData = [...$studentsData, student];
+    $selectedData = $selectedData.filter((student) => student.student_id !== student_id);
   };
 </script>
 
 <div class="overflow-x-auto">
-  <h1 class="my-2">Selected</h1>
-  <p class="mt-2">
-    {#if $selectedData.length > 0}
-      Below are the selected students.
-    {:else}
-      Please select a student.
-    {/if}
+  <h1 class="my-2 text-lg">Selected</h1>
+  <p class="mt-2" fade={{ duration: 1000 }}>
+    {$selectedData.length > 0
+      ? "Once you have finished selecting students, click the next button."
+      : "Please select students from the list below."}
   </p>
   <table class="table table-compact w-full" in:fade|local={{ duration: 1000 }}>
     {#if $selectedData.length > 0}
       <thead>
         <tr>
           <th />
-          <th>#</th>
           {#each titleValues as title}
             <th>{title}</th>
           {/each}
         </tr>
       </thead>
       <tbody>
-        {#each $selectedData as student, i (student.student_id)}
+        {#each $selectedData as student (student.student_id)}
           <tr>
             <button
               on:click={() => removeFromSelected(student.student_id, student)}
               type="button"
-              class="ml-2 btn btn-circle btn-error btn-sm"
+              class="btn btn-circle btn-error btn-sm"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +62,6 @@
                 />
               </svg>
             </button>
-            <td>{i + 1}</td>
             <td>{student.student_id}</td>
             <td>{student.student_name}</td>
             <td>{student.homeroom}</td>
@@ -84,18 +75,15 @@
   </table>
 </div>
 <div class="overflow-x-auto">
-  <p class="mt-2">
-    {#if $filtered.length > 0}
-      Below are the available students.
-    {:else}
-      Please wait for the available students to load.
-    {/if}
+  <p class="mt-2" fade={{ duration: 1000 }}>
+    {$filtered.length > 0
+      ? "Below are the available students."
+      : "Please wait for the available students to load."}
   </p>
   <table class="table table-compact w-full" in:fade|local={{ duration: 1000 }}>
     <thead>
       <tr>
         <th />
-        <th>#</th>
         {#each titleValues as title}
           <th>{title}</th>
         {/each}
@@ -103,12 +91,12 @@
     </thead>
     {#if $filtered.length > 0}
       <tbody>
-        {#each $filtered as student, i (student.student_id)}
+        {#each $filtered as student (student.student_id)}
           <tr>
             <button
               on:click={() => addToSelected(student.student_id, student)}
               type="button"
-              class="ml-2 btn btn-circle btn-success btn-sm"
+              class="btn btn-circle btn-success btn-sm"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +113,6 @@
                 />
               </svg>
             </button>
-            <td>{i + 1}</td>
             <td>{student.student_id}</td>
             <td>{student.student_name}</td>
             <td>{student.homeroom}</td>
@@ -138,7 +125,6 @@
       <tfoot>
         <tr>
           <th />
-          <th>#</th>
           {#each titleValues as title}
             <th>{title}</th>
           {/each}

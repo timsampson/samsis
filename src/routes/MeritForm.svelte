@@ -1,21 +1,33 @@
 <script>
   import MeritSearch from "../components/MeritSearch.svelte";
   import StudentHRTable from "../components/MeritSearchTable.svelte";
+  import MeritCategories from "../components/MeritCategories.svelte";
+  import { meritFormStepOneSelect, selectedData } from "../stores/meritStore.js";
+  $: console.log(` meritFormStepOneSelect: ${$meritFormStepOneSelect}`);
 </script>
 
-<h1>Merit Form Page</h1>
-<p>
-  Start by searching for the student below, either by name or by homeroom. Then select and add the
-  students in Add Students section..
-</p>
+<h1 class="text-xl">Merit Form Page</h1>
 <div class="container mx-auto">
   <form>
-    <section>
-      <MeritSearch />
-      <button type="button" class="ml-2 btn btn-primary">Next</button>
-    </section>
-    <section>
-      <StudentHRTable />
-    </section>
+    {#if $meritFormStepOneSelect}
+      <section>
+        <MeritSearch />
+        {#if $selectedData.length > 0}
+          <button
+            on:click={() => meritFormStepOneSelect.set(false)}
+            type="button"
+            class="ml-2 btn btn-primary">Next</button
+          >
+        {/if}
+      </section>
+      <section>
+        <StudentHRTable />
+      </section>
+    {:else}
+      <section>
+        <p>Now choose the categories</p>
+        <MeritCategories />
+      </section>
+    {/if}
   </form>
 </div>
