@@ -33,14 +33,14 @@
   }
 </script>
 
-<nav class="bg-white container flex flex-wrap justify-between items-center mx-auto">
+<nav class="bg-white container flex flex-wrap justify-between items-center mx-auto pt-1">
   <div class="justify-self-start base-100">
     <a href="#/" on:click={() => setURL("/home")} class="btn btn-ghost normal-case text-xl"
       >SAMSIS</a
     >
   </div>
   <div class="justify-self-end hidden lg:flex">
-    <ul class="menu menu-horizontal p-0">
+    <ul class="menu menu-horizontal">
       <li>
         <a href="#/about/" on:click={() => setURL("/about")}>About</a>
       </li>

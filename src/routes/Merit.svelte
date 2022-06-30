@@ -19,19 +19,22 @@
   }
 </script>
 
-<h1 class="text-indigo-600 text-3xl font-bold ">Merit Page</h1>
-<p class="mt-1 py-2">
-  If you have any Merits or Demerits entered by teachers or administrators, you will see them here.
-</p>
-<div class="overflow-x-auto">
-  <table class="table table-compact w-full">
-    <h1 class="text-2xl text-center text-blue-900">
-      {#if meritValues.length > 0}
-        Below are the current Merits and Demerits.
-      {:else}
-        Please wait for the available Merits and Demerits to load.
-      {/if}
-    </h1>
-    <MeritTable {meritValues} />
-  </table>
+<div class="container mx-auto">
+  <h1 class="text-xl">Merit Page</h1>
+  <p class="mt-1 py-2">
+    If you have any Merits or Demerits entered by teachers or administrators, you will see them
+    here.
+  </p>
+  <div class="overflow-x-auto">
+    <table class="table table-compact w-full">
+      <h1 class="text-2xl text-center text-blue-900">
+        {#if meritValues.length > 0}
+          Below are the current Merits and Demerits.
+        {:else}
+          Please wait for the available Merits and Demerits to load.
+        {/if}
+      </h1>
+      <MeritTable {meritValues} />
+    </table>
+  </div>
 </div>

@@ -15,8 +15,8 @@
   }
 </script>
 
-<div class="ml-8">
-  <h1 class="text-indigo-600 text-3xl font-bold ">Sign Up</h1>
+<div class="container mx-auto">
+  <h1 class="text-xl">Sign Up</h1>
   <ClubSelectionForm {clubList} />
   <h1 class="text-2xl text-center text-blue-900">
     {#if clubList.length > 0}

@@ -30,8 +30,8 @@
   }
 </script>
 
-<h1 class="text-xl">Merit Form Page</h1>
 <div class="container mx-auto">
+  <h1 class="text-xl">Merit Form Page</h1>
   <form on:submit|preventDefault={handleSubmit}>
     {#if $meritFormStepOneSelect}
       <section>
