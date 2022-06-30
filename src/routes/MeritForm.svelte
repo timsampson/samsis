@@ -1,7 +1,7 @@
 <script>
-  import MeritSearch from "../components/MeritSearch.svelte";
-  import StudentHRTable from "../components/MeritSearchTable.svelte";
-  import MeritCategories from "../components/MeritCategories.svelte";
+  import MeritSearch from "../components/MeritForm/MeritSearch.svelte";
+  import StudentHRTable from "../components/MeritForm/MeritSearchTable.svelte";
+  import MeritCategories from "../components/MeritForm/MeritCategories.svelte";
   import {
     meritFormStepOneSelect,
     selectedData,

@@ -5,7 +5,7 @@
   import About from "./routes/About.svelte";
   import NotFound from "./routes/NotFound.svelte";
   import ClubSignUp from "./routes/ClubSignUp.svelte";
-  import Navigation from "./components/Navigation.svelte";
+  import Navigation from "./components/Shared/Navigation.svelte";
   import ClubAdmin from "./routes/ClubAdmin.svelte";
   import Merit from "./routes/Merit.svelte";
   import MeritAdmin from "./routes/MeritAdmin.svelte";

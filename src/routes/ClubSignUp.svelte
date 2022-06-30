@@ -1,6 +1,6 @@
 <script>
-  import ClubsTable from "../components/ClubTable.svelte";
-  import ClubSelectionForm from "../components/clubSelectionForm.svelte";
+  import ClubsTable from "../components/Club/ClubTable.svelte";
+  import ClubSelectionForm from "../components/Club/ClubSelectionForm.svelte";
   import { onMount } from "svelte";
 
   export let titles = ["Club Name", "Enrolled", "Capacity", "Details", "Moderators"];

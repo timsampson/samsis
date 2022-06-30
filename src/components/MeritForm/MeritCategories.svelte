@@ -1,5 +1,5 @@
 <script>
-  import { selectedCategory, behaviorKinds, behaviors } from "../stores/meritStore.js";
+  import { selectedCategory, behaviorKinds, behaviors } from "../../stores/meritStore.js";
   const categories = [
     "Merit",
     "Information",

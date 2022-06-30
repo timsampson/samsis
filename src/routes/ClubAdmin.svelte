@@ -1,7 +1,7 @@
 <script>
   import { fade } from "svelte/transition";
   import { onMount } from "svelte";
-  import RadioAdmin from "../components/RadioAdmin.svelte";
+  import RadioAdmin from "../components/Club/RadioAdmin.svelte";
   let selectedRecords = [];
   let submitted = false;
   let approvalType;

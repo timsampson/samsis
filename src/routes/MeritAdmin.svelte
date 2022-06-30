@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import MeritTable from "../components/MeritTable.svelte";
+  import MeritTable from "../components/MeritForm/MeritTable.svelte";
   let meritValues = [];
   onMount(() => {
     google.script.run.withSuccessHandler(displayMerits).getAllMeritInfo();

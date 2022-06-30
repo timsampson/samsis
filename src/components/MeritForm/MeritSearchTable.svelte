@@ -1,7 +1,7 @@
 <script>
   import { fade } from "svelte/transition";
   import { onMount } from "svelte";
-  import { filtered, selectedData, studentsData, term } from "../stores/meritStore.js";
+  import { filtered, selectedData, studentsData } from "../../stores/meritStore.js";
   let titleValues = ["Id", "Name", "Homeroom", "Teacher", "Grade", "School"];
   onMount(() => {
     google.script.run.withSuccessHandler(loadStudentsHRData).getAllStudentsHRInfo();

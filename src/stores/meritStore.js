@@ -20,8 +20,8 @@ export const filtered = derived(
 	})
 );
 export const meritFormComplete = derived(
-	[details, selectedCategory]
-	, ([$details, $selectedCategory]) => {
-		return $details.length > 0 && $selectedCategory.length > 0;
+	[details, selectedCategory, behaviors]
+	, ([$details, $selectedCategory, $behaviors]) => {
+		return $details.length > 0 && $selectedCategory.length > 0 && $behaviors.length > 0;
 	}
 );

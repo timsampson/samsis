@@ -1,5 +1,5 @@
 <script>
-  import { term } from "../stores/meritStore.js";
+  import { term } from "../../stores/meritStore.js";
   let val = "";
   $: term.set(val.toString().toLowerCase().trim());
   $: console.log($term);
