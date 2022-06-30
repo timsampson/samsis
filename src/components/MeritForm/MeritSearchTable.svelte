@@ -29,7 +29,7 @@
       ? "Once you have finished selecting students, click the next button."
       : "Please select students from the list below."}
   </p>
-  <table class="table table-compact w-full" in:fade|local={{ duration: 1000 }}>
+  <table class="table table-compact w-full table-zebra" in:fade|local={{ duration: 1000 }}>
     {#if $selectedData.length > 0}
       <thead>
         <tr>
@@ -80,7 +80,7 @@
       ? "Below are the available students."
       : "Please wait for the available students to load."}
   </p>
-  <table class="table table-compact w-full" in:fade|local={{ duration: 1000 }}>
+  <table class="table table-compact w-full table-zebra" in:fade|local={{ duration: 1000 }}>
     <thead>
       <tr>
         <th />

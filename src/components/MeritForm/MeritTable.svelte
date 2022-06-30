@@ -4,7 +4,7 @@
 </script>
 
 <div class="overflow-x-auto">
-  <table class="table table-compact w-full" in:fade|local={{ duration: 1000 }}>
+  <table class="table table-compact w-full table-zebra" in:fade|local={{ duration: 1000 }}>
     <thead>
       <tr>
         <th>Date</th>
@@ -18,7 +18,7 @@
     {#if meritValues.length > 0}
       <tbody>
         {#each meritValues as merit}
-          <tr class="odd:bg-gray-200">
+          <tr>
             <td>{merit.timestamp.toLocaleDateString()}</td>
             <td>{merit.studentName}</td>
             <td>{merit.teacherName}</td>

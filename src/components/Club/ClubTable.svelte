@@ -6,7 +6,7 @@
 
 <div class="overflow-x-auto">
   {#if clubList.length > 0}
-    <table class="table table-compact w-full" in:fade|local={{ duration: 1000 }}>
+    <table class="table table-compact w-full table-zebra" in:fade|local={{ duration: 1000 }}>
       <thead>
         <tr>
           {#each titles as title, i (titles[i])}
@@ -16,7 +16,7 @@
       </thead>
       <tbody>
         {#each clubList as club}
-          <tr class="odd:bg-gray-200">
+          <tr>
             <td>{club.name}</td>
             <td>{club.enrolled}</td>
             <td>{club.capacity}</td>
