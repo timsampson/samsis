@@ -30,6 +30,7 @@
       $behaviorKinds = RCList;
     } else $behaviorKinds = positiveList;
     uncheckBehaviorList();
+    behaviors.set([]);
   }
   function uncheckBehaviorList() {
     let checkboxes = document.getElementsByName("behaviorList");
