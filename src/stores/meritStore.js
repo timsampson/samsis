@@ -1,6 +1,6 @@
 import { writable, derived } from 'svelte/store';
 export const stepOneComplete = writable(false);
-export const meritDateValue = writable({});
+export const meritDateValue = writable(() => new Date().toLocaleDateString("en-CA"));
 export const dateIsSelected = writable(false);
 export const selectedCategory = writable('');
 export const behaviorKinds = writable('');
@@ -22,14 +22,13 @@ export const filtered = derived(
 	})
 );
 export const meritFormComplete = derived(
-	[details, selectedCategory, behaviors]
-	, ([$details, $selectedCategory, $behaviors]) => {
+	[details, selectedCategory, behaviors, dateIsSelected]
+	, ([$details, $selectedCategory, $behaviors, $dateIsSelected]) => {
 		return (
 			$details.length > 0 && 
 			$selectedCategory.length > 0 && 
-			$behaviors.length > 0 && 
-			meritDateValue != null && 
-			dateIsSelected 
+			$behaviors.length > 0  && 
+			$dateIsSelected 
 			);
 	}
 );
