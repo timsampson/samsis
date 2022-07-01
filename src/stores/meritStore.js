@@ -1,5 +1,7 @@
 import { writable, derived } from 'svelte/store';
-export const meritFormStepOneSelect = writable(true);
+export const stepOneComplete = writable(false);
+export const meritDateValue = writable({});
+export const dateIsSelected = writable(false);
 export const selectedCategory = writable('');
 export const behaviorKinds = writable('');
 export const behaviors = writable([]);
@@ -22,6 +24,12 @@ export const filtered = derived(
 export const meritFormComplete = derived(
 	[details, selectedCategory, behaviors]
 	, ([$details, $selectedCategory, $behaviors]) => {
-		return $details.length > 0 && $selectedCategory.length > 0 && $behaviors.length > 0;
+		return (
+			$details.length > 0 && 
+			$selectedCategory.length > 0 && 
+			$behaviors.length > 0 && 
+			meritDateValue != null && 
+			dateIsSelected 
+			);
 	}
 );

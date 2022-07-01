@@ -2,28 +2,33 @@
   import MeritSearch from "../components/MeritForm/MeritSearch.svelte";
   import StudentHRTable from "../components/MeritForm/MeritSearchTable.svelte";
   import MeritCategories from "../components/MeritForm/MeritCategories.svelte";
+  import MeritDate from "../components/MeritForm/MeritDate.svelte";
+  import MeritNextBtn from "../components/MeritForm/MeritNextBtn.svelte";
   import {
-    meritFormStepOneSelect,
+    stepOneComplete,
     selectedData,
     details,
     selectedCategory,
     meritFormComplete,
     behaviors,
+    meritDateValue,
+    dateIsSelected,
   } from "../stores/meritStore.js";
-
   const meritResponse = {
     behaviorCategory: "",
     behaviors: [],
     details: "",
     selectedStudents: [],
+    selectedDate: {},
   };
-  $: console.log(`meritFormStepOneSelect: ${$meritFormStepOneSelect}`);
-  $: console.log(`Details: ${$details}`);
+  $: console.log(`stepOneComplete: ${$stepOneComplete}`);
+  $: console.log(`$meritDateValue: ${$meritDateValue}`);
   function handleSubmit() {
     meritResponse.behaviorCategory = $selectedCategory;
     meritResponse.behaviors = $behaviors;
     meritResponse.details = $details;
     meritResponse.selectedStudents = $selectedData;
+    meritResponse.selectedDate = $meritDateValue;
     console.log(`meritResponse:`);
     console.table(meritResponse);
     console.log("handleSubmit");
@@ -33,16 +38,25 @@
 <div class="container mx-auto">
   <h1 class="text-xl">Merit Form Page</h1>
   <form on:submit|preventDefault={handleSubmit}>
-    {#if $meritFormStepOneSelect}
+    {#if !$stepOneComplete}
       <section>
-        <MeritSearch />
-        {#if $selectedData.length > 0}
-          <button
-            on:click={() => meritFormStepOneSelect.set(false)}
-            type="button"
-            class="ml-2 btn btn-primary">Next</button
-          >
-        {/if}
+        <div class="shadow overflow-hidden sm:rounded-md">
+          <div class="px-4 py-5 bg-white sm:p-6">
+            <div class="grid grid-cols-3 gap-4">
+              <div>
+                <MeritSearch />
+              </div>
+              <div>
+                <MeritDate />
+              </div>
+              <div>
+                {#if $selectedData.length > 0 && $dateIsSelected}
+                  <MeritNextBtn />
+                {/if}
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
       <section>
         <StudentHRTable />
