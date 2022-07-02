@@ -43,6 +43,7 @@
     details.set("");
     meritDateValue.set({});
     dateIsSelected.set(false);
+    behaviors.set([]);
   }
 </script>
 
@@ -78,7 +79,7 @@
           <button
             on:click={() => stepOneComplete.set(false)}
             type="button"
-            class="ml-2 mt-2 btn btn-primary">Back</button
+            class="ml-2 mt-2 btn btn-primary bg-warning">Back</button
           >
           <p>Now choose the categories</p>
           <MeritCategories />
@@ -96,11 +97,15 @@
         </section>
       {/if}
       {#if $meritFormComplete}
-        <button type="submit" class="ml-2 mt-2 btn btn-primary">Submit</button>
+        <button type="submit" class="ml-2 mt-2 btn btn-primary bg-success">Submit</button>
       {/if}
     </form>
   {:else}
-    <p>Thank you for submitting your merit form.</p>
-    <button on:click={resetForm} type="button" class="ml-2 mt-2 btn btn-primary">New Form</button>
+    <p class="text-lg ">Thank you for submitting your merit form.</p>
+    <button on:click={resetForm} type="button" class="ml-2 mt-2 btn btn-primary bg-warning"
+      >New Form</button
+    >
+    <p>Your submission included the follwing details.</p>
+    <pre>{JSON.stringify(meritResponse, null, 2)}</pre>
   {/if}
 </div>
