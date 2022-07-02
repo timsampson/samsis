@@ -1,5 +1,5 @@
 <script>
-  import { selectedCategory, behaviorKinds, behaviors } from "../../stores/meritStore.js";
+  import { selectedCategory, behaviorKinds, meritBehaviors } from "../../stores/meritStore.js";
   const categories = [
     "Merit",
     "Information",
@@ -15,7 +15,7 @@
   const OCList = ["fighting", "screaming", "thowing objects"];
   const RCList = ["smoking", "fireworks", "swearing"];
   $: console.log(`selectedCategory: ${$selectedCategory}`);
-  $: console.log(`behaviors: ${$behaviors}`);
+  $: console.log(`meritBehaviors: ${$meritBehaviors}`);
 
   function displayBehaviorKinds() {
     if ($selectedCategory === "Information") {
@@ -30,7 +30,7 @@
       $behaviorKinds = RCList;
     } else $behaviorKinds = positiveList;
     uncheckBehaviorList();
-    behaviors.set([]);
+    meritBehaviors.set([]);
   }
   function uncheckBehaviorList() {
     let checkboxes = document.getElementsByName("behaviorList");
@@ -77,10 +77,10 @@
               <div class=" ml-2">
                 <label>
                   <input
-                    bind:group={$behaviors}
+                    bind:group={$meritBehaviors}
                     type="checkbox"
                     id={"merit" + behavior}
-                    name="behaviors"
+                    name="meritBehaviors"
                     value={behavior}
                   />
                   {behavior}</label

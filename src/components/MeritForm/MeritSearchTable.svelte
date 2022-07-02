@@ -1,7 +1,7 @@
 <script>
   import { fade } from "svelte/transition";
   import { onMount } from "svelte";
-  import { filtered, selectedData, studentsData } from "../../stores/meritStore.js";
+  import { filtered, selectedStudents, studentsData } from "../../stores/meritStore.js";
   let titleValues = ["Id", "Name", "Homeroom", "Teacher", "Grade", "School"];
   onMount(() => {
     google.script.run.withSuccessHandler(loadStudentsHRData).getAllStudentsHRInfo();
@@ -13,24 +13,24 @@
     studentsData.set(studentsHRData);
   }
   const addToSelected = (student_id, student) => {
-    $selectedData = [...$selectedData, student];
+    $selectedStudents = [...$selectedStudents, student];
     $studentsData = $studentsData.filter((student) => student.student_id !== student_id);
   };
   const removeFromSelected = (student_id, student) => {
     $studentsData = [...$studentsData, student];
-    $selectedData = $selectedData.filter((student) => student.student_id !== student_id);
+    $selectedStudents = $selectedStudents.filter((student) => student.student_id !== student_id);
   };
 </script>
 
 <div class="overflow-x-auto">
   <h1 class="my-2 text-lg">Selected</h1>
   <p class="mt-2" fade={{ duration: 1000 }}>
-    {$selectedData.length > 0
+    {$selectedStudents.length > 0
       ? "Once you have finished selecting students, click the next button."
       : "Please select students from the list below."}
   </p>
   <table class="table table-compact w-full table-zebra" in:fade|local={{ duration: 1000 }}>
-    {#if $selectedData.length > 0}
+    {#if $selectedStudents.length > 0}
       <thead>
         <tr>
           <th />
@@ -40,7 +40,7 @@
         </tr>
       </thead>
       <tbody>
-        {#each $selectedData as student (student.student_id)}
+        {#each $selectedStudents as student (student.student_id)}
           <tr>
             <td>
               <button

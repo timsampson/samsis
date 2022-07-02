@@ -6,50 +6,50 @@
   import MeritNextBtn from "../components/MeritForm/MeritNextBtn.svelte";
   import {
     stepOneComplete,
-    selectedData,
-    details,
+    selectedStudents,
+    meritDetails,
     selectedCategory,
     meritFormComplete,
-    behaviors,
+    meritBehaviors,
     meritDateValue,
     dateIsSelected,
+    meritFormSubmitted,
   } from "../stores/meritStore.js";
-  let meritFormSubmitted = false;
   const meritResponse = {
     behaviorCategory: "",
-    behaviors: [],
-    details: "",
+    meritBehaviors: [],
+    meritDetails: "",
     selectedStudents: [],
-    selectedDate: {},
+    selectedDate: "",
   };
-  $: console.log(`stepOneComplete: ${$stepOneComplete}`);
-  $: console.log(`$meritDateValue: ${$meritDateValue}`);
+  // $: console.log(`stepOneComplete: ${$stepOneComplete}`);
+  // $: console.log(`$meritDateValue: ${$meritDateValue}`);
   function handleSubmit() {
     meritResponse.behaviorCategory = $selectedCategory;
-    meritResponse.behaviors = $behaviors;
-    meritResponse.details = $details;
-    meritResponse.selectedStudents = $selectedData;
+    meritResponse.meritBehaviors = $meritBehaviors;
+    meritResponse.meritDetails = $meritDetails;
+    meritResponse.selectedStudents = $selectedStudents;
     meritResponse.selectedDate = $meritDateValue;
     console.log(`meritResponse:`);
     console.table(meritResponse);
     console.log("handleSubmit");
-    meritFormSubmitted = true;
+    meritFormSubmitted.set(true);
   }
   function resetForm() {
-    meritFormSubmitted = false;
+    meritFormSubmitted.set(false);
     stepOneComplete.set(false);
-    selectedData.set([]);
+    selectedStudents.set([]);
     selectedCategory.set([]);
-    details.set("");
-    meritDateValue.set({});
+    meritDetails.set("");
+    meritDateValue.set("");
     dateIsSelected.set(false);
-    behaviors.set([]);
+    meritBehaviors.set([]);
   }
 </script>
 
 <div class="container mx-auto">
   <h1 class="text-xl">Merit Form Page</h1>
-  {#if !meritFormSubmitted}
+  {#if !$meritFormSubmitted}
     <form on:submit|preventDefault={handleSubmit}>
       {#if !$stepOneComplete}
         <section>
@@ -63,7 +63,7 @@
                   <MeritDate />
                 </div>
                 <div>
-                  {#if $selectedData.length > 0 && $dateIsSelected}
+                  {#if $selectedStudents.length > 0 && $dateIsSelected}
                     <MeritNextBtn />
                   {/if}
                 </div>
@@ -90,8 +90,8 @@
           <div class="ml-2 mt-4">
             <textarea
               class="textarea textarea-primary min-w-full"
-              placeholder="Details"
-              bind:value={$details}
+              placeholder="meritDetails"
+              bind:value={$meritDetails}
             />
           </div>
         </section>
@@ -105,7 +105,17 @@
     <button on:click={resetForm} type="button" class="ml-2 mt-2 btn btn-primary bg-warning"
       >New Form</button
     >
-    <p>Your submission included the follwing details.</p>
-    <pre>{JSON.stringify(meritResponse, null, 2)}</pre>
+    <p class="text-xl">Your submission included the following details.</p>
+    <p><span class="font-semibold">Merit Category: </span>{$selectedCategory}</p>
+    <p class="font-semibold">Incident date: {$meritDateValue}</p>
+    <p>Students in report:</p>
+    <ul>
+      {#each $selectedStudents as student, i}
+        <li>
+          <span class="font-semibold">{i + 1}) </span>{student.student_id}, {student.student_name}
+        </li>
+      {/each}
+    </ul>
+    <p><span class="font-semibold">Merit Details: </span>{$meritDetails}</p>
   {/if}
 </div>
