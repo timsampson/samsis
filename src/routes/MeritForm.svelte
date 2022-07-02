@@ -4,6 +4,7 @@
   import MeritCategories from "../components/MeritForm/MeritCategories.svelte";
   import MeritDate from "../components/MeritForm/MeritDate.svelte";
   import MeritNextBtn from "../components/MeritForm/MeritNextBtn.svelte";
+  import MeritSubmissionDisplay from "../components/MeritForm/MeritSubmissionDisplay.svelte";
   import {
     stepOneComplete,
     selectedStudents,
@@ -79,7 +80,7 @@
           <button
             on:click={() => stepOneComplete.set(false)}
             type="button"
-            class="ml-2 mt-2 btn btn-primary bg-warning">Back</button
+            class="ml-2 mt-2 btn btn-sm btn-primary bg-warning">Back</button
           >
           <p>Now choose the categories</p>
           <MeritCategories />
@@ -97,25 +98,16 @@
         </section>
       {/if}
       {#if $meritFormComplete}
-        <button type="submit" class="ml-2 mt-2 btn btn-primary bg-success">Submit</button>
+        <button type="submit" class="ml-2 mt-2 btn btn-sm btn-primary bg-success">Submit</button>
       {/if}
     </form>
   {:else}
     <p class="text-lg ">Thank you for submitting your merit form.</p>
-    <button on:click={resetForm} type="button" class="ml-2 mt-2 btn btn-primary bg-warning"
-      >New Form</button
+    <button
+      on:click={resetForm}
+      type="button"
+      class="ml-2 mt-2 btn btn-sm btn-wide btn-primary bg-warning">Start a new submission</button
     >
-    <p class="text-xl">Your submission included the following details.</p>
-    <p><span class="font-semibold">Merit Category: </span>{$selectedCategory}</p>
-    <p class="font-semibold">Incident date: {$meritDateValue}</p>
-    <p>Students in report:</p>
-    <ul>
-      {#each $selectedStudents as student, i}
-        <li>
-          <span class="font-semibold">{i + 1}) </span>{student.student_id}, {student.student_name}
-        </li>
-      {/each}
-    </ul>
-    <p><span class="font-semibold">Merit Details: </span>{$meritDetails}</p>
+    <MeritSubmissionDisplay />
   {/if}
 </div>
