@@ -14,6 +14,6 @@
     bind:value={$meritDateValue}
     min="2021-01-01"
     max="2022-12-31"
-    class="input input-bordered input-primary w-full max-w-xs"
+    class="input input-bordered input-primary w-full max-w-xs rounded-lg"
   />
 </div>
