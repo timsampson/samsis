@@ -1,8 +1,7 @@
 <script>
   import { meritSearchTerm } from "../../stores/meritStore.js";
   let val = "";
-  $: meritSearchTerm.set(val.toString().toLowerCase().trim());
-  $: console.log($meritSearchTerm);
+  $: meritSearchTerm.set(val.toLowerCase().trim());
 </script>
 
 <div>
