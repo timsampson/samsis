@@ -32,9 +32,30 @@ type Merit = {
     resolved_message: string,
 }
 
+
 let meritSheet = schoolSpreadsheet.getSheetByName("merits");
 let meritValues: any[][] | [any, ...any[]];
 let meritValuesAsObjArray: any[];
+
+let meritCategoriesSheet = schoolSpreadsheet.getSheetByName("merit_categories");
+let meritCategoriesValues: any[][] | [any, ...any[]];
+let meritCategoriesValuesAsObjArray: any[];
+function getAllMeritCategories() {
+    meritCategoriesValues = meritCategoriesSheet.getDataRange().getValues();
+    let meritCategoriesData = valuesToArrayOfObjects(meritCategoriesValues);
+    return meritCategoriesData;
+}
+
+
+let subjectsSheet = schoolSpreadsheet.getSheetByName("subjects");
+let subjectsValues: any[][] | [any, ...any[]];
+let subjectsValuesAsObjArray: any[];
+
+function getAllSubjects() {
+    subjectsValues = subjectsSheet.getDataRange().getValues();
+    subjectsValuesAsObjArray = valuesToArrayOfObjects(subjectsValues);
+    return subjectsValuesAsObjArray;
+}
 
 function getAllMeritInfo() {
     meritValues = meritSheet.getDataRange().getValues();
