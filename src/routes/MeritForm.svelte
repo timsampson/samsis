@@ -5,6 +5,7 @@
   import MeritDate from "../components/MeritForm/MeritDate.svelte";
   import MeritNextBtn from "../components/MeritForm/MeritNextBtn.svelte";
   import MeritSubmissionDisplay from "../components/MeritForm/MeritSubmissionDisplay.svelte";
+  import MeritSubject from "../components/MeritForm/MeritSubject.svelte";
   import {
     stepOneComplete,
     selectedStudents,
@@ -62,7 +63,7 @@
         <section>
           <div class="shadow overflow-hidden sm:rounded-md">
             <div class="px-4 py-5 bg-white sm:p-6">
-              <div class="grid grid-cols-3 gap-4">
+              <div class="grid grid-cols-4 gap-4">
                 <div>
                   <MeritSearch />
                 </div>
@@ -70,9 +71,12 @@
                   <MeritDate />
                 </div>
                 <div>
-                  {#if $selectedStudents.length > 0 && $dateIsSelected}
-                    <MeritNextBtn />
-                  {/if}
+                  <MeritSubject />
+                  <div>
+                    {#if $selectedStudents.length > 0 && $dateIsSelected}
+                      <MeritNextBtn />
+                    {/if}
+                  </div>
                 </div>
               </div>
             </div>
