@@ -1,21 +1,18 @@
 <script>
-  import { selectedCategory, behaviorKinds, meritBehaviors } from "../../stores/meritStore.js";
-  const categories = [
-    "Merit",
-    "Information",
-    "Level 1",
-    "Yellow Level",
-    "Orange Level",
-    "Red Level",
-    "Homework",
-  ];
-  const positiveList = ["helpful", "On task", "Diligent"];
-  const informationList = ["sleepy", "eating in class", "late", "emotional"];
-  const level1List = ["off task", "constantly chatting", "tardy"];
-  const YCList = ["shouting", "running", "sleeping"];
-  const OCList = ["fighting", "screaming", "thowing objects"];
-  const RCList = ["smoking", "fireworks", "swearing"];
-  const HWList = ["late", "incomplete", "unsubmitted"];
+  import {
+    selectedCategory,
+    behaviorKinds,
+    meritBehaviors,
+    categories,
+    informationList,
+    level1List,
+    YCList,
+    OCList,
+    RCList,
+    HWList,
+    positiveList,
+  } from "../../stores/meritStore.js";
+
   $: console.log(`selectedCategory: ${$selectedCategory}`);
   $: console.log(`meritBehaviors: ${$meritBehaviors}`);
 
