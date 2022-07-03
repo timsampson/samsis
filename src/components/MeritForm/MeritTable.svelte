@@ -20,8 +20,8 @@
         {#each meritValues as merit}
           <tr>
             <td>{merit.timestamp.toLocaleDateString()}</td>
-            <td>{merit.studentName}</td>
-            <td>{merit.teacherName}</td>
+            <td>{merit.student_name}</td>
+            <td>{merit.teacher_name}</td>
             <td>{merit.categories}</td>
             <td>{merit.type}</td>
             <td>{merit.details}</td>

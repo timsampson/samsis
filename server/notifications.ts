@@ -22,18 +22,18 @@ function createMeritEmailHTML(
         record: {
             sunPicture: GoogleAppsScript.Base.Blob;
             housePicture: GoogleAppsScript.Base.Blob;
-            studentName: any;
-            studentHouse: any;
+            student_name: any;
+            student_house: any;
             allDetails: any;
             hrtEmail: string;
             teacherEmail: string;
-            studentEmail: any;
+            student_email: any;
         };
     }): void {
     // Create the individual template
     const htmlBody = HtmlService.createTemplateFromFile("meritMailTemplate");
-    htmlBody.name = record.studentName;
-    htmlBody.house = record.studentHouse;
+    htmlBody.name = record.student_name;
+    htmlBody.house = record.student_house;
     htmlBody.alldetails = record.allDetails;
     const meritHtmlBody = htmlBody.evaluate().getContent();
     // Send the email
@@ -41,7 +41,7 @@ function createMeritEmailHTML(
 
     function sendMeritEmail() {
         const ccEmail = record.hrtEmail + ", " + record.teacherEmail;
-        const toEmail = record.studentEmail;
+        const toEmail = record.student_email;
         const emailSubject = "Merit Awarded";
         sendMerit(meritHtmlBody, ccEmail, toEmail, emailSubject);
     }

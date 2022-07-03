@@ -1,14 +1,14 @@
 type Merit = {
     id: string,
     timestamp: Date,
-    incidentDate: Date,
-    studentID: string,
+    incident_date: Date,
+    student_id: string,
     homeroom: string,
-    studentName: string,
-    studentEmail: string,
-    studentHouse: string,
+    student_name: string,
+    student_email: string,
+    student_house: string,
     teacherEmail: string,
-    teacherName: string,
+    teacher_name: string,
     subject: string,
     hr_teacher_id: string,
     hr_teacher_email: string,
@@ -69,7 +69,7 @@ function getAllMeritInfo() {
 function getSingeUserMeritInfo() {
     meritValues = meritSheet.getDataRange().getValues();
     meritValuesAsObjArray = valuesToArrayOfObjects(meritValues);
-    let studentMeritInfo = meritValuesAsObjArray.filter((merit: Merit) => merit.studentEmail == getUserEmail());
+    let studentMeritInfo = meritValuesAsObjArray.filter((merit: Merit) => merit.student_email == getUserEmail());
     studentMeritInfo.forEach((record, index) => {
         studentMeritInfo[index] = JSON.stringify(record);
     });
@@ -144,37 +144,37 @@ function meritSubmissionTest() {
 }
 
 function meritSubmission(meritRecord): boolean {
-    // id	timestamp	incidentDate	studentID	homeroom	studentName	studentEmail	studentHouse	teacherEmail	teacherName	subject	hr_teacher_id	hr_teacher_email	hr_teacher_name	categories	type	attendance_details	merit_details	homework_details	all_details	notice_sent	assigned_department	assigned_to	assignee_reviewed	assignee_reviewed_date	assignee_message	assignment_status	resolved	resolved_by	resolved_date	resolved_message
+    // id	timestamp	incident_date	student_id	homeroom	student_name	student_email	student_house	teacherEmail	teacher_name	subject	hr_teacher_id	hr_teacher_email	hr_teacher_name	categories	type	attendance_details	merit_details	homework_details	all_details	notice_sent	assigned_department	assigned_to	assignee_reviewed	assignee_reviewed_date	assignee_message	assignment_status	resolved	resolved_by	resolved_date	resolved_message
     //let meritRecord = JSON.parse(meritRecordObj);
     let id: string;
     let category = meritRecord.behaviorCategory;
     let timestamp = new Date();
-    let incidentDate = new Date(meritRecord.selectedDate);
+    let incident_date = new Date(meritRecord.selectedDate);
     let details = meritRecord.meritDetails;
     let type = meritRecord.meritBehaviors.join(',');
     let teacherEmail = getUserEmail();
-    let teacherName = getTeacherName(teacherEmail);
+    let teacher_name = getTeacherName(teacherEmail);
     meritRecord.selectedStudents.forEach((student) => {
         // [{"id":"3","student_id":"768","hr_id":"GKS1","student_email":"adamov@niceschool.edu",
         // "student_name":"Zondra Adamov","hr_teacher":"Ms. Marie Tobin","homeroom":"Taichung",
         // "grade":"K","school":"ls"},
-        // id	timestamp	incidentDate	studentID	homeroom	studentName	studentEmail	studentHouse
-        //	teacherEmail	teacherName	subject	hr_teacher_id	hr_teacher_email	hr_teacher_name	categories	type	attendance_details	merit_details	homework_details	all_details	notice_sent	assigned_department	assigned_to	assignee_reviewed	assignee_reviewed_date	assignee_message	assignment_status	resolved	resolved_by	resolved_date	resolved_message
+        // id	timestamp	incident_date	student_id	homeroom	student_name	student_email	student_house
+        //	teacherEmail	teacher_name	subject	hr_teacher_id	hr_teacher_email	hr_teacher_name	categories	type	attendance_details	merit_details	homework_details	all_details	notice_sent	assigned_department	assigned_to	assignee_reviewed	assignee_reviewed_date	assignee_message	assignment_status	resolved	resolved_by	resolved_date	resolved_message
         let studentHRInfo = getStudentHRInfo(student.student_email);
         //let studentInfo = getStudentInfo(student.student_email);
-        let studentHouse = getStudentHouse(student.student_email);
+        let student_house = getStudentHouse(student.student_email);
         id = getlogId(meritSheet);
         let record = [
             id,
             timestamp,
-            incidentDate,
+            incident_date,
             student.student_id,
             student.homeroom,
             student.student_name,
             student.student_email,
-            studentHouse,
+            student_house,
             teacherEmail,
-            teacherName,
+            teacher_name,
             "testing",
             studentHRInfo.hr_id,
             studentHRInfo.hr_teacher_id,

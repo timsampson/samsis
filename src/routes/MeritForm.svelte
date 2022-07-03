@@ -1,6 +1,6 @@
 <script>
   import MeritSearch from "../components/MeritForm/MeritSearch.svelte";
-  import StudentHRTable from "../components/MeritForm/MeritSearchTable.svelte";
+  import MeritSearchTable from "../components/MeritForm/MeritSearchTable.svelte";
   import MeritCategories from "../components/MeritForm/MeritCategories.svelte";
   import MeritDate from "../components/MeritForm/MeritDate.svelte";
   import MeritNextBtn from "../components/MeritForm/MeritNextBtn.svelte";
@@ -84,7 +84,7 @@
           </div>
         </section>
         <section>
-          <StudentHRTable />
+          <MeritSearchTable />
         </section>
       {:else}
         <section>

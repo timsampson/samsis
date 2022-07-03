@@ -36,7 +36,7 @@
 <nav>
   <div class="relative flex items-center justify-between h-16">
     <div>
-      <a href="#/" on:click={() => setURL("/home")} class="btn btn-ghost normal-case text-xl"
+      <a href="#/" on:click={() => setURL("/home")} class="btn btn-ghost normal-case text-xl ml-2"
         >SAMSIS</a
       >
     </div>

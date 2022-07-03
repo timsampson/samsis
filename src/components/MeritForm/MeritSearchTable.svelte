@@ -7,6 +7,7 @@
     google.script.run.withSuccessHandler(loadStudentsHRData).getAllStudentsHRInfo();
   });
   function loadStudentsHRData(studentsHRData) {
+    console.table(studentsHRData[0]);
     studentsHRData.forEach((record, index) => {
       studentsHRData[index] = JSON.parse(record);
     });
@@ -67,7 +68,7 @@
             <td>{student.student_id}</td>
             <td>{student.student_name}</td>
             <td>{student.homeroom}</td>
-            <td>{student.hr_teacher}</td>
+            <td>{student.hr_teacher_name}</td>
             <td>{student.grade}</td>
             <td>{student.school}</td>
           </tr>
@@ -120,7 +121,7 @@
             <td>{student.student_id}</td>
             <td>{student.student_name}</td>
             <td>{student.homeroom}</td>
-            <td>{student.hr_teacher}</td>
+            <td>{student.hr_teacher_name}</td>
             <td>{student.grade}</td>
             <td>{student.school}</td>
           </tr>
