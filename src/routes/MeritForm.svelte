@@ -16,6 +16,7 @@
     meritDateValue,
     dateIsSelected,
     meritFormSubmitted,
+    selectedSubject,
   } from "../stores/meritStore.js";
   const meritResponse = {
     behaviorCategory: "",
@@ -63,20 +64,20 @@
         <section>
           <div class="shadow overflow-hidden sm:rounded-md">
             <div class="px-4 py-5 bg-white sm:p-6">
-              <div class="grid grid-cols-4 gap-4">
-                <div>
+              <div class="grid lg:grid-cols-4 gap-2 md:grid-cols-2">
+                <div class="flex-none">
                   <MeritSearch />
                 </div>
-                <div>
+                <div class="flex-none">
                   <MeritDate />
                 </div>
-                <div>
+                <div class="flex-none">
                   <MeritSubject />
-                  <div>
-                    {#if $selectedStudents.length > 0 && $dateIsSelected}
-                      <MeritNextBtn />
-                    {/if}
-                  </div>
+                </div>
+                <div class="flex-none">
+                  {#if $selectedStudents.length > 0 && $dateIsSelected && $selectedSubject != ""}
+                    <MeritNextBtn />
+                  {/if}
                 </div>
               </div>
             </div>

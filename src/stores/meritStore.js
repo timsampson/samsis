@@ -8,6 +8,7 @@ export const OCList = ["fighting", "screaming", "thowing objects"];
 export const RCList = ["smoking", "fireworks", "swearing"];
 export const HWList = ["incomplete", "not submitted", "poor effort"];
 export const subjects = ["Reading"," History","Geography","Geometry","Algebra lI","Writing","Physics","Chemistry","Biology","Math","Precalculus","Calculus"];
+export const selectedSubject = writable('');
 export const stepOneComplete = writable(false);
 export const meritDateValue = writable(() => new Date().toLocaleDateString("en-CA"));
 export const dateIsSelected = writable(false);
