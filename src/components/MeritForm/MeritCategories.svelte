@@ -7,6 +7,7 @@
     "Yellow Level",
     "Orange Level",
     "Red Level",
+    "Homework",
   ];
   const positiveList = ["helpful", "On task", "Diligent"];
   const informationList = ["sleepy", "eating in class", "late", "emotional"];
@@ -14,6 +15,7 @@
   const YCList = ["shouting", "running", "sleeping"];
   const OCList = ["fighting", "screaming", "thowing objects"];
   const RCList = ["smoking", "fireworks", "swearing"];
+  const HWList = ["late", "incomplete", "unsubmitted"];
   $: console.log(`selectedCategory: ${$selectedCategory}`);
   $: console.log(`meritBehaviors: ${$meritBehaviors}`);
 
@@ -28,6 +30,8 @@
       $behaviorKinds = OCList;
     } else if ($selectedCategory === "Red Level") {
       $behaviorKinds = RCList;
+    } else if ($selectedCategory === "Homework") {
+      $behaviorKinds = HWList;
     } else $behaviorKinds = positiveList;
     uncheckBehaviorList();
     meritBehaviors.set([]);

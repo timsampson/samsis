@@ -60,12 +60,12 @@ function getCurrentClubRecordIndex(applicationEmail) {
     return currentClubRecordIndex;
 }
 function getClubsFilteredByLevel() {
-    if (isTeacher()) {
+    if (isTeacher(getUserEmail())) {
         let clubs: Club[] = getClubRecords();
         return clubs;
     } else {
         // need student details
-        let studentHRInfo: Student = getStudentHRInfo();
+        let studentHRInfo: Student = getStudentHRInfo(getUserEmail());
         // need available clubs
         // filter the availabe clubs by matches with student details.
         let allclubs = getClubRecords();
@@ -89,8 +89,8 @@ function getClubsFilteredByLevel() {
     }
 }
 async function getUserClubState() {
-    let studentDetails = await getStudentInfo();
-    let studentHRInfo = await getStudentHRInfo();
+    let studentDetails = await getStudentInfo(getUserEmail());
+    let studentHRInfo = await getStudentHRInfo(getUserEmail());
     let currentClubRecord = getCurrentClubRecord();
     let isStudent = (studentDetails.email != undefined);
     let formState = getFormState();
@@ -113,9 +113,9 @@ async function getUserClubState() {
 }
 
 function testClubs() {
-    let studentDetails = getStudentInfo();
+    let studentDetails = getStudentInfo(getUserEmail());
     Logger.log(`studentDetails: ${JSON.stringify(studentDetails)}`);
-    let studentHRInfo = getStudentHRInfo();
+    let studentHRInfo = getStudentHRInfo(getUserEmail());
     Logger.log(`studentHRInfo: ${JSON.stringify(studentHRInfo)}`);
     let currentClubRecord = getCurrentClubRecord();
     Logger.log(`currentClubRecord: ${JSON.stringify(currentClubRecord)}`);

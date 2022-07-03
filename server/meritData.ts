@@ -10,9 +10,9 @@ type Merit = {
     teacherEmail: string,
     teacherName: string,
     subject: string,
-    hrTeacherID: string,
-    hrTeacherEmail: string,
-    hrTeacherName: string,
+    hr_teacher_id: string,
+    hr_teacher_email: string,
+    hr_teacher_name: string,
     categories: string,
     type: string,
     attendance_details: string,
@@ -60,4 +60,113 @@ function getUserMeritInfoByEmail(email: string) {
     meritValuesAsObjArray = valuesToArrayOfObjects(meritValues);
     let studentInfo = studentValuesAsObjArray.find((student: Student) => student.email == email);
     return studentInfo;
+}
+function meritSubmissionTest() {
+    let testObj = {
+        "behaviorCategory": "Orange Level",
+        "meritBehaviors": [
+            "fighting",
+            "screaming"
+        ],
+        "meritDetails": "j kj jnkj",
+        "selectedStudents": [
+            {
+                "id": "3",
+                "student_id": "768",
+                "hr_id": "GKS1",
+                "student_email": "adamov@niceschool.edu",
+                "student_name": "Zondra  Adamov",
+                "hr_teacher": "Ms. Marie Tobin",
+                "homeroom": "Taichung",
+                "grade": "K",
+                "school": "ls"
+            },
+            {
+                "id": "1",
+                "student_id": "387",
+                "hr_id": "GPKS1",
+                "student_email": "tcoughlan@niceschool.edu",
+                "student_name": "Rafaellle Thaddeus Coughlan",
+                "hr_teacher": "Ms. Victoria Bishop",
+                "homeroom": "Kaohsiung",
+                "grade": "PK",
+                "school": "ls"
+            },
+            {
+                "id": "2",
+                "student_id": "338",
+                "hr_id": "GPKS2",
+                "student_email": "vguitt@niceschool.edu",
+                "student_name": "Maryellen Valentine Guitt",
+                "hr_teacher": "Mr. Danny Baker",
+                "homeroom": "Wulai",
+                "grade": "PK",
+                "school": "ls"
+            },
+            {
+                "id": "4",
+                "student_id": "872",
+                "hr_id": "GKS2",
+                "student_email": "rcadwallader@niceschool.edu",
+                "student_name": "Clyve Russell Cadwallader",
+                "hr_teacher": "Ms. Agnes Tobin",
+                "homeroom": "Tainan",
+                "grade": "K",
+                "school": "ls"
+            }
+        ],
+        "selectedDate": "2022-07-19"
+    }
+
+    let testObjAsString = JSON.stringify(testObj);
+    meritSubmission(testObjAsString);
+}
+
+function meritSubmission(meritRecord): boolean {
+    // id	timestamp	incidentDate	studentID	homeroom	studentName	studentEmail	studentHouse	teacherEmail	teacherName	subject	hr_teacher_id	hr_teacher_email	hr_teacher_name	categories	type	attendance_details	merit_details	homework_details	all_details	notice_sent	assigned_department	assigned_to	assignee_reviewed	assignee_reviewed_date	assignee_message	assignment_status	resolved	resolved_by	resolved_date	resolved_message
+    //let meritRecord = JSON.parse(meritRecordObj);
+    let id: string;
+    let category = meritRecord.behaviorCategory;
+    let timestamp = new Date();
+    let incidentDate = new Date(meritRecord.selectedDate);
+    let details = meritRecord.meritDetails;
+    let type = meritRecord.meritBehaviors.join(',');
+    let teacherEmail = getUserEmail();
+    let teacherName = getTeacherName(teacherEmail);
+    meritRecord.selectedStudents.forEach((student) => {
+        // [{"id":"3","student_id":"768","hr_id":"GKS1","student_email":"adamov@niceschool.edu",
+        // "student_name":"Zondra Adamov","hr_teacher":"Ms. Marie Tobin","homeroom":"Taichung",
+        // "grade":"K","school":"ls"},
+        // id	timestamp	incidentDate	studentID	homeroom	studentName	studentEmail	studentHouse
+        //	teacherEmail	teacherName	subject	hr_teacher_id	hr_teacher_email	hr_teacher_name	categories	type	attendance_details	merit_details	homework_details	all_details	notice_sent	assigned_department	assigned_to	assignee_reviewed	assignee_reviewed_date	assignee_message	assignment_status	resolved	resolved_by	resolved_date	resolved_message
+        let studentHRInfo = getStudentHRInfo(student.student_email);
+        //let studentInfo = getStudentInfo(student.student_email);
+        let studentHouse = getStudentHouse(student.student_email);
+        id = getlogId(meritSheet);
+        let record = [
+            id,
+            timestamp,
+            incidentDate,
+            student.student_id,
+            student.homeroom,
+            student.student_name,
+            student.student_email,
+            studentHouse,
+            teacherEmail,
+            teacherName,
+            "testing",
+            studentHRInfo.hr_id,
+            studentHRInfo.hr_teacher_id,
+            studentHRInfo.hr_teacher_email,
+            studentHRInfo.hr_teacher_name,
+            category,
+            type,
+            "", // attendance_details
+            "", //merit_details
+            "", //homework_details
+            details,
+        ];
+        meritSheet.appendRow(record);
+    });
+    return true;
 }

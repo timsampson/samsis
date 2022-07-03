@@ -31,10 +31,16 @@
     meritResponse.meritDetails = $meritDetails;
     meritResponse.selectedStudents = $selectedStudents;
     meritResponse.selectedDate = $meritDateValue;
-    console.log(`meritResponse:`);
-    console.table(meritResponse);
-    console.log("handleSubmit");
+    // console.log(`meritResponse:`);
+    // console.table(meritResponse);
+    // console.log("handleSubmit");
     meritFormSubmitted.set(true);
+    //let meritRecord = JSON.stringify(meritResponse);
+    google.script.run.withSuccessHandler(meritSubmissionResponse).meritSubmission(meritResponse);
+  }
+  function meritSubmissionResponse(response) {
+    console.log(`meritSubmissionResponse:`);
+    console.table(response);
   }
   function resetForm() {
     meritFormSubmitted.set(false);
@@ -109,5 +115,6 @@
       class="ml-2 mt-2 btn btn-sm btn-wide btn-primary bg-warning">Start a new submission</button
     >
     <MeritSubmissionDisplay />
+    <pre>{JSON.stringify(meritResponse)}</pre>
   {/if}
 </div>

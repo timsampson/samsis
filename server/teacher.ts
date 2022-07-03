@@ -1,23 +1,38 @@
+// id	email	lastname	firstname	gender	title	full_name	employment	department_code	department_name	role	is_club_admin
 type Staff = {
+    id: string,
     email: string,
-    phone: string,
+    lastname: string,
+    firstname: string,
+    gender: string,
+    title: string,
+    full_name: string,
+    employment_type: string,
+    department_name: string,
     role: string,
 }
 
-function isTeacher() {
-    let staffInfo = getStaffInfo();
+function isTeacher(email: string) {
+    if (email === undefined) { email = getUserEmail(); }
+    let staffInfo = getStaffInfo(email);
     if (staffInfo === undefined) {
         return false;
     }
     return true;
 }
-function getStaffInfo() {
+function getStaffInfo(email: string) {
+    if (email === undefined) { email = getUserEmail(); }
     staffValues = staffSheet.getDataRange().getValues();
     staffValuesAsObjArray = valuesToArrayOfObjects(staffValues);
-    let staffInfo = staffValuesAsObjArray.find((staff: Staff) => staff.email == getUserEmail());
+    let staffInfo: Staff = staffValuesAsObjArray.find((staff: Staff) => staff.email == email);
     return staffInfo;
 }
 function testStaff() {
-    Logger.log(getStaffInfo());
-    Logger.log(isTeacher());
+    Logger.log(getStaffInfo(getUserEmail()));
+    Logger.log(isTeacher(getUserEmail()));
+}
+function getTeacherName(email: string) {
+    if (email === undefined) { email = getUserEmail(); }
+    let staffInfo: Staff = getStaffInfo(email);
+    return staffInfo.full_name;
 }
