@@ -9,5 +9,5 @@
   id="completePartOne"
   on:click={() => stepOneComplete.set(true)}
   type="button"
-  class="ml-2 btn btn-sm btn-primary">Next</button
+  class="ml-2 btn  btn-primary">Next</button
 >
