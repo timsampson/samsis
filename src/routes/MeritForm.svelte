@@ -102,8 +102,9 @@
           <div class="ml-2 mt-4">
             <textarea
               class="textarea textarea-primary min-w-full"
-              placeholder="meritDetails"
+              placeholder="Write the details here."
               bind:value={$meritDetails}
+              required
             />
           </div>
         </section>
