@@ -1,5 +1,5 @@
 <script>
-  export let approvalType;
+  import { approvalType } from "../../stores/clubAdminStore.js";
 </script>
 
 <fieldset>
@@ -11,11 +11,11 @@
         name="approvalType"
         id="approved_radio"
         value="approved"
-        bind:group={approvalType}
+        bind:group={$approvalType}
       />
       <label
         class="form-check-label inline-block cursor-pointer"
-        class:text-green-800={approvalType == "approved"}
+        class:text-green-800={$approvalType == "approved"}
         for="approved_radio">Approved</label
       >
     </div>
@@ -26,11 +26,11 @@
         name="approvalType"
         id="rejected_radio"
         value="rejected"
-        bind:group={approvalType}
+        bind:group={$approvalType}
       />
       <label
         class="form-check-label inline-block cursor-pointer"
-        class:text-red-500={approvalType == "rejected"}
+        class:text-red-500={$approvalType == "rejected"}
         for="rejected_radio">Rejected</label
       >
     </div>

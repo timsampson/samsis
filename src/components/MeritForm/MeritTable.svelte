@@ -1,6 +1,6 @@
 <script>
   import { fade } from "svelte/transition";
-  export let meritValues = [];
+  import { meritValues } from "../../stores/meritStore.js";
 </script>
 
 <div class="overflow-x-auto">
@@ -15,9 +15,9 @@
         <th>Details</th>
       </tr>
     </thead>
-    {#if meritValues.length > 0}
+    {#if $meritValues.length > 0}
       <tbody>
-        {#each meritValues as merit}
+        {#each $meritValues as merit}
           <tr>
             <td>{merit.timestamp.toLocaleDateString()}</td>
             <td>{merit.student_name}</td>

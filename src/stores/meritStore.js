@@ -1,4 +1,5 @@
 import { writable, derived } from 'svelte/store';
+export const meritValues = writable([]);
 export const categories = [ "Merit", "Information", "Level 1",  "Yellow Level",  "Orange Level", "Red Level", "Homework"];
 export const positiveList = ["helpful", "On task", "Diligent"];
 export const informationList = ["sleepy", "eating in class", "late", "emotional"];

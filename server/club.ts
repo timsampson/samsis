@@ -1,11 +1,11 @@
 type Club = {
     id: number,
-    formSubmissionDate: any;
+    form_submission_date: any;
     level: string,
-    clubId: number,
+    club_id: number,
     active: boolean,
     year: string,
-    name: string,
+    club_name: string,
     enrolled: number,
     capacity: number,
     moderator: string,
@@ -13,7 +13,7 @@ type Club = {
     location: string,
 };
 type ClubEnrollment = {
-    recordId: number,
+    record_id: number,
     approvalDate: any,
     year: string,
     email: string,
@@ -21,12 +21,27 @@ type ClubEnrollment = {
     grade: string,
     school: string,
     homeroom: string,
-    clubId: number,
-    clubName: string,
-    clubModerator: string,
+    club_id: number,
+    club_name: string,
+    club_moderator: string,
     description: string,
-    isInClub: boolean;
+    is_in_club: boolean;
 };
+type UserClubState = {
+    email: string,
+    name: string,
+    grade: string,
+    school: string,
+    homeroom: string,
+    form_edit_state: string,
+    is_in_club: boolean,
+    current_club_id: number,
+    current_club_name: string,
+    user_role: string,
+    is_student: boolean,
+    is_moderator: boolean,
+    club_message: string,
+}
 function getClubRecords() {
     clubsValues = clubsSheet.getDataRange().getValues();
     clubsValuesAsObjArray = valuesToArrayOfObjects(clubsValues);
@@ -40,14 +55,14 @@ function getCurrentClubRecord() {
     clubEnrollmentValuesAsObjArray = valuesToArrayOfObjects(clubEnrollmentSheet.getDataRange().getValues());
     let clubRecord = clubEnrollmentValuesAsObjArray.find((clubRecord) => clubRecord.email == getUserEmail());
     if (clubRecord == null || clubRecord == undefined) {
-        currentClubRecord.clubId;
-        currentClubRecord.clubName;
-        currentClubRecord.isInClub = false;
+        currentClubRecord.club_id = 0;
+        currentClubRecord.club_name = 'Not in a club';
+        currentClubRecord.is_in_club = false;
     }
     else {
-        currentClubRecord.clubId = clubRecord.clubId;
-        currentClubRecord.clubName = clubRecord.clubName;
-        currentClubRecord.isInClub = true;
+        currentClubRecord.club_id = clubRecord.club_id;
+        currentClubRecord.club_name = clubRecord.club_name;
+        currentClubRecord.is_in_club = true;
     }
     Logger.log(JSON.stringify(currentClubRecord));
     return currentClubRecord;
@@ -65,16 +80,16 @@ function getClubsFilteredByLevel() {
         return clubs;
     } else {
         // need student details
-        let studentHRInfo: Student = getStudentHRInfo(getUserEmail());
+        let studentHrInfo: Student = getStudentHRInfo(getUserEmail());
         // need available clubs
         // filter the availabe clubs by matches with student details.
         let allclubs = getClubRecords();
         function isMatch(levelOptions) {
             let isMatch = false;
             levelOptions.forEach((element) => {
-                if (sanitize(element) == sanitize(studentHRInfo.grade)
-                    || sanitize(element) == sanitize(studentHRInfo.school)
-                    || sanitize(element) == sanitize(studentHRInfo.homeroom)) {
+                if (sanitize(element) == sanitize(studentHrInfo.grade)
+                    || sanitize(element) == sanitize(studentHrInfo.school)
+                    || sanitize(element) == sanitize(studentHrInfo.homeroom)) {
                     isMatch = true;
                 }
             });
@@ -90,24 +105,24 @@ function getClubsFilteredByLevel() {
 }
 async function getUserClubState() {
     let studentDetails = await getStudentInfo(getUserEmail());
-    let studentHRInfo = await getStudentHRInfo(getUserEmail());
+    let studentHrInfo = await getStudentHRInfo(getUserEmail());
     let currentClubRecord = getCurrentClubRecord();
-    let isStudent = (studentDetails.email != undefined);
-    let formState = getFormState();
-    let userClubState = {
+    let is_student = (studentDetails.email != undefined);
+    let form_edit_state = getFormState();
+    let userClubState: UserClubState = {
         email: studentDetails.email,
         name: studentDetails.full_name,
-        grade: studentHRInfo.grade,
-        school: studentHRInfo.school,
-        homeroom: studentHRInfo.homeroom,
-        formState: formState,
-        isInClub: currentClubRecord.isInClub,
-        currentClubId: currentClubRecord.clubId,
-        currentClubName: currentClubRecord.clubName,
+        grade: studentHrInfo.grade,
+        school: studentHrInfo.school,
+        homeroom: studentHrInfo.homeroom,
+        form_edit_state: form_edit_state,
+        is_in_club: currentClubRecord.is_in_club,
+        current_club_id: currentClubRecord.club_id,
+        current_club_name: currentClubRecord.club_name,
         user_role: "",
-        isStudent: isStudent,
-        isModerator: false,
-        clubMessage: "",
+        is_student: is_student,
+        is_moderator: false,
+        club_message: "",
     };
     return userClubState;
 }
@@ -115,14 +130,14 @@ async function getUserClubState() {
 function testClubs() {
     let studentDetails = getStudentInfo(getUserEmail());
     Logger.log(`studentDetails: ${JSON.stringify(studentDetails)}`);
-    let studentHRInfo = getStudentHRInfo(getUserEmail());
-    Logger.log(`studentHRInfo: ${JSON.stringify(studentHRInfo)}`);
+    let studentHrInfo = getStudentHRInfo(getUserEmail());
+    Logger.log(`studentHrInfo: ${JSON.stringify(studentHrInfo)}`);
     let currentClubRecord = getCurrentClubRecord();
     Logger.log(`currentClubRecord: ${JSON.stringify(currentClubRecord)}`);
-    let isStudent = (studentDetails.email != undefined);
-    Logger.log(`isStudent: ${isStudent}`);
-    let formState = getFormState();
-    Logger.log(`formState: ${formState}`);
+    let is_student = (studentDetails.email != undefined);
+    Logger.log(`is_student: ${is_student}`);
+    let form_state = getFormState();
+    Logger.log(`form_state: ${form_state}`);
     let userClubState = getUserClubState();
     Logger.log(`userClubState: ${JSON.stringify(userClubState)}`);
 }

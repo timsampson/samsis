@@ -46,8 +46,8 @@ function getlogId(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
     let formApplicationDate = new Date();
     let year = formApplicationDate.getFullYear();
     let day = formApplicationDate.getDate();
-    let recordId = "id" + year + day + lastRecordRow + Math.floor(Math.random() * 10);
-    return recordId;
+    let record_id = "id" + year + day + lastRecordRow + Math.floor(Math.random() * 10);
+    return record_id;
 }
 // get user photo from google drive
 //AdminDirectory.Users.Photos.get(email_address)
@@ -57,7 +57,7 @@ function getUserPhoto() {
     return Utilities.base64EncodeWebSafe(photo).replace(/_/g, '/').replace(/-/g, '+');
 }// club sheet value for sheet status
 const formStatusSheet = schoolSpreadsheet.getSheetByName("club_form_state");
-let formState = formStatusSheet.getRange(2, 1).getValue();
+let form_edit_state = formStatusSheet.getRange(2, 1).getValue();
 function getFormState() {
     return formStatusSheet.getRange(2, 1).getValue();
 }

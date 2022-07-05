@@ -160,7 +160,7 @@ function meritSubmission(meritRecord): boolean {
         // "grade":"K","school":"ls"},
         // id	timestamp	incident_date	student_id	homeroom	student_name	student_email	student_house
         //	teacherEmail	teacher_name	subject	hr_teacher_id	hr_teacher_email	hr_teacher_name	categories	type	attendance_details	merit_details	homework_details	all_details	notice_sent	assigned_department	assigned_to	assignee_reviewed	assignee_reviewed_date	assignee_message	assignment_status	resolved	resolved_by	resolved_date	resolved_message
-        let studentHRInfo = getStudentHRInfo(student.student_email);
+        let studentHrInfo = getStudentHRInfo(student.student_email);
         //let studentInfo = getStudentInfo(student.student_email);
         let student_house = getStudentHouse(student.student_email);
         id = getlogId(meritSheet);
@@ -176,10 +176,10 @@ function meritSubmission(meritRecord): boolean {
             teacherEmail,
             teacher_name,
             "testing",
-            studentHRInfo.hr_id,
-            studentHRInfo.hr_teacher_id,
-            studentHRInfo.hr_teacher_email,
-            studentHRInfo.hr_teacher_name,
+            studentHrInfo.hr_id,
+            studentHrInfo.hr_teacher_id,
+            studentHrInfo.hr_teacher_email,
+            studentHrInfo.hr_teacher_name,
             category,
             type,
             "", // attendance_details

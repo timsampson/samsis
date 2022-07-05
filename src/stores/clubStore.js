@@ -1,0 +1,22 @@
+import { writable } from 'svelte/store';
+export const club_list = writable([]);
+export const show_notice = writable(false);
+export const form_is_closed = writable(true);
+export const submitted = writable(false);
+export const notification_kind = writable('info');
+export const form_edit_state = writable('closed');
+export const is_in_club = writable(false);
+export const application_message = writable('');
+export const is_moderator = writable(false);
+export const homeroom = writable('');
+export const current_club_name = writable("");
+export const user_role = writable('');
+export const current_club_id = writable('');
+export const school_id = writable('');
+export const student_name = writable('');
+export const club_message = writable('');
+export const email = writable('');
+export const is_student = writable(false);
+export const school = writable('');
+export const grade = writable('');
+ 

@@ -1,11 +1,11 @@
 <script>
   import { fade } from "svelte/transition";
-  export let clubList;
+  import { club_list } from "../../stores/clubStore.js";
   export let titles;
 </script>
 
 <div class="overflow-x-auto">
-  {#if clubList.length > 0}
+  {#if $club_list.length > 0}
     <table class="table table-compact w-full table-zebra" in:fade|local={{ duration: 1000 }}>
       <thead>
         <tr>
@@ -15,13 +15,13 @@
         </tr>
       </thead>
       <tbody>
-        {#each clubList as club}
+        {#each $club_list as club}
           <tr>
-            <td>{club.name}</td>
+            <td>{club.club_name}</td>
             <td>{club.enrolled}</td>
             <td>{club.capacity}</td>
             <td>{club.description}</td>
-            <td>{club.moderator}</td>
+            <td>{club.moderator_name}</td>
           </tr>
         {/each}
       </tbody>

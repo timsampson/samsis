@@ -48,11 +48,11 @@ function getStudentHRInfo(email: string) {
     if (email === undefined) { email = getUserEmail(); }
     hrStudentValues = hrStudentSheet.getDataRange().getValues();
     hrStudentValuesAsObjArray = valuesToArrayOfObjects(hrStudentValues);
-    const studentHRInfo = hrStudentValuesAsObjArray.find((record: HRinfo) => record.student_email == email);
-    if (studentHRInfo.hr_id === undefined) {
-        studentHRInfo.hr_id = "Not Assigned";
+    const studentHrInfo = hrStudentValuesAsObjArray.find((record: HRinfo) => record.student_email == email);
+    if (studentHrInfo.hr_id === undefined) {
+        studentHrInfo.hr_id = "Not Assigned";
     }
-    return studentHRInfo;
+    return studentHrInfo;
 }
 function getAllStudentsHRInfo() {
     hrStudentValues = hrStudentSheet.getDataRange().getValues();
