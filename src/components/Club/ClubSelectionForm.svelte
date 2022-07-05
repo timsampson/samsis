@@ -180,7 +180,7 @@
         bind:value={selected}
         class="select select-primary w-full max-w-xs"
       >
-        <option value={() => (selected.club_name = "")}>Select a Club Here</option>
+        <option value="">Select a Club Here</option>
         {#each $club_list as club}
           <option value={club}>
             {club.club_name}
