@@ -28,7 +28,6 @@
     }
   }
   function handleSubmit() {
-    submitted.set(false);
     approvalElementList = document.getElementsByName("approvals");
     let numChecked = 0;
     for (let i = 0; i < approvalElementList.length; i++) {
@@ -44,7 +43,7 @@
         if (approvalElementList[i].checked) {
           let approvalObj = {
             record_id: recordsForApproval[i].record_id,
-            email: recordsForApproval[i].email,
+            email: recordsForApproval[i].student_email,
             review_status: $approvalType,
           };
           approvedArr.push(approvalObj);
@@ -54,8 +53,6 @@
         }
       }
     }
-    console.log("approved Array for submission is: ");
-    console.table(approvedArr);
     google.script.run
       .withSuccessHandler(approvalResponse)
       .processReviewedClubApplications(approvedArr);
