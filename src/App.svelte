@@ -7,7 +7,7 @@
   import ClubSignUp from "./routes/ClubSignUp.svelte";
   import Navigation from "./components/Shared/Navigation.svelte";
   import ClubAdmin from "./routes/ClubAdmin.svelte";
-  import Merit from "./routes/Merit.svelte";
+  import Merits from "./routes/Merits.svelte";
   import MeritAdmin from "./routes/MeritAdmin.svelte";
   import MeritForm from "./routes/MeritForm.svelte";
   google.script.url.getLocation(function (location) {
@@ -23,7 +23,7 @@
     "/about/": About,
     "/clubsignup/": ClubSignUp,
     "/clubadmin/": ClubAdmin,
-    "/merit": Merit,
+    "/merits": Merits,
     "/meritform/": MeritForm,
     "/meritadmin/": MeritAdmin,
     "*": NotFound,
