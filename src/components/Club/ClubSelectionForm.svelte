@@ -96,7 +96,14 @@
       notification_kind.set("error");
       form_is_closed.set(true);
       show_notice.set(true);
-      application_message.set("The form is currently closed.");
+
+      if ($is_in_club == true) {
+        application_message.set(
+          `The form is currently closed. You are currently enrolled in the ${$current_club_name} club. Changes are not allowed at this time.`
+        );
+      } else {
+        application_message.set("The form is currently closed.");
+      }
     } else if ($form_edit_state == "submit") {
       notification_kind.set("success");
       show_notice.set(true);

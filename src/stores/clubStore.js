@@ -10,6 +10,7 @@ export const application_message = writable('');
 export const is_moderator = writable(false);
 export const homeroom = writable('');
 export const current_club_name = writable("");
+export const applied_club_name = writable("");
 export const user_role = writable('');
 export const current_club_id = writable('');
 export const school_id = writable('');
