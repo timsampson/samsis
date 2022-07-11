@@ -52,7 +52,7 @@
           <a href="#/clubadmin/" on:click={() => setURL("/clubadmin")}>Club Admin</a>
         </li>
         <li>
-          <a href="#/merit/" on:click={() => setURL("/merit")}>Merit</a>
+          <a href="#/merits/" on:click={() => setURL("/merits")}>Merits</a>
         </li>
         <li>
           <a href="#/meritadmin/" on:click={() => setURL("/meritadmin")}>Merit Admin</a>
