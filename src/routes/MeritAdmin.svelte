@@ -1,19 +1,17 @@
 <script>
   import { onMount } from "svelte";
-  import MeritTable from "../components/MeritForm/MeritTable.svelte";
-  import { meritValues } from "../stores/meritStore.js";
+  import MeritAdminTable from "../components/MeritForm/MeritAdminTable.svelte";
+  import { meritAdminValues } from "../stores/meritAdminStore.js";
   onMount(() => {
-    google.script.run.withSuccessHandler(displayMerits).getAllMeritInfo();
+    google.script.run.withSuccessHandler(setAdminMerits).getAllMeritInfo();
   });
-  function displayMerits(meritData) {
-    meritData.forEach((record, index) => {
-      meritData[index] = JSON.parse(record);
-      meritData[index].timestamp = new Date(meritData[index].timestamp);
-      meritData[index].all_details = meritData[index].attendance_details
-        .concat(meritData[index].merit_details, meritData[index].homework_details)
-        .trim();
+  function setAdminMerits(allMeritData) {
+    console.log("updating data for meritAdminValues");
+    allMeritData.forEach((record, index) => {
+      allMeritData[index] = JSON.parse(record);
+      allMeritData[index].timestamp = new Date(allMeritData[index].timestamp);
     });
-    meritValues.set(meritData);
+    meritAdminValues.set(allMeritData);
   }
 </script>
 
@@ -22,12 +20,12 @@
   <p class="mt-1 py-2">The list below will display all the Merits and Demerits.</p>
   <div class="overflow-x-auto">
     <h1 class="text-2xl text-center text-blue-900">
-      {#if $meritValues.length > 0}
+      {#if $meritAdminValues.length > 0}
         Below are the current Merits and Demerits.
       {:else}
         Please wait for the available Merits and Demerits to load.
       {/if}
     </h1>
-    <MeritTable />
+    <MeritAdminTable />
   </div>
 </div>
