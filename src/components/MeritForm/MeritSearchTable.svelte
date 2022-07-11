@@ -34,7 +34,7 @@
     {#if $selectedStudents.length > 0}
       <thead>
         <tr>
-          <th />
+          <th class="text-center">Remove</th>
           {#each titleValues as title}
             <th>{title}</th>
           {/each}
@@ -43,7 +43,7 @@
       <tbody>
         {#each $selectedStudents as student (student.student_id)}
           <tr>
-            <td>
+            <td class="text-center align-middle">
               <button
                 on:click={() => removeFromSelected(student.student_id, student)}
                 type="button"
@@ -86,7 +86,7 @@
   <table class="table table-compact w-full table-zebra" in:fade|local={{ duration: 1000 }}>
     <thead>
       <tr>
-        <th />
+        <th class="text-center">Include</th>
         {#each titleValues as title}
           <th>{title}</th>
         {/each}
@@ -96,7 +96,7 @@
       <tbody>
         {#each $filtered as student (student.student_id)}
           <tr>
-            <td>
+            <td class="text-center align-middle">
               <button
                 on:click={() => addToSelected(student.student_id, student)}
                 type="button"
