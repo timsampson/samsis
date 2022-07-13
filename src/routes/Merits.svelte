@@ -9,7 +9,9 @@
     console.log(`it works!`);
     meritData.forEach((record, index) => {
       meritData[index] = JSON.parse(record);
+      meritData[index].incident_date = new Date(meritData[index].incident_date);
       meritData[index].timestamp = new Date(meritData[index].timestamp);
+
       meritData[index].details = meritData[index].attendance_details
         .concat(meritData[index].merit_details, meritData[index].homework_details)
         .trim();

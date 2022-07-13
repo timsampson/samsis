@@ -6,10 +6,10 @@
     google.script.run.withSuccessHandler(setAdminMerits).getAllMeritInfo();
   });
   function setAdminMerits(allMeritData) {
-    console.log("updating data for meritAdminValues");
     allMeritData.forEach((record, index) => {
       allMeritData[index] = JSON.parse(record);
       allMeritData[index].timestamp = new Date(allMeritData[index].timestamp);
+      allMeritData[index].incident_date = new Date(allMeritData[index].incident_date);
     });
     meritAdminValues.set(allMeritData);
   }

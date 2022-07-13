@@ -20,6 +20,7 @@
         {#each $meritValues as merit}
           <tr>
             <td>{merit.timestamp.toLocaleDateString()}</td>
+            <td>{merit.incident_date}</td>
             <td>{merit.student_name}</td>
             <td>{merit.teacher_name}</td>
             <td>{merit.categories}</td>

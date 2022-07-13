@@ -25,19 +25,13 @@
     selectedStudents: [],
     selectedDate: "",
   };
-  // $: console.log(`stepOneComplete: ${$stepOneComplete}`);
-  // $: console.log(`$meritDateValue: ${$meritDateValue}`);
   function handleSubmit() {
     meritResponse.behaviorCategory = $selectedCategory;
     meritResponse.meritBehaviors = $meritBehaviors;
     meritResponse.meritDetails = $meritDetails;
     meritResponse.selectedStudents = $selectedStudents;
     meritResponse.selectedDate = $meritDateValue;
-    // console.log(`meritResponse:`);
-    // console.table(meritResponse);
-    // console.log("handleSubmit");
     meritFormSubmitted.set(true);
-    //let meritRecord = JSON.stringify(meritResponse);
     google.script.run.withSuccessHandler(meritSubmissionResponse).meritSubmission(meritResponse);
   }
   function meritSubmissionResponse(response) {
