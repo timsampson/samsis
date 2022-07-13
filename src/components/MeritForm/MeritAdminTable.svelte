@@ -204,13 +204,15 @@
           placeholder={$meritModalStudentDetails}
         />
       </div>
-      <div class="modal-action">
-        <label for="merit-edit-modal" class="btn btn-primary btn-sm" on:click={() => submitUpdate()}
-          >Update</label
-        >
-      </div>
-      <div class="modal-action">
-        <label for="merit-edit-modal" class="btn btn-accent btn-sm">Close</label>
+      <div class="btn-group">
+        <div class="modal-action">
+          <label
+            for="merit-edit-modal"
+            class="btn btn-primary btn-sm"
+            on:click={() => submitUpdate()}>Update</label
+          >
+          <label for="merit-edit-modal" class="btn btn-accent btn-sm">Close</label>
+        </div>
       </div>
     </div>
   </div>
