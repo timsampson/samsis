@@ -6,9 +6,13 @@
     meritIncidentDateValue,
     meritModalStudentId,
     meritModalSubject,
+    meritModalTeacherName,
     meritModalStudentCategory,
     meritModalStudentName,
     meritModalStudentDetails,
+    meritModalSelectedCategory,
+    meritModalBehaviors,
+    meritModalTeachers,
   } from "../../stores/meritAdminStore.js";
   import { subjects } from "../../stores/meritStore.js";
 
@@ -17,21 +21,49 @@
   }
   function editRecord(merit) {
     meritIncidentDateValue.set(merit.incident_date.toLocaleDateString());
-    console.log(`Updating meritModalDate ${$meritIncidentDateValue}`);
     meritModalSubject.set(merit.subject);
     meritModalStudentId.set(merit.student_id);
     meritModalStudentCategory.set(merit.categories);
     meritModalStudentName.set(merit.student_name);
+    meritModalTeacherName.set(merit.teacher_name);
     meritModalStudentDetails.set(merit.details);
+    meritModalSelectedCategory.set(merit.behaviorCategory);
+    meritModalBehaviors.set(merit.behavior);
+    modalSelectedStudentID.set(merit.student_id);
+    modalSelectedStudentName.set(merit.student_name);
+
     console.log(`Editing ${merit.details} with id ${merit.id}`);
   }
+  const meritEditResponse = {
+    incidentDate: "",
+    selectedStudentId: "",
+    selectedTeacherName: "",
+    selectedTeacherId: "",
+    behaviorCategory: "",
+    behaviorSubject: "",
+    meritBehaviors: [],
+    meritDetails: "",
+  };
   function submitUpdate() {
     console.log(`Updating meritDate ${$meritModalDate}`);
-    console.log(`Updating meritSubject ${$meritModalSubject}`);
+    meritEditResponse.incidentDate = $meritModalDate;
     console.log(`Updating meritStudentId ${$meritModalStudentId}`);
+    meritEditResponse.behaviorCategory = $meritModalStudentId;
+    console.log(`Updating meritSubject ${$meritModalSubject}`);
+    meritEditResponse.behaviorSubject = $meritModalDate;
     console.log(`Updating meritStudentCategory ${$meritModalStudentCategory}`);
-    console.log(`Updating meritStudentName ${$meritModalStudentName}`);
-    console.log(`Updating meritStudentDetails ${$meritModalStudentDetails}`);
+    // meritEditResponse.behaviorCategory = $selectedCategory;
+    // console.log(`Updating meritStudentName ${$meritModalStudentName}`);
+    // meritEditResponse.behaviorCategory = $selectedCategory;
+    // console.log(`Updating meritStudentDetails ${$meritModalStudentDetails}`);
+    // meritEditResponse.behaviorCategory = $selectedCategory;
+    google.script.run
+      .withSuccessHandler(meritEditSubmissionResponse)
+      .meritEditSubmission(meritResponse);
+  }
+  function meritEditSubmissionResponse(response) {
+    console.log(`meritEditSubmissionResponse:`);
+    console.table(response);
   }
 </script>
 
@@ -198,10 +230,23 @@
             <option value={subject}>{subject}</option>
           {/each}
         </select>
+
+        <!-- meritModalTeacherName -->
+        <select
+          bind:value={$meritModalTeacherName}
+          id="teacher-edit"
+          class="select select-bordered select-primary"
+          required
+        >
+          <option disabled selected>{$meritModalTeacherName}</option>
+          {#each $meritModalTeachers as teacher}
+            <option value={teacher}>{teacher.teacher_name}</option>
+          {/each}
+        </select>
         <textarea
           rows="6"
           class="textarea textarea-primary mt-2"
-          placeholder={$meritModalStudentDetails}
+          placeholder={$meritModalTeacherName}
         />
       </div>
       <div class="btn-group">

@@ -1,11 +1,11 @@
 <script>
-  import MeritSearch from "../components/MeritForm/MeritSearch.svelte";
-  import MeritSearchTable from "../components/MeritForm/MeritSearchTable.svelte";
-  import MeritCategories from "../components/MeritForm/MeritCategories.svelte";
-  import MeritDate from "../components/MeritForm/MeritDate.svelte";
-  import MeritNextBtn from "../components/MeritForm/MeritNextBtn.svelte";
-  import MeritSubmissionDisplay from "../components/MeritForm/MeritSubmissionDisplay.svelte";
-  import MeritSubject from "../components/MeritForm/MeritSubject.svelte";
+  import MeritSearch from "../components/Merit/MeritSearch.svelte";
+  import MeritSearchTable from "../components/Merit/MeritSearchTable.svelte";
+  import MeritCategories from "../components/Merit/MeritCategories.svelte";
+  import MeritDate from "../components/Merit/MeritDate.svelte";
+  import MeritNextBtn from "../components/Merit/MeritNextBtn.svelte";
+  import MeritSubmissionDisplay from "../components/Merit/MeritSubmissionDisplay.svelte";
+  import MeritSubject from "../components/Merit/MeritSubject.svelte";
   import {
     stepOneComplete,
     selectedStudents,

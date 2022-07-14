@@ -1,7 +1,8 @@
 <script>
   import { onMount } from "svelte";
-  import MeritTable from "../components/MeritForm/MeritTable.svelte";
-  export let meritValues = [];
+  import { meritIndividualStudentValues } from "../stores/meritIndividualStore.js";
+
+  import MeritIndividualTable from "../components/Merit/MeritIndividualTable.svelte";
   onMount(() => {
     google.script.run.withSuccessHandler(displayUserMerits).getSingeUserMeritInfo();
   });
@@ -16,8 +17,7 @@
         .concat(meritData[index].merit_details, meritData[index].homework_details)
         .trim();
     });
-    meritValues = meritData;
-    console.table(meritValues);
+    meritIndividualStudentValues.set(meritData);
   }
 </script>
 
@@ -30,13 +30,13 @@
   <div class="overflow-x-auto">
     <table class="table table-compact w-full">
       <h1 class="text-2xl text-center text-blue-900">
-        {#if meritValues.length > 0}
+        {#if $meritIndividualStudentValues.length > 0}
           Below are the current Merits and Demerits.
         {:else}
           Please wait for the available Merits and Demerits to load.
         {/if}
       </h1>
-      <MeritTable {meritValues} />
+      <MeritIndividualTable />
     </table>
   </div>
 </div>
