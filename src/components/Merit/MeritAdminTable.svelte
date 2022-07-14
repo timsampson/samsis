@@ -1,5 +1,6 @@
 <script>
   import { fade } from "svelte/transition";
+  import MeritEditModal from "./MeritEditModal.svelte";
   import {
     meritAdminValues,
     meritModalDate,
@@ -7,6 +8,7 @@
     meritModalStudentId,
     meritModalSubject,
     meritModalTeacherName,
+    meritModalTeacherId,
     meritModalStudentCategory,
     meritModalStudentName,
     meritModalStudentDetails,
@@ -14,11 +16,11 @@
     meritModalBehaviors,
     meritModalTeachers,
   } from "../../stores/meritAdminStore.js";
-  import { subjects } from "../../stores/meritStore.js";
 
   function deleteRecord(merit) {
     console.log(`Deleting ${merit.details} with id ${merit.id}`);
   }
+  $: console.log($meritModalTeacherId);
   function editRecord(merit) {
     meritIncidentDateValue.set(merit.incident_date.toLocaleDateString());
     meritModalSubject.set(merit.subject);
@@ -29,41 +31,8 @@
     meritModalStudentDetails.set(merit.details);
     meritModalSelectedCategory.set(merit.behaviorCategory);
     meritModalBehaviors.set(merit.behavior);
-    modalSelectedStudentID.set(merit.student_id);
-    modalSelectedStudentName.set(merit.student_name);
-
+    meritModalStudentId.set(merit.student_id);
     console.log(`Editing ${merit.details} with id ${merit.id}`);
-  }
-  const meritEditResponse = {
-    incidentDate: "",
-    selectedStudentId: "",
-    selectedTeacherName: "",
-    selectedTeacherId: "",
-    behaviorCategory: "",
-    behaviorSubject: "",
-    meritBehaviors: [],
-    meritDetails: "",
-  };
-  function submitUpdate() {
-    console.log(`Updating meritDate ${$meritModalDate}`);
-    meritEditResponse.incidentDate = $meritModalDate;
-    console.log(`Updating meritStudentId ${$meritModalStudentId}`);
-    meritEditResponse.behaviorCategory = $meritModalStudentId;
-    console.log(`Updating meritSubject ${$meritModalSubject}`);
-    meritEditResponse.behaviorSubject = $meritModalDate;
-    console.log(`Updating meritStudentCategory ${$meritModalStudentCategory}`);
-    // meritEditResponse.behaviorCategory = $selectedCategory;
-    // console.log(`Updating meritStudentName ${$meritModalStudentName}`);
-    // meritEditResponse.behaviorCategory = $selectedCategory;
-    // console.log(`Updating meritStudentDetails ${$meritModalStudentDetails}`);
-    // meritEditResponse.behaviorCategory = $selectedCategory;
-    google.script.run
-      .withSuccessHandler(meritEditSubmissionResponse)
-      .meritEditSubmission(meritResponse);
-  }
-  function meritEditSubmissionResponse(response) {
-    console.log(`meritEditSubmissionResponse:`);
-    console.table(response);
   }
 </script>
 
@@ -196,69 +165,18 @@
           </button>
         </td>
         <td>9/2/2021</td>
+        <td>9/5/2021</td>
         <td>Student Name</td>
         <td>Subject Name</td>
         <td>Teacher Name</td>
         <td>Merit Category</td>
         <td>Merit Type</td>
+
         <td>Lots of details here.</td>
       </tr>
     {/if}
   </table>
 
   <!-- Modal for merit-edit-modal -->
-  <input type="checkbox" id="merit-edit-modal" class="modal-toggle" />
-  <div class="modal">
-    <div class="modal-box">
-      <h3 class="font-bold text-lg">Update Record Id {$meritModalStudentId}</h3>
-      <p class="py-4">
-        {`${$meritIncidentDateValue}, ${$meritModalStudentCategory}, ${$meritModalStudentName},
-        ${$meritModalStudentDetails}`}
-      </p>
-      <div class="form-control w-full max-w-md">
-        <label for="subject-edit" class="label">
-          <span class="label-text mt-2">Select the subject:</span>
-        </label>
-        <select
-          bind:value={$meritModalSubject}
-          id="subject-edit"
-          class="select select-bordered select-primary"
-          required
-        >
-          <option disabled selected>{$meritModalSubject}</option>
-          {#each subjects as subject}
-            <option value={subject}>{subject}</option>
-          {/each}
-        </select>
-
-        <!-- meritModalTeacherName -->
-        <select
-          bind:value={$meritModalTeacherName}
-          id="teacher-edit"
-          class="select select-bordered select-primary"
-          required
-        >
-          <option disabled selected>{$meritModalTeacherName}</option>
-          {#each $meritModalTeachers as teacher}
-            <option value={teacher}>{teacher.teacher_name}</option>
-          {/each}
-        </select>
-        <textarea
-          rows="6"
-          class="textarea textarea-primary mt-2"
-          placeholder={$meritModalTeacherName}
-        />
-      </div>
-      <div class="btn-group">
-        <div class="modal-action">
-          <label
-            for="merit-edit-modal"
-            class="btn btn-primary btn-sm"
-            on:click={() => submitUpdate()}>Update</label
-          >
-          <label for="merit-edit-modal" class="btn btn-accent btn-sm">Close</label>
-        </div>
-      </div>
-    </div>
-  </div>
+  <MeritEditModal />
 </div>

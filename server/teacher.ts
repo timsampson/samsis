@@ -27,6 +27,11 @@ function getStaffInfo(email: string) {
     let staffInfo: Staff = staffValuesAsObjArray.find((staff: Staff) => staff.email == email);
     return staffInfo;
 }
+function getAllStaffInfo() {
+    staffValues = staffSheet.getDataRange().getValues();
+    let staffInfo = staffValuesAsObjArray = valuesToArrayOfObjects(staffValues);
+    return staffInfo;
+}
 function testStaff() {
     Logger.log(getStaffInfo(getUserEmail()));
     Logger.log(isTeacher(getUserEmail()));

@@ -4,10 +4,9 @@
   import { meritAdminValues, meritModalTeachers } from "../stores/meritAdminStore.js";
   onMount(() => {
     google.script.run.withSuccessHandler(setAdminMerits).getAllMeritInfo();
-    google.script.run.withSuccessHandler(setTeacherList).getStaffInfo();
+    google.script.run.withSuccessHandler(setTeacherList).getAllStaffInfo();
   });
   function setAdminMerits(allMeritData) {
-    console.log("setAdminMerits");
     allMeritData.forEach((record, index) => {
       allMeritData[index] = JSON.parse(record);
       allMeritData[index].timestamp = new Date(allMeritData[index].timestamp);
@@ -16,7 +15,6 @@
     meritAdminValues.set(allMeritData);
   }
   function setTeacherList(teachersList) {
-    console.log("setTeacherList");
     meritModalTeachers.set(teachersList);
   }
 </script>

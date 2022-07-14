@@ -136,7 +136,7 @@ function meritSubmissionTest() {
                 "school": "ls"
             }
         ],
-        "selectedDate": "2022-07-19"
+        "incident_date": "2022-07-19"
     }
 
     let testObjAsString = JSON.stringify(testObj);
@@ -144,24 +144,16 @@ function meritSubmissionTest() {
 }
 
 function meritSubmission(meritRecord): boolean {
-    // id	timestamp	incident_date	student_id	homeroom	student_name	student_email	student_house	teacherEmail	teacher_name	subject	hr_teacher_id	hr_teacher_email	hr_teacher_name	categories	type	attendance_details	merit_details	homework_details	all_details	notice_sent	assigned_department	assigned_to	assignee_reviewed	assignee_reviewed_date	assignee_message	assignment_status	resolved	resolved_by	resolved_date	resolved_message
-    //let meritRecord = JSON.parse(meritRecordObj);
     let id: string;
     let category = meritRecord.behaviorCategory;
     let timestamp = new Date();
-    let incident_date = new Date(meritRecord.selectedDate);
+    let incident_date = new Date(meritRecord.incident_date);
     let details = meritRecord.meritDetails;
     let type = meritRecord.meritBehaviors.join(',');
     let teacherEmail = getUserEmail();
     let teacher_name = getTeacherName(teacherEmail);
     meritRecord.selectedStudents.forEach((student) => {
-        // [{"id":"3","student_id":"768","hr_id":"GKS1","student_email":"adamov@niceschool.edu",
-        // "student_name":"Zondra Adamov","hr_teacher":"Ms. Marie Tobin","homeroom":"Taichung",
-        // "grade":"K","school":"ls"},
-        // id	timestamp	incident_date	student_id	homeroom	student_name	student_email	student_house
-        //	teacherEmail	teacher_name	subject	hr_teacher_id	hr_teacher_email	hr_teacher_name	categories	type	attendance_details	merit_details	homework_details	all_details	notice_sent	assigned_department	assigned_to	assignee_reviewed	assignee_reviewed_date	assignee_message	assignment_status	resolved	resolved_by	resolved_date	resolved_message
         let studentHrInfo = getStudentHRInfo(student.student_email);
-        //let studentInfo = getStudentInfo(student.student_email);
         let student_house = getStudentHouse(student.student_email);
         id = getlogId(meritSheet);
         let record = [
