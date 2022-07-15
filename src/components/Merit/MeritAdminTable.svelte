@@ -3,26 +3,24 @@
   import MeritEditModal from "./MeritEditModal.svelte";
   import {
     meritAdminValues,
-    meritModalDate,
     meritIncidentDateValue,
     meritModalStudentId,
     meritModalSubject,
     meritModalTeacherName,
-    meritModalTeacherId,
     meritModalStudentCategory,
     meritModalStudentName,
     meritModalStudentDetails,
     meritModalSelectedCategory,
     meritModalBehaviors,
-    meritModalTeachers,
+    meritModalDate,
   } from "../../stores/meritAdminStore.js";
 
   function deleteRecord(merit) {
     console.log(`Deleting ${merit.details} with id ${merit.id}`);
   }
-  $: console.log($meritModalTeacherId);
   function editRecord(merit) {
-    meritIncidentDateValue.set(merit.incident_date.toLocaleDateString());
+    meritIncidentDateValue.set(merit.incident_date.toLocaleDateString("en-CA"));
+    meritModalDate.set(merit.incident_date.toLocaleDateString("en-CA"));
     meritModalSubject.set(merit.subject);
     meritModalStudentId.set(merit.student_id);
     meritModalStudentCategory.set(merit.categories);

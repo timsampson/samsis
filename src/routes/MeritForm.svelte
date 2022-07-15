@@ -30,6 +30,7 @@
     meritResponse.meritBehaviors = $meritBehaviors;
     meritResponse.meritDetails = $meritDetails;
     meritResponse.selectedStudents = $selectedStudents;
+    console.log(`$meritDateValue ${$meritDateValue}`);
     meritResponse.selectedDate = $meritDateValue;
     meritFormSubmitted.set(true);
     google.script.run.withSuccessHandler(meritSubmissionResponse).meritSubmission(meritResponse);

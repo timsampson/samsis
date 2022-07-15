@@ -12,3 +12,5 @@ export const meritModalStudentCategory = writable('');
 export const meritModalStudentDetails = writable('');
 export const meritModalTeachers = writable([]);
 export const meritModalTeacherId = writable('');
+export const MeritModalSelectedTeacher = writable({});
+export const meritModalSelectedStudent = writable({});

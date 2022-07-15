@@ -147,11 +147,13 @@ function meritSubmission(meritRecord): boolean {
     let id: string;
     let category = meritRecord.behaviorCategory;
     let timestamp = new Date();
-    let incident_date = new Date(meritRecord.incident_date);
+    let incident_date = new Date(meritRecord.selectedDate);
     let details = meritRecord.meritDetails;
     let type = meritRecord.meritBehaviors.join(',');
     let teacherEmail = getUserEmail();
-    let teacher_name = getTeacherName(teacherEmail);
+    let staffInfo: Staff = getStaffInfo(teacherEmail);
+    let teacher_name = staffInfo.full_name;
+    let teacherId = staffInfo.id;
     meritRecord.selectedStudents.forEach((student) => {
         let studentHrInfo = getStudentHRInfo(student.student_email);
         let student_house = getStudentHouse(student.student_email);
@@ -165,6 +167,7 @@ function meritSubmission(meritRecord): boolean {
             student.student_name,
             student.student_email,
             student_house,
+            teacherId,
             teacherEmail,
             teacher_name,
             "testing",
@@ -182,4 +185,7 @@ function meritSubmission(meritRecord): boolean {
         meritSheet.appendRow(record);
     });
     return true;
+}
+function meritEditSubmission(submission) {
+    return "recieved";
 }

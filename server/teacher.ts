@@ -41,3 +41,8 @@ function getTeacherName(email: string) {
     let staffInfo: Staff = getStaffInfo(email);
     return staffInfo.full_name;
 }
+function getTeacherId(email: string) {
+    if (email === undefined) { email = getUserEmail(); }
+    let staffInfo: Staff = getStaffInfo(email);
+    return staffInfo.id;
+}
