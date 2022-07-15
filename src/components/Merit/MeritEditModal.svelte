@@ -9,6 +9,7 @@
     meritModalStudentId,
     meritModalSubject,
     meritModalTeacherName,
+    meritModalTeacherId,
     MeritModalSelectedTeacher,
     meritModalDate,
     meritModalStudentCategory,
@@ -27,11 +28,16 @@
     meritModalStudentId.set(student.id);
     meritModalStudentName.set(student.student_name);
   }
+  function updateTeacher(teacher) {
+    meritModalTeacherId.set(teacher.id);
+    meritModalTeacherName.set(student.full_name);
+  }
 
   const meritEditResponse = {
     selectedStudentId: "",
     selectedStudentName: "",
-    incidentDate: $meritIncidentDateValue,
+    selectedSubject: "",
+    selectedIncidentDate: "",
     selectedTeacherName: "",
     selectedTeacherId: "",
     incidentDatebehaviorCategory: "",
@@ -47,6 +53,11 @@
     meritEditResponse.selectedStudentName = $meritModalStudentName;
     console.log(`Updating selectedStudentName ${meritEditResponse.selectedStudentName}`);
 
+    meritEditResponse.selectedSubject = $meritModalSubject;
+    console.log(`Updating selectedSubject ${meritEditResponse.selectedSubject}`);
+
+    meritEditResponse.selectedTeacherId = $meritModalTeacherId;
+    console.log(`Updating selectedTeacherId ${meritEditResponse.selectedTeacherId}`);
     // meritEditResponse.incidentDate = $meritModalDate;
     // console.log(`Updating meritDate ${meritEditResponse.incidentDate}`);
 
@@ -76,6 +87,7 @@
       <label for="student-edit" class="label">
         <span class="label-text mt-2">Change the student:</span>
       </label>
+      <!-- Student Select -->
       <select
         bind:value={$meritModalStudentName}
         id="student-edit"
@@ -84,11 +96,12 @@
       >
         <option disabled selected>{$meritModalStudentName}</option>
         {#each $filtered as student}
-          <option on:blur={() => updateStudent(student)} value={student}
+          <option on:blur={() => updateStudent(student)} value={student.student_name}
             >{student.student_name}</option
           >
         {/each}
       </select>
+      <!-- Subject Select -->
       <label for="subject-edit" class="label">
         <span class="label-text mt-2">Change the subject:</span>
       </label>
@@ -109,14 +122,15 @@
         <span class="label-text mt-2">Change the teacher:</span>
       </label>
       <select
-        bind:value={$MeritModalSelectedTeacher}
+        bind:value={$meritModalTeacherName}
         id="teacher-edit"
         class="select select-bordered select-primary mt-2"
         required
       >
         <option disabled selected>{$meritModalTeacherName}</option>
         {#each $meritModalTeachers as teacher}
-          <option value={teacher}>{teacher.full_name}</option>
+          <option on:blur={() => updateTeacher(teacher)} value={teacher}>{teacher.full_name}</option
+          >
         {/each}
       </select>
       <!-- meritModalDate  -->

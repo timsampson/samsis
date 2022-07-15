@@ -7,6 +7,7 @@
     meritModalStudentId,
     meritModalSubject,
     meritModalTeacherName,
+    meritModalTeacherId,
     meritModalStudentCategory,
     meritModalStudentName,
     meritModalStudentDetails,
@@ -26,6 +27,7 @@
     meritModalStudentCategory.set(merit.categories);
     meritModalStudentName.set(merit.student_name);
     meritModalTeacherName.set(merit.teacher_name);
+    meritModalTeacherId.set(merit.teacher_id);
     meritModalStudentDetails.set(merit.details);
     meritModalSelectedCategory.set(merit.behaviorCategory);
     meritModalBehaviors.set(merit.behavior);
