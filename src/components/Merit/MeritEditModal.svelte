@@ -80,59 +80,72 @@
 
 <input type="checkbox" id="merit-edit-modal" class="modal-toggle" />
 <div class="modal">
-  <div class="modal-box">
+  <div class="modal-box w-11/12 max-w-5xl">
     <h3 class="font-bold text-lg">Update Record Id {$meritModalStudentId}</h3>
-    <div class="form-control w-full max-w-md">
-      <MeritSearch />
-      <label for="student-edit" class="label">
-        <span class="label-text mt-2">Change the student:</span>
-      </label>
+    <!-- first row -->
+    <div class="grid grid-cols-3 gap-4">
+      <!-- Student Search -->
+      <div>
+        <MeritSearch />
+      </div>
       <!-- Student Select -->
-      <select
-        bind:value={$meritModalStudentName}
-        id="student-edit"
-        class="select select-bordered select-primary"
-        required
-      >
-        <option disabled selected>{$meritModalStudentName}</option>
-        {#each $filtered as student}
-          <option on:blur={() => updateStudent(student)} value={student.student_name}
-            >{student.student_name}</option
-          >
-        {/each}
-      </select>
+      <div>
+        <label for="student-edit" class="label">
+          <span class="label-text">Change the student:</span>
+        </label>
+        <select
+          bind:value={$meritModalStudentName}
+          id="student-edit"
+          class="select select-bordered select-primary"
+          required
+        >
+          <option disabled selected>{$meritModalStudentName}</option>
+          {#each $filtered as student}
+            <option on:blur={() => updateStudent(student)} value={student.student_name}
+              >{student.student_name}
+            </option>
+          {/each}
+        </select>
+      </div>
       <!-- Subject Select -->
-      <label for="subject-edit" class="label">
-        <span class="label-text mt-2">Change the subject:</span>
-      </label>
-      <select
-        bind:value={$meritModalSubject}
-        id="subject-edit"
-        class="select select-bordered select-primary"
-        required
-      >
-        <option disabled selected>{$meritModalSubject}</option>
-        {#each subjects as subject}
-          <option value={subject}>{subject}</option>
-        {/each}
-      </select>
-
+      <div>
+        <label for="subject-edit" class="label">
+          <span class="label-text">Change the subject:</span>
+        </label>
+        <select
+          bind:value={$meritModalSubject}
+          id="subject-edit"
+          class="select select-bordered select-primary"
+          required
+        >
+          <option disabled selected>{$meritModalSubject}</option>
+          {#each subjects as subject}
+            <option value={subject}>{subject}</option>
+          {/each}
+        </select>
+      </div>
+    </div>
+    <!-- second row -->
+    <div class="grid grid-cols-3 gap-4">
       <!-- meritModalTeacherName -->
-      <label for="teacher-edit" class="label">
-        <span class="label-text mt-2">Change the teacher:</span>
-      </label>
-      <select
-        bind:value={$meritModalTeacherName}
-        id="teacher-edit"
-        class="select select-bordered select-primary mt-2"
-        required
-      >
-        <option disabled selected>{$meritModalTeacherName}</option>
-        {#each $meritModalTeachers as teacher}
-          <option on:blur={() => updateTeacher(teacher)} value={teacher}>{teacher.full_name}</option
-          >
-        {/each}
-      </select>
+      <div>
+        <label for="teacher-edit" class="label">
+          <span class="label-text">Change the teacher:</span>
+        </label>
+        <select
+          bind:value={$meritModalTeacherName}
+          id="teacher-edit"
+          class="select select-bordered select-primary"
+          required
+        >
+          <option disabled selected>{$meritModalTeacherName}</option>
+          {#each $meritModalTeachers as teacher}
+            <option on:blur={() => updateTeacher(teacher)} value={teacher}
+              >{teacher.full_name}</option
+            >
+          {/each}
+        </select>
+      </div>
       <!-- meritModalDate  -->
       <div>
         <label for="meritModalDate" class="label">
@@ -146,17 +159,21 @@
           class="input input-bordered input-primary w-full max-w-xs rounded-lg"
         />
       </div>
-      <!-- Modal details  -->
+    </div>
+
+    <!-- Modal details  -->
+    <div>
       <label for="details-edit" class="label">
         <span class="label-text mt-2">Change Details</span>
       </label>
       <textarea
         id="details-edit"
         rows="4"
-        class="textarea textarea-primary mt-2"
+        class=" block w-full p-2.5 textarea textarea-primary textarea-bordered"
         placeholder={$meritModalStudentDetails}
       />
     </div>
+    <!-- ? -->
     <div class="btn-group">
       <div class="modal-action">
         <label for="merit-edit-modal" class="btn btn-primary btn-sm" on:click={() => submitUpdate()}
