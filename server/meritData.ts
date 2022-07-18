@@ -32,7 +32,6 @@ type Merit = {
     resolved_message: string,
 }
 
-
 let meritSheet = schoolSpreadsheet.getSheetByName("merits");
 let meritValues: any[][] | [any, ...any[]];
 let meritValuesAsObjArray: any[];
@@ -45,7 +44,6 @@ function getAllMeritCategories() {
     let meritCategoriesData = valuesToArrayOfObjects(meritCategoriesValues);
     return meritCategoriesData;
 }
-
 
 let subjectsSheet = schoolSpreadsheet.getSheetByName("subjects");
 let subjectsValues: any[][] | [any, ...any[]];
@@ -65,6 +63,7 @@ function getAllMeritInfo() {
     });
     return meritData;
 }
+
 // To be used when a student looks up their own records
 function getSingeUserMeritInfo() {
     meritValues = meritSheet.getDataRange().getValues();
@@ -75,6 +74,7 @@ function getSingeUserMeritInfo() {
     });
     return studentMeritInfo;
 }
+
 // To be used when an admin gets up a single user's records... might just do this filtered client side.
 function getUserMeritInfoByEmail(email: string) {
     meritValues = meritSheet.getDataRange().getValues();
@@ -82,6 +82,7 @@ function getUserMeritInfoByEmail(email: string) {
     let studentInfo = studentValuesAsObjArray.find((student: Student) => student.email == email);
     return studentInfo;
 }
+
 function meritSubmissionTest() {
     let testObj = {
         "behaviorCategory": "Orange Level",
@@ -190,6 +191,7 @@ function meritSubmission(meritRecord): boolean {
     });
     return true;
 }
+
 function meritEditSubmission(submission) {
     return "recieved";
 }
