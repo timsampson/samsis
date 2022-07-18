@@ -9,7 +9,7 @@ type Application = {
     school: string,
     homeroom: string,
     club_id: number,
-    applied_club_name: string,
+    club_name: string,
     club_moderator: string,
     club_location: string,
     review_status: string,
@@ -53,7 +53,7 @@ async function clubApplicationSubmission(club_id: number) {
         school: studentHrInfo.school,
         homeroom: studentHrInfo.homeroom,
         club_moderator: appliedClubDetails.moderator,
-        applied_club_name: appliedClubDetails.club_name,
+        club_name: appliedClubDetails.club_name,
         description: appliedClubDetails.description,
         club_location: appliedClubDetails.location,
         review_status: "pending",
@@ -80,7 +80,7 @@ async function clubApplicationSubmission(club_id: number) {
         (application.has_capacity && !application.is_in_club && form_state == "submit") {
         // these records are getting written contiguously, so this will be a problem if the columns are moved.
         // this can be updated to use 4 column indexes and 4 separate writes to be less brittle
-        application.application_message = `Welcome! Your application to join the ${application.applied_club_name} club has been approved.`;
+        application.application_message = `Welcome! Your application to join the ${application.club_name} club has been approved.`;
         application.review_status = "approved";
         application.notification_kind = "success";
         application.reviewed_by = "Automatic Review";
@@ -90,14 +90,14 @@ async function clubApplicationSubmission(club_id: number) {
         (application.has_capacity && application.is_in_club && form_state == "submit") {
         // these records are getting written contiguously, so this will be a problem if the columns are moved.
         // this can be updated to use 4 column indexes and 4 separate writes to be less brittle
-        application.application_message = `Your application to join the ${application.applied_club_name} club has been approved.`;
+        application.application_message = `Your application to join the ${application.club_name} club has been approved.`;
         application.review_status = "pending";
         application.notification_kind = "warning";
         application.reviewed_by = "Automatic Review";
         application.processed = false;
     }
     else {
-        application.application_message = `Unfortunately your application to join the ${application.applied_club_name} club is still pending. The club is full or the moderator has not yet approved your application.`;
+        application.application_message = `Unfortunately your application to join the ${application.club_name} club is still pending. The club is full or the moderator has not yet approved your application.`;
         application.review_status = "pending";
         application.notification_kind = "warning";
         application.reviewed_by = "Automatic Review";
@@ -116,7 +116,7 @@ async function clubApplicationSubmission(club_id: number) {
         application.school,
         application.homeroom,
         application.club_id,
-        application.applied_club_name,
+        application.club_name,
         application.club_moderator,
         application.description,
         application.has_capacity,
@@ -170,12 +170,12 @@ function processReviewedClubApplications(approvedList: Approved[]) {
                 // these records are getting written contiguously, so this will be a problem if the columns are moved.
                 // this can be updated to use 4 column indexes and 4 separate writes to be less brittle
                 updateRange.setValues([[true, "approved", processingDate, userProcessing]]);
-                recordToProcess.application_message = `Your application to join the ${recordToProcess.applied_club_name} club has been approved.`;
+                recordToProcess.application_message = `Your application to join the ${recordToProcess.club_name} club has been approved.`;
                 updateEnrollmentEntry(recordToProcess);
             }
             else {
                 updateRange.setValues([[true, "rejected", processingDate, userProcessing]]);
-                recordToProcess.application_message = `Your application to join the ${recordToProcess.applied_club_name} club has been rejected.`;
+                recordToProcess.application_message = `Your application to join the ${recordToProcess.club_name} club has been rejected.`;
             }
             recordToProcess.reviewed_date = processingDate;
             processedApplications++;
@@ -205,7 +205,7 @@ function updateEnrollmentEntry(application: Application) {
         application.school,
         application.homeroom,
         application.club_id,
-        application.applied_club_name,
+        application.club_name,
         application.club_moderator,
         application.description
     ];

@@ -12,7 +12,7 @@ let staffSheet = schoolSpreadsheet.getSheetByName("staff");
 let staffValues: any[][] | [any, ...any[]];
 let staffValuesAsObjArray: any[];
 
-let clubEnrollmentSheet = schoolSpreadsheet.getSheetByName("club_enrollment");
+let clubEnrollmentSheet = schoolSpreadsheet.getSheetByName("club_enrollments");
 let clubEnrollmentValues: any[][] | [any, ...any[]];
 let clubEnrollmentValuesAsObjArray: any[];
 
@@ -20,7 +20,7 @@ let clubApplicationSheet = schoolSpreadsheet.getSheetByName("club_applications")
 let clubApplicationValues: any[][] | [any, ...any[]];
 let clubApplicationValuesAsObjArray: any[];
 
-let hrStudentSheet = schoolSpreadsheet.getSheetByName("hr_st_join");
+let hrStudentSheet = schoolSpreadsheet.getSheetByName("hr_student_join");
 let hrStudentValues: any[][] | [any, ...any[]];
 let hrStudentValuesAsObjArray: any[];
 

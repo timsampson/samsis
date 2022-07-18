@@ -36,9 +36,12 @@ let meritSheet = schoolSpreadsheet.getSheetByName("merits");
 let meritValues: any[][] | [any, ...any[]];
 let meritValuesAsObjArray: any[];
 
+let meritLogSheet = schoolSpreadsheet.getSheetByName("merit_log");
+
 let meritCategoriesSheet = schoolSpreadsheet.getSheetByName("merit_categories");
 let meritCategoriesValues: any[][] | [any, ...any[]];
 let meritCategoriesValuesAsObjArray: any[];
+
 function getAllMeritCategories() {
     meritCategoriesValues = meritCategoriesSheet.getDataRange().getValues();
     let meritCategoriesData = valuesToArrayOfObjects(meritCategoriesValues);
@@ -194,4 +197,17 @@ function meritSubmission(meritRecord): boolean {
 
 function meritEditSubmission(submission) {
     return "recieved";
+}
+
+function deleteMeritEntry(id: string) {
+    meritValues = meritSheet.getDataRange().getValues();
+    meritValuesAsObjArray = valuesToArrayOfObjects(meritValues);
+    let rowIndex = meritValuesAsObjArray.findIndex((record: Merit) => record.id == id);
+    // Rows start at "1", so index + 1 is the row number to delete.
+    let colIndex = meritSheet.getLastColumn();
+    let logRange = meritSheet.getRange(rowIndex + 1, 1, rowIndex + 1, colIndex);
+    let logValues = logRange.getValues();
+    meritLogSheet.appendRow([logValues]);
+    // meritSheet.deleteRow(index + 1);
+    return true;
 }

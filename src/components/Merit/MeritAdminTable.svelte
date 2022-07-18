@@ -16,7 +16,13 @@
   import { selectedCategory, meritBehaviors } from "../../stores/meritStore.js";
 
   function deleteRecord(merit) {
+    google.script.run.withSuccessHandler(deleteRecordResponse).deleteMeritEntry(merit.id);
+
     console.log(`Deleting ${merit.details} with id ${merit.id}`);
+  }
+
+  function deleteRecordResponse(response) {
+    console.log(`Delete response: ${response}`);
   }
   function editRecord(merit) {
     meritIncidentDateValue.set(merit.incident_date.toLocaleDateString("en-CA"));
