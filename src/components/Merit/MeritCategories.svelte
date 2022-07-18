@@ -1,35 +1,32 @@
 <script>
   import {
     selectedCategory,
-    behaviorKinds,
+    behaviorCategory,
     meritBehaviors,
-    categories,
+    behaviorCategories,
     informationList,
-    level1List,
     YCList,
     OCList,
     RCList,
     HWList,
-    positiveList,
+    MeritList,
   } from "../../stores/meritStore.js";
 
   $: console.log(`selectedCategory: ${$selectedCategory}`);
   $: console.log(`meritBehaviors: ${$meritBehaviors}`);
 
-  function displayBehaviorKinds() {
+  function displaybehaviorCategory() {
     if ($selectedCategory === "Information") {
-      $behaviorKinds = informationList;
-    } else if ($selectedCategory === "Level 1") {
-      $behaviorKinds = level1List;
-    } else if ($selectedCategory === "Yellow Level") {
-      $behaviorKinds = YCList;
-    } else if ($selectedCategory === "Orange Level") {
-      $behaviorKinds = OCList;
-    } else if ($selectedCategory === "Red Level") {
-      $behaviorKinds = RCList;
+      $behaviorCategory = informationList;
+    } else if ($selectedCategory === "Misconduct: Yellow Level") {
+      $behaviorCategory = YCList;
+    } else if ($selectedCategory === "Misconduct: Orange Level") {
+      $behaviorCategory = OCList;
+    } else if ($selectedCategory === "Misconduct: Red Level") {
+      $behaviorCategory = RCList;
     } else if ($selectedCategory === "Homework") {
-      $behaviorKinds = HWList;
-    } else $behaviorKinds = positiveList;
+      $behaviorCategory = HWList;
+    } else $behaviorCategory = MeritList;
     uncheckBehaviorList();
     meritBehaviors.set([]);
   }
@@ -43,22 +40,22 @@
 
 <!-- Merit Category Component -->
 <div class="container flex justify-start ">
-  <div class="card w-64 h-72 bg-info-100 shadow-xl">
+  <div class="card w-72 h-72 bg-info-200 shadow-xl">
     <div class="card-body">
       <h2 class="card-title">Merit Category</h2>
       <fieldset>
         <legend>Select a Merit Category:</legend>
-        {#each categories as category}
-          <div class="ml-2">
+        {#each behaviorCategories as category}
+          <div>
             <label>
               <input
-                on:select={displayBehaviorKinds}
+                on:select={displaybehaviorCategory}
                 type="radio"
                 bind:group={$selectedCategory}
                 id={"merit" + category}
                 name="Merit"
                 value={category}
-                on:change={displayBehaviorKinds}
+                on:change={displaybehaviorCategory}
               />
               {category}</label
             >
@@ -67,14 +64,14 @@
       </fieldset>
     </div>
   </div>
-  <div class="ml-4">
-    {#if $behaviorKinds.length > 0}
+  <!-- <div class="ml-4">
+    {#if $behaviorCategory.length > 0}
       <div class="card w-64 h-72 bg-info-400 shadow-xl">
         <div class="card-body">
           <h2 class="card-title">Behavior Category</h2>
           <fieldset>
             <legend>Select behavior:</legend>
-            {#each $behaviorKinds as behavior}
+            {#each $behaviorCategory as behavior}
               <div class=" ml-2">
                 <label>
                   <input
@@ -92,5 +89,5 @@
         </div>
       </div>
     {/if}
-  </div>
+  </div> -->
 </div>

@@ -8,13 +8,12 @@
     meritModalSubject,
     meritModalTeacherName,
     meritModalTeacherId,
-    meritModalStudentCategory,
+    // meritModalStudentCategory,
     meritModalStudentName,
     meritModalStudentDetails,
-    meritModalSelectedCategory,
-    meritModalBehaviors,
     meritModalDate,
   } from "../../stores/meritAdminStore.js";
+  import { selectedCategory, meritBehaviors } from "../../stores/meritStore.js";
 
   function deleteRecord(merit) {
     console.log(`Deleting ${merit.details} with id ${merit.id}`);
@@ -24,14 +23,16 @@
     meritModalDate.set(merit.incident_date.toLocaleDateString("en-CA"));
     meritModalSubject.set(merit.subject);
     meritModalStudentId.set(merit.student_id);
-    meritModalStudentCategory.set(merit.categories);
+    // meritModalStudentCategory.set(merit.behaviorCategories);
     meritModalStudentName.set(merit.student_name);
     meritModalTeacherName.set(merit.teacher_name);
     meritModalTeacherId.set(merit.teacher_id);
     meritModalStudentDetails.set(merit.details);
-    meritModalSelectedCategory.set(merit.behaviorCategory);
-    meritModalBehaviors.set(merit.behavior);
+    selectedCategory.set(merit.category);
+    // meritModalBehaviors.set(merit.behavior);
     meritModalStudentId.set(merit.student_id);
+    meritBehaviors.set(merit.type.split(",").map((element) => element.trim()));
+    console.log($meritBehaviors);
     console.log(`Editing ${merit.details} with id ${merit.id}`);
   }
 </script>
@@ -106,7 +107,7 @@
             <td>{merit.student_name}</td>
             <td>{merit.subject}</td>
             <td>{merit.teacher_name}</td>
-            <td>{merit.categories}</td>
+            <td>{merit.category}</td>
             <td>{merit.type}</td>
             <td>{merit.details}</td>
           </tr>

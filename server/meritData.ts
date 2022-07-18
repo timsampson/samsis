@@ -154,10 +154,13 @@ function meritSubmission(meritRecord): boolean {
     let staffInfo: Staff = getStaffInfo(teacherEmail);
     let teacher_name = staffInfo.full_name;
     let teacherId = staffInfo.id;
+    let all_details;
     meritRecord.selectedStudents.forEach((student) => {
         let studentHrInfo = getStudentHRInfo(student.student_email);
         let student_house = getStudentHouse(student.student_email);
         id = getlogId(meritSheet);
+        all_details = `On ${incident_date.toLocaleDateString("en-CA")} the student with ID ${student.student_id} , ${student.student_name} in homeroom ${student.homeroom} has recieved a ${category} with the following details: ${details}.`;
+
         let record = [
             id,
             timestamp,
@@ -181,6 +184,7 @@ function meritSubmission(meritRecord): boolean {
             "", //merit_details
             "", //homework_details
             details,
+            all_details,
         ];
         meritSheet.appendRow(record);
     });

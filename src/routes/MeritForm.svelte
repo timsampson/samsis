@@ -2,6 +2,7 @@
   import MeritSearch from "../components/Merit/MeritSearch.svelte";
   import MeritSearchTable from "../components/Merit/MeritSearchTable.svelte";
   import MeritCategories from "../components/Merit/MeritCategories.svelte";
+  import MeritBehaviors from "../components/Merit/MeritBehaviors.svelte";
   import MeritDate from "../components/Merit/MeritDate.svelte";
   import MeritNextBtn from "../components/Merit/MeritNextBtn.svelte";
   import MeritSubmissionDisplay from "../components/Merit/MeritSubmissionDisplay.svelte";
@@ -43,7 +44,8 @@
     meritFormSubmitted.set(false);
     stepOneComplete.set(false);
     selectedStudents.set([]);
-    selectedCategory.set([]);
+    selectedCategory.set("");
+    meritBehaviors.set([]);
     meritDetails.set("");
     meritDateValue.set("");
     dateIsSelected.set(false);
@@ -88,8 +90,11 @@
             type="button"
             class="ml-2 mt-2 btn btn-sm btn-primary bg-warning">Back</button
           >
-          <p>Now choose the categories</p>
-          <MeritCategories />
+          <p>Now choose the behaviorCategories</p>
+          <div class="grid grid-cols-3 gap-4">
+            <MeritCategories />
+            <MeritBehaviors />
+          </div>
         </section>
       {/if}
       {#if $selectedCategory.length > 1}

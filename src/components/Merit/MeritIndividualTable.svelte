@@ -7,6 +7,7 @@
   <table class="table table-compact w-full table-zebra" in:fade|local={{ duration: 1000 }}>
     <thead>
       <tr>
+        <th>id</th>
         <th>Incident Date</th>
         <th>Student</th>
         <th>Teacher</th>
@@ -20,11 +21,12 @@
       <tbody>
         {#each $meritIndividualStudentValues as merit}
           <tr>
+            <td>{merit.id}</td>
             <td>{merit.incident_date.toLocaleDateString()}</td>
             <td>{merit.student_name}</td>
             <td>{merit.teacher_name}</td>
             <td>{merit.subject}</td>
-            <td>{merit.categories}</td>
+            <td>{merit.category}</td>
             <td>{merit.type}</td>
             <td>{merit.details}</td>
           </tr>
@@ -32,6 +34,7 @@
       </tbody>
       <tfoot>
         <tr>
+          <th>id</th>
           <th>Incident Date</th>
           <th>Student</th>
           <th>Teacher</th>

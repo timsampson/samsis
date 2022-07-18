@@ -1,18 +1,16 @@
 <script>
   google.script.run.withSuccessHandler(loadStudentsHRData).getAllStudentsHRInfo();
   import MeritSearch from "./MeritSearch.svelte";
+  import MeritCategories from "./MeritCategories.svelte";
+  import MeritBehaviors from "./MeritBehaviors.svelte";
   import { subjects } from "../../stores/meritStore.js";
   import { filtered, studentsData } from "../../stores/meritStore.js";
   import {
-    meritIncidentDateValue,
-    meritModalSelectedStudent,
     meritModalStudentId,
     meritModalSubject,
     meritModalTeacherName,
     meritModalTeacherId,
-    MeritModalSelectedTeacher,
     meritModalDate,
-    meritModalStudentCategory,
     meritModalStudentName,
     meritModalStudentDetails,
     meritModalTeachers,
@@ -58,14 +56,8 @@
 
     meritEditResponse.selectedTeacherId = $meritModalTeacherId;
     console.log(`Updating selectedTeacherId ${meritEditResponse.selectedTeacherId}`);
-    // meritEditResponse.incidentDate = $meritModalDate;
-    // console.log(`Updating meritDate ${meritEditResponse.incidentDate}`);
 
-    // meritEditResponse.selectedTeacherName = $MeritModalSelectedTeacher.full_name;
-    // console.log(`Updating selectedTeacherName ${meritEditResponse.selectedTeacherName}`);
-
-    // meritEditResponse.selectedTeacherId = $MeritModalSelectedTeacher.id;
-    // console.log(`Updating selectedTeacherId ${meritEditResponse.selectedTeacherId}`);
+    // meritModalSelectedCategory
 
     google.script.run
       .withSuccessHandler(meritEditSubmissionResponse)
@@ -85,49 +77,10 @@
     <!-- first row -->
     <div class="grid grid-cols-3 gap-4">
       <!-- Student Search -->
-      <div>
+      <div class="bg-orange-300">
         <MeritSearch />
       </div>
-      <!-- Student Select -->
-      <div>
-        <label for="student-edit" class="label">
-          <span class="label-text">Change the student:</span>
-        </label>
-        <select
-          bind:value={$meritModalStudentName}
-          id="student-edit"
-          class="select select-bordered select-primary"
-          required
-        >
-          <option disabled selected>{$meritModalStudentName}</option>
-          {#each $filtered as student}
-            <option on:blur={() => updateStudent(student)} value={student.student_name}
-              >{student.student_name}
-            </option>
-          {/each}
-        </select>
-      </div>
-      <!-- Subject Select -->
-      <div>
-        <label for="subject-edit" class="label">
-          <span class="label-text">Change the subject:</span>
-        </label>
-        <select
-          bind:value={$meritModalSubject}
-          id="subject-edit"
-          class="select select-bordered select-primary"
-          required
-        >
-          <option disabled selected>{$meritModalSubject}</option>
-          {#each subjects as subject}
-            <option value={subject}>{subject}</option>
-          {/each}
-        </select>
-      </div>
-    </div>
-    <!-- second row -->
-    <div class="grid grid-cols-3 gap-4">
-      <!-- meritModalTeacherName -->
+      <!-- Teacher Select -->
       <div>
         <label for="teacher-edit" class="label">
           <span class="label-text">Change the teacher:</span>
@@ -146,7 +99,46 @@
           {/each}
         </select>
       </div>
-      <!-- meritModalDate  -->
+      <!-- Subject Select -->
+      <div class="bg-orange-300">
+        <label for="subject-edit" class="label">
+          <span class="label-text">Change the subject:</span>
+        </label>
+        <select
+          bind:value={$meritModalSubject}
+          id="subject-edit"
+          class="select select-bordered select-primary"
+          required
+        >
+          <option disabled selected>{$meritModalSubject}</option>
+          {#each subjects as subject}
+            <option value={subject}>{subject}</option>
+          {/each}
+        </select>
+      </div>
+    </div>
+    <!-- second row -->
+    <div class="grid grid-cols-3 gap-4">
+      <!-- Student Select -->
+      <div class="bg-green-300">
+        <label for="student-edit" class="label">
+          <span class="label-text">Change the student:</span>
+        </label>
+        <select
+          bind:value={$meritModalStudentName}
+          id="student-edit"
+          class="select select-bordered select-primary"
+          required
+        >
+          <option disabled selected>{$meritModalStudentName}</option>
+          {#each $filtered as student}
+            <option on:blur={() => updateStudent(student)} value={student.student_name}
+              >{student.student_name}
+            </option>
+          {/each}
+        </select>
+      </div>
+      <!-- Date Select  -->
       <div>
         <label for="meritModalDate" class="label">
           <span class="label-text">Change the incident date</span>
@@ -159,16 +151,22 @@
           class="input input-bordered input-primary w-full max-w-xs rounded-lg"
         />
       </div>
+      <div class="bg-green-300" />
     </div>
-
-    <!-- Modal details  -->
+    <!-- Third row -->
+    <div class="grid grid-cols-3 gap-4">
+      <MeritCategories />
+      <MeritBehaviors />
+    </div>
+    <!-- Fourth row -->
+    <!-- Details Update  -->
     <div>
       <label for="details-edit" class="label">
         <span class="label-text mt-2">Change Details</span>
       </label>
       <textarea
         id="details-edit"
-        rows="4"
+        rows="2"
         class=" block w-full p-2.5 textarea textarea-primary textarea-bordered"
         placeholder={$meritModalStudentDetails}
       />

@@ -24,8 +24,6 @@
     google.script.run.withSuccessHandler(displayUserClubFormState).getUserClubState();
   });
   function displayUserClubFormState(formState) {
-    console.log("formState");
-    console.table(formState);
     show_notice.set(formState.show_notice);
     form_edit_state.set(formState.form_edit_state);
     is_in_club.set(formState.is_in_club);
@@ -40,23 +38,6 @@
     is_student.set(formState.is_student);
     email.set(formState.email);
     application_message.set(formState.club_message);
-    console.log(`application_message: ${$application_message}`);
-    console.log(`is_student: ${$is_student}`);
-    console.log(`is_moderator: ${$is_moderator}`);
-    console.log(`is_in_club: ${$is_in_club}`);
-    console.log(`form_edit_state: ${$form_edit_state}`);
-    console.log(`submitted: ${$submitted}`);
-    console.log(`notification_kind: ${$notification_kind}`);
-    console.log(`form_is_closed: ${$form_is_closed}`);
-    console.log(`application_message: ${$application_message}`);
-    console.log(`homeroom: ${$homeroom}`);
-    console.log(`current_club_name: ${$current_club_name}`);
-    console.log(`user_role: ${$user_role}`);
-    console.log(`current_club_id: ${$current_club_id}`);
-    console.log(`school: ${$school}`);
-    console.log(`grade: ${$grade}`);
-    console.log(`student_name: ${$student_name}`);
-    console.log(`email: ${$email}`);
 
     isFormClosed();
   }
