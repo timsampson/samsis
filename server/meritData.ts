@@ -13,7 +13,7 @@ type Merit = {
     hr_teacher_id: string,
     hr_teacher_email: string,
     hr_teacher_name: string,
-    categories: string,
+    category: string,
     type: string,
     attendance_details: string,
     merit_details: string,
