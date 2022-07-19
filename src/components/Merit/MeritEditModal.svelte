@@ -91,7 +91,7 @@
         <select
           bind:value={$meritModalTeacherName}
           id="teacher-edit"
-          class="select select-bordered select-primary"
+          class="select select-bordered select-primary w-full"
           required
         >
           <option disabled selected>{$meritModalTeacherName}</option>
@@ -110,7 +110,7 @@
         <select
           bind:value={$meritModalSubject}
           id="subject-edit"
-          class="select select-bordered select-primary"
+          class="select select-bordered select-primary w-full"
           required
         >
           <option disabled selected>{$meritModalSubject}</option>
@@ -130,7 +130,7 @@
         <select
           bind:value={$meritModalStudentName}
           id="student-edit"
-          class="select select-bordered select-primary"
+          class="select select-bordered select-primary w-full"
           required
         >
           <option disabled selected>{$meritModalStudentName}</option>

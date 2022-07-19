@@ -39,55 +39,25 @@
 </script>
 
 <!-- Merit Category Component -->
-<div class="container flex justify-start ">
-  <div class="card w-72 h-72 bg-info-200 shadow-xl">
-    <div class="card-body">
-      <h2 class="card-title">Merit Category</h2>
-      <fieldset>
-        <legend>Select a Merit Category:</legend>
-        {#each behaviorCategories as category}
-          <div>
-            <label>
-              <input
-                on:select={displaybehaviorCategory}
-                type="radio"
-                bind:group={$selectedCategory}
-                id={"merit" + category}
-                name="Merit"
-                value={category}
-                on:change={displaybehaviorCategory}
-              />
-              {category}</label
-            >
-          </div>
-        {/each}
-      </fieldset>
-    </div>
-  </div>
-  <!-- <div class="ml-4">
-    {#if $behaviorCategory.length > 0}
-      <div class="card w-64 h-72 bg-info-400 shadow-xl">
-        <div class="card-body">
-          <h2 class="card-title">Behavior Category</h2>
-          <fieldset>
-            <legend>Select behavior:</legend>
-            {#each $behaviorCategory as behavior}
-              <div class=" ml-2">
-                <label>
-                  <input
-                    bind:group={$meritBehaviors}
-                    type="checkbox"
-                    id={"merit" + behavior}
-                    name="meritBehaviors"
-                    value={behavior}
-                  />
-                  {behavior}</label
-                >
-              </div>
-            {/each}
-          </fieldset>
-        </div>
+<div class="mt-2 p-2 h-full border rounded-lg border-primary">
+  <h2 class="text-xl">Merit Category</h2>
+  <fieldset>
+    <legend class="text-lg">Select a Merit Category:</legend>
+    {#each behaviorCategories as category}
+      <div class="ml-2">
+        <label>
+          <input
+            on:select={displaybehaviorCategory}
+            type="radio"
+            bind:group={$selectedCategory}
+            id={"merit" + category}
+            name="Merit"
+            value={category}
+            on:change={displaybehaviorCategory}
+          />
+          {category}</label
+        >
       </div>
-    {/if}
-  </div> -->
+    {/each}
+  </fieldset>
 </div>
