@@ -199,15 +199,16 @@ function meritEditSubmission(submission) {
     return "recieved";
 }
 
-function deleteMeritEntry(id: string) {
+function deleteMeritEntry(recordId: string) {
     meritValues = meritSheet.getDataRange().getValues();
     meritValuesAsObjArray = valuesToArrayOfObjects(meritValues);
-    let rowIndex = meritValuesAsObjArray.findIndex((record: Merit) => record.id == id);
-    // Rows start at "1", so index + 1 is the row number to delete.
+    let rowIndex = meritValuesAsObjArray.findIndex((record: Merit) => record.id == recordId);
+    // Rows start at "1", and there is a header row so index + 2 is the row number to delete.
     let colIndex = meritSheet.getLastColumn();
-    let logRange = meritSheet.getRange(rowIndex + 1, 1, rowIndex + 1, colIndex);
-    let logValues = logRange.getValues();
-    meritLogSheet.appendRow([logValues]);
-    // meritSheet.deleteRow(index + 1);
-    return true;
+    let logHeaderValues = meritSheet.getRange(1, 1, 1, colIndex).getValues();
+    meritLogSheet.appendRow(logHeaderValues[0]);
+    let logRecordValues = meritSheet.getRange(rowIndex + 2, 1, 1, colIndex).getValues();
+    meritLogSheet.appendRow(logRecordValues[0]);
+    meritSheet.deleteRow(rowIndex + 2);
+    return JSON.stringify(meritValuesAsObjArray[rowIndex]);
 }

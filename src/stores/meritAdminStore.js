@@ -6,6 +6,7 @@ export const meritModalSelectedCategory = writable('');
 // export const meritModalStudentCategory = writable('');
 
 // export const meritModalBehaviors = writable([]);
+export const meritModalRecordId = writable('');
 export const meritModalTeacherName = writable('');
 export const meritModalSubject = writable('');
 export const meritModalStudentName = writable('');

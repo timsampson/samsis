@@ -1,7 +1,10 @@
 <script>
   import { fade } from "svelte/transition";
   import MeritEditModal from "./MeritEditModal.svelte";
+  import MeritDeleteModal from "./MeritDeleteModal.svelte";
+
   import {
+    meritModalRecordId,
     meritAdminValues,
     meritIncidentDateValue,
     meritModalStudentId,
@@ -15,16 +18,8 @@
   } from "../../stores/meritAdminStore.js";
   import { selectedCategory, meritBehaviors } from "../../stores/meritStore.js";
 
-  function deleteRecord(merit) {
-    google.script.run.withSuccessHandler(deleteRecordResponse).deleteMeritEntry(merit.id);
-
-    console.log(`Deleting ${merit.details} with id ${merit.id}`);
-  }
-
-  function deleteRecordResponse(response) {
-    console.log(`Delete response: ${response}`);
-  }
-  function editRecord(merit) {
+  function loadRecord(merit) {
+    meritModalRecordId.set(merit.id);
     meritIncidentDateValue.set(merit.incident_date.toLocaleDateString("en-CA"));
     meritModalDate.set(merit.incident_date.toLocaleDateString("en-CA"));
     meritModalSubject.set(merit.subject);
@@ -64,10 +59,11 @@
         {#each $meritAdminValues as merit}
           <tr>
             <td class="text-center align-middle">
-              <button
-                on:click={() => deleteRecord(merit)}
-                type="button"
-                class="btn btn-error btn-xs btn-square"
+              <!-- The button to open modal -->
+              <label
+                for="merit-delete-modal"
+                on:click={() => loadRecord(merit)}
+                class="btn btn-accent btn-xs btn-square text-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -83,14 +79,14 @@
                     d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-              </button>
+              </label>
             </td>
             <td class="text-center align-middle">
               <!-- The button to open modal -->
               <label
                 for="merit-edit-modal"
-                class="btn btn-info btn-xs btn-square text-white"
-                on:click={() => editRecord(merit)}
+                class="btn btn-secondary btn-xs btn-square text-white"
+                on:click={() => loadRecord(merit)}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -136,7 +132,7 @@
     {:else}
       <tr>
         <td class="text-center align-middle">
-          <button type="button" class="btn btn-error btn-xs btn-square ml-2">
+          <button type="button" class="btn btn-accent btn-xs btn-square ml-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-4 w-4"
@@ -154,7 +150,7 @@
           </button>
         </td>
         <td class="text-center align-middle">
-          <button type="button" class="btn btn-info btn-xs btn-square ml-2">
+          <button type="button" class="btn btn-secondary btn-xs btn-square ml-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-4 w-4"
@@ -186,4 +182,5 @@
 
   <!-- Modal for merit-edit-modal -->
   <MeritEditModal />
+  <MeritDeleteModal />
 </div>

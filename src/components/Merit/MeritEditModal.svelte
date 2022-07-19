@@ -6,6 +6,7 @@
   import { subjects } from "../../stores/meritStore.js";
   import { filtered, studentsData } from "../../stores/meritStore.js";
   import {
+    meritModalRecordId,
     meritModalStudentId,
     meritModalSubject,
     meritModalTeacherName,
@@ -73,11 +74,13 @@
 <input type="checkbox" id="merit-edit-modal" class="modal-toggle" />
 <div class="modal">
   <div class="modal-box w-11/12 max-w-5xl">
-    <h3 class="font-bold text-lg">Update Record Id {$meritModalStudentId}</h3>
+    <h3 class="font-bold text-lg">
+      Update Record Id {$meritModalRecordId} for student Id {$meritModalStudentId}
+    </h3>
     <!-- first row -->
     <div class="grid grid-cols-3 gap-4">
       <!-- Student Search -->
-      <div class="bg-orange-300">
+      <div>
         <MeritSearch />
       </div>
       <!-- Teacher Select -->
@@ -100,7 +103,7 @@
         </select>
       </div>
       <!-- Subject Select -->
-      <div class="bg-orange-300">
+      <div>
         <label for="subject-edit" class="label">
           <span class="label-text">Change the subject:</span>
         </label>
@@ -120,7 +123,7 @@
     <!-- second row -->
     <div class="grid grid-cols-3 gap-4">
       <!-- Student Select -->
-      <div class="bg-green-300">
+      <div>
         <label for="student-edit" class="label">
           <span class="label-text">Change the student:</span>
         </label>
@@ -151,7 +154,6 @@
           class="input input-bordered input-primary w-full max-w-xs rounded-lg"
         />
       </div>
-      <div class="bg-green-300" />
     </div>
     <!-- Third row -->
     <div class="grid grid-cols-3 gap-4">
@@ -172,13 +174,15 @@
       />
     </div>
     <!-- ? -->
-    <div class="btn-group">
-      <div class="modal-action">
-        <label for="merit-edit-modal" class="btn btn-primary btn-sm" on:click={() => submitUpdate()}
-          >Update</label
-        >
-        <label for="merit-edit-modal" class="btn btn-accent btn-sm">Close</label>
-      </div>
+    <div class="modal-action grid grid-cols-3 justify-items-stretch">
+      <label for="merit-edit-modal" class="btn btn-secondary justify-self-start">Close Window</label
+      >
+
+      <label
+        for="merit-edit-modal"
+        class="btn btn-primary text-white justify-self-end"
+        on:click={() => submitUpdate()}>Update Record</label
+      >
     </div>
   </div>
 </div>
