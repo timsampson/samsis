@@ -10,7 +10,7 @@
   <select
     bind:value={$selectedSubject}
     id="subject-select"
-    class="select select-bordered select-primary"
+    class="select select-bordered select-primary w-full"
     required
   >
     <option value="">-- Please choose --</option>

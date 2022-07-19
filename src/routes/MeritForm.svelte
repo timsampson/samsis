@@ -61,7 +61,7 @@
         <section>
           <div class="shadow overflow-hidden sm:rounded-md">
             <div class="px-4 py-5 bg-white sm:p-6">
-              <div class="grid lg:grid-cols-4 gap-2 md:grid-cols-2">
+              <div class="grid lg:grid-cols-4 gap-2 md:grid-cols-2 sm:grid-cols-1">
                 <div class="flex-none">
                   <MeritSearch />
                 </div>
