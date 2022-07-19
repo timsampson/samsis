@@ -81,7 +81,9 @@
           </div>
         </section>
         <section>
-          <MeritSearchTable />
+          <div class="px-4">
+            <MeritSearchTable />
+          </div>
         </section>
       {:else}
         <section>

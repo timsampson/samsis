@@ -38,7 +38,7 @@
       {#if $selectedStudents.length > 0}
         <thead>
           <tr>
-            <th class="text-center">Remove</th>
+            <th class="text-center w-6">Remove</th>
             {#each titleValues as title}
               <th>{title}</th>
             {/each}
