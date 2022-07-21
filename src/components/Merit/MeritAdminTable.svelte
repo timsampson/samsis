@@ -11,14 +11,38 @@
     meritModalSubject,
     meritModalTeacherName,
     meritModalTeacherId,
-    // meritModalStudentCategory,
     meritModalStudentName,
     meritModalStudentDetails,
     meritModalDate,
   } from "../../stores/meritAdminStore.js";
-  import { selectedCategory, meritBehaviors } from "../../stores/meritStore.js";
-
+  import {
+    selectedCategory,
+    meritBehaviors,
+    meritObjStore,
+    behaviorList,
+  } from "../../stores/meritStore.js";
+  $: console.table($meritObjStore);
   function loadRecord(merit) {
+    console.log("merit.category");
+    console.log(merit.category);
+
+    let objIndex = $meritObjStore.findIndex((obj) => {
+      return obj.category === merit.category;
+    });
+    console.log(`objIndex: ${objIndex}`);
+    $meritObjStore[objIndex].isSelected = true;
+    console.log(`$meritObjStore[objIndex].isSelected: ${$meritObjStore[objIndex].isSelected}`);
+    console.log(`meritObjStore[objIndex].attributes: ${$meritObjStore[objIndex].attributes}`);
+    behaviorList.set($meritObjStore[objIndex].attributes);
+    // console.log(`$behaviorList: ${$behaviorList}`);
+
+    meritBehaviors.set(merit.type.split(",").map((element) => element.trim()));
+    console.log(`$meritBehaviors: ${$meritBehaviors}`);
+
+    // console.log("meritObjStore[merit.category]");
+    // console.table(meritObjStore[merit.category]);
+
+    selectedCategory.set(meritObjStore[merit.category]);
     meritModalRecordId.set(merit.id);
     meritIncidentDateValue.set(merit.incident_date.toLocaleDateString("en-CA"));
     meritModalDate.set(merit.incident_date.toLocaleDateString("en-CA"));
@@ -30,11 +54,10 @@
     meritModalTeacherId.set(merit.teacher_id);
     meritModalStudentDetails.set(merit.details);
     selectedCategory.set(merit.category);
-    // meritModalBehaviors.set(merit.behavior);
     meritModalStudentId.set(merit.student_id);
     meritBehaviors.set(merit.type.split(",").map((element) => element.trim()));
-    console.log($meritBehaviors);
-    console.log(`Editing ${merit.details} with id ${merit.id}`);
+    // console.log($meritBehaviors);
+    // console.log(`Editing ${merit.details} with id ${merit.id}`);
   }
 </script>
 

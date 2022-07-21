@@ -1,7 +1,7 @@
 import { writable, derived } from 'svelte/store';
 // export const meritValues = writable([]);
 export const behaviorCategories = [ "Merit", "Information",  "Misconduct: Yellow Level",  "Misconduct: Orange Level", "Misconduct: Red Level", "Homework"];
-export const MeritList = ["helpful", "on task", "diligent"];
+export const MeritList = ["helpful", "on task", "diligent", "organized"];
 export const informationList = ["sleepy", "eating in class", "late", "emotional"];
 export const YCList = ["off task", "constantly chatting", "tardy", "shouting", "running", "sleeping"];
 export const OCList = ["fighting", "screaming", "thowing objects"];
@@ -11,7 +11,7 @@ export const subjects = ["Reading"," History","Geography","Geometry","Algebra lI
 export const selectedSubject = writable('');
 export const stepOneComplete = writable(false);
 export const meritDateValue = writable(() => new Date().toLocaleDateString("en-CA"));
-export const behaviorCategory = writable('');
+export const behaviorList = writable('');
 export const meritBehaviors = writable([]);
 export const meritDetails = writable('');
 export const meritSearchTerm = writable('');
@@ -43,3 +43,41 @@ export const meritFormComplete = derived(
 			);
 	}
 );
+export const meritObjStore = writable([
+	{
+	"category": 'Merit',
+	"attributes": ["helpful", "on task", "diligent", "organized"],
+	"selected":[],
+	"isSelected": false,
+	},
+	{
+	"category": 'Information',
+	"attributes": ["sleepy", "eating in class", "late", "emotional"],
+	"selected":[],
+	"isSelected": false,
+	},
+	{
+	"category": 'Misconduct: Yellow Level',
+	"attributes": ["off task", "constantly chatting", "tardy", "shouting", "running", "sleeping"],
+	"selected":[],
+	"isSelected": false,
+	},
+	{
+	"category": 'Misconduct: Orange Level',
+	"attributes": ["fighting", "screaming", "thowing objects"],
+	"selected":[],
+	"isSelected": false,
+	},
+	{
+	"category": 'Misconduct: Red Level',
+	"attributes": ["smoking", "fireworks", "swearing"],
+	"selected":[],
+	"isSelected": false,
+	},
+	{
+	"category": 'Homework',
+	"attributes": ["incomplete", "not submitted", "poor effort"],
+	"selected":[],
+	"isSelected": false,
+	},	
+])

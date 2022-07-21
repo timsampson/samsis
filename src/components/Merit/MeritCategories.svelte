@@ -1,7 +1,9 @@
 <script>
+  displayBehaviorCategory();
+
   import {
     selectedCategory,
-    behaviorCategory,
+    behaviorList,
     meritBehaviors,
     behaviorCategories,
     informationList,
@@ -10,26 +12,39 @@
     RCList,
     HWList,
     MeritList,
+    meritObjStore,
   } from "../../stores/meritStore.js";
 
-  $: console.log(`selectedCategory: ${$selectedCategory}`);
-  $: console.log(`meritBehaviors: ${$meritBehaviors}`);
+  // $: console.log(`selectedCategory: ${$selectedCategory}`);
+  // $: console.log(`meritBehaviors: ${$meritBehaviors}`);
 
-  function displaybehaviorCategory() {
-    if ($selectedCategory === "Information") {
-      $behaviorCategory = informationList;
-    } else if ($selectedCategory === "Misconduct: Yellow Level") {
-      $behaviorCategory = YCList;
-    } else if ($selectedCategory === "Misconduct: Orange Level") {
-      $behaviorCategory = OCList;
-    } else if ($selectedCategory === "Misconduct: Red Level") {
-      $behaviorCategory = RCList;
-    } else if ($selectedCategory === "Homework") {
-      $behaviorCategory = HWList;
-    } else $behaviorCategory = MeritList;
+  function displayBehaviorCategory() {
     uncheckBehaviorList();
     meritBehaviors.set([]);
+    let selectedCategoryIndex = $meritObjStore.findIndex((obj) => {
+      return obj.isSelected === true;
+    });
+    if (selectedCategoryIndex > -1) {
+      selectedCategory.set($meritObjStore[selectedCategoryIndex].category);
+      meritBehaviors.set($meritObjStore[selectedCategoryIndex].selected);
+      behaviorList.set($meritObjStore[selectedCategoryIndex].category);
+    }
+    loadSelectedCategory();
   }
+  export function loadSelectedCategory() {
+    if ($selectedCategory === "Information") {
+      $behaviorList = informationList;
+    } else if ($selectedCategory === "Misconduct: Yellow Level") {
+      $behaviorList = YCList;
+    } else if ($selectedCategory === "Misconduct: Orange Level") {
+      $behaviorList = OCList;
+    } else if ($selectedCategory === "Misconduct: Red Level") {
+      $behaviorList = RCList;
+    } else if ($selectedCategory === "Homework") {
+      $behaviorList = HWList;
+    } else $behaviorList = MeritList;
+  }
+
   function uncheckBehaviorList() {
     let checkboxes = document.getElementsByName("behaviorList");
     for (let i = 0, n = checkboxes.length; i < n; i++) {
@@ -47,13 +62,13 @@
       <div class="ml-2">
         <label>
           <input
-            on:select={displaybehaviorCategory}
+            on:select={displayBehaviorCategory}
             type="radio"
             bind:group={$selectedCategory}
             id={"merit" + category}
             name="Merit"
             value={category}
-            on:change={displaybehaviorCategory}
+            on:change={displayBehaviorCategory}
           />
           {category}</label
         >
