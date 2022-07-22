@@ -22,27 +22,43 @@
     behaviorList,
   } from "../../stores/meritStore.js";
   $: console.table($meritObjStore);
-  function loadRecord(merit) {
-    console.log("merit.category");
-    console.log(merit.category);
 
+  function loadRecord(merit) {
+    // console.log("merit.category");
+    // console.log(merit.category);
+
+    // identify attributes of the merit category to load into the modal
     let objIndex = $meritObjStore.findIndex((obj) => {
       return obj.category === merit.category;
-    });
-    console.log(`objIndex: ${objIndex}`);
+    }); // console.log(`objIndex: ${objIndex}`);
+
+    // mark the merit category as selected
     $meritObjStore[objIndex].isSelected = true;
-    console.log(`$meritObjStore[objIndex].isSelected: ${$meritObjStore[objIndex].isSelected}`);
-    console.log(`meritObjStore[objIndex].attributes: ${$meritObjStore[objIndex].attributes}`);
+    // console.log(`$meritObjStore[objIndex].isSelected: ${$meritObjStore[objIndex].isSelected}`);
+
+    // set the category as selected so the behavior list is loaded
+    selectedCategory.set(meritObjStore[merit.category]);
+
     behaviorList.set($meritObjStore[objIndex].attributes);
+    console.log(`meritObjStore[objIndex].attributes: ${$meritObjStore[objIndex].attributes}`);
+
     // console.log(`$behaviorList: ${$behaviorList}`);
 
     meritBehaviors.set(merit.type.split(",").map((element) => element.trim()));
     console.log(`$meritBehaviors: ${$meritBehaviors}`);
 
+    // if the merit list returned from the record has an additional attribute,
+    // load it into the meritBehaviors list to be available to select or deselect.
+    $meritBehaviors.forEach((element) => {
+      if (!$behaviorList.includes(element)) {
+        $behaviorList = [...$behaviorList, element];
+      }
+    });
+    console.log(`After $meritBehaviors: ${$meritBehaviors}`);
+
     // console.log("meritObjStore[merit.category]");
     // console.table(meritObjStore[merit.category]);
 
-    selectedCategory.set(meritObjStore[merit.category]);
     meritModalRecordId.set(merit.id);
     meritIncidentDateValue.set(merit.incident_date.toLocaleDateString("en-CA"));
     meritModalDate.set(merit.incident_date.toLocaleDateString("en-CA"));
@@ -55,7 +71,7 @@
     meritModalStudentDetails.set(merit.details);
     selectedCategory.set(merit.category);
     meritModalStudentId.set(merit.student_id);
-    meritBehaviors.set(merit.type.split(",").map((element) => element.trim()));
+    // meritBehaviors.set(merit.type.split(",").map((element) => element.trim()));
     // console.log($meritBehaviors);
     // console.log(`Editing ${merit.details} with id ${merit.id}`);
   }

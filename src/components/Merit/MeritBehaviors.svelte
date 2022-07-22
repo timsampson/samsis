@@ -24,6 +24,18 @@
             >
           </div>
         {/each}
+
+        <div class="ml-2">
+          <label>
+            <input
+              bind:group={$meritBehaviors}
+              type="checkbox"
+              id="meritOther"
+              name="meritBehaviors"
+            />
+            other</label
+          >
+        </div>
       </fieldset>
     </div>
   {/if}

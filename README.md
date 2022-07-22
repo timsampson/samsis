@@ -6,7 +6,7 @@ I use GAPS for different tasks at work and over the years I've build a few mini 
 
 ## Motivation
 
-With this in mind, I've realized that it would be helpful to have one application that makes use of as many of the patterns and processes in a centralized way. I'll try as much as possible to first build a new feature or use case with this repository and then extract the funtionality for the targeted application needed at work.
+With this in mind, I've realized that it would be helpful to have one application that makes use of as many of the patterns and processes in one app. I'll try as much as possible to first build a new feature or use case with this repository and then extract the funtionality for the targeted application needed.
 
 ## Use Case
 
@@ -14,29 +14,23 @@ In the applications put to use so far, the number of accounts that are processed
 
 It may end up being an impractical Frankenstein app, but I think it will be fun to build. Starting with the most basic features, with each feature branch, I will be adding functionality.
 
-## Initial Features
+## Features
 
-- [Setup Script with Sheet Menu add on and alert](https://github.com/timsampson/samsis/tree/gaps-setup/server)
-- [Simple Web Page with doGet](https://github.com/timsampson/samsis/tree/simple-webpage)
-- [Web Page with Svelte.js](https://github.com/timsampson/samsis/tree/deploy-svelte)
-- [TailwindCSS for Styling](https://github.com/timsampson/samsis/tree/add-tailwind)
-- [Routing with ItalyPaleAle\svelte-spa-router](https://github.com/timsampson/samsis/tree/links-pages)
-- [Routing with google.script.history.push](https://github.com/timsampson/samsis/tree/url-routing)
-- [Add a page to Display Table from a sheet](https://github.com/timsampson/samsis/tree/club-signup)
-- [Add a navigation component](https://github.com/timsampson/samsis/tree/nav-component)
-- [Navigate to pasted URL](https://github.com/timsampson/samsis/tree/router-paste-url)
-- [Submit a simple form from web to a sheet](https://github.com/timsampson/samsis/tree/submit-basic-form)
-- [Username with Icon displayed](https://github.com/timsampson/samsis/tree/user-icon)
-- [Separate table and form components](https://github.com/timsampson/samsis/tree/club-signup-form-comp)
-
-## Improved Features
-
-- [Form submission with entry supplimental sheet Data](https://github.com/timsampson/samsis/tree/form-submission-supplemented-data)
+- Sheet Menu add on and alert
+- Web App with doGet
+- Use Svelte.js and Svelte Stores
+- TailwindCSS for Styling, Daisy UI components.
+- Routing with ItalyPaleAle\svelte-spa-router and using google.script.history.push
+- Form submission for students to join clubs
+- Admin for Club Manager to approve or reject applications.  Setting to auto accept if club is not full.
+- Form submission for student behavior records.
+- Admin for student behavior records. Delete or edit entries
+- Page for student to review their own records.
 
 ## To Do
 
-1. Update the documentation so someone new to GAPS can follow along and build it themselves.
-2. Get it working without needing extra steps other than downloading and running npm install. Issue with it not working on Windows.
+1. Update the documentation so someone new to GAPS can follow along and build something similar themselves.
+2. Get it working without needing extra steps other than downloading and running npm install. Issue with it not working on Windows after npm install.
 
 ## FYI
 
