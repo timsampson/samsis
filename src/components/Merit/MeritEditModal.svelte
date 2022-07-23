@@ -4,7 +4,13 @@
   import MeritCategories from "./MeritCategories.svelte";
   import MeritBehaviors from "./MeritBehaviors.svelte";
   import { subjects } from "../../stores/meritStore.js";
-  import { filtered, studentsData } from "../../stores/meritStore.js";
+  import {
+    filtered,
+    studentsData,
+    meritBehaviors,
+    meritBehaviorsOther,
+    meritboxIsChecked,
+  } from "../../stores/meritStore.js";
   import {
     meritModalRecordId,
     meritModalStudentId,
@@ -39,7 +45,7 @@
     selectedIncidentDate: "",
     selectedTeacherName: "",
     selectedTeacherId: "",
-    incidentDatebehaviorCategory: "",
+    behaviorCategory: "",
     behaviorSubject: "",
     meritBehaviors: [],
     meritDetails: "",
@@ -59,6 +65,16 @@
     console.log(`Updating selectedTeacherId ${meritEditResponse.selectedTeacherId}`);
 
     // meritModalSelectedCategory
+    if ($meritboxIsChecked) {
+      console.log(`meritbox is checked: ${$meritboxIsChecked}`);
+      $meritBehaviors = [...$meritBehaviors, $meritBehaviorsOther];
+      meritEditResponse.meritBehaviors = $meritBehaviors;
+      console.log(`Updating meritEditResponse.meritBehaviors ${meritEditResponse.meritBehaviors}`);
+    } else {
+      console.log(`meritbox is checked: ${$meritboxIsChecked}`);
+      meritEditResponse.meritBehaviors = $meritBehaviors;
+      console.log(`Updating meritEditResponse.meritBehaviors ${meritEditResponse.meritBehaviors}`);
+    }
 
     google.script.run
       .withSuccessHandler(meritEditSubmissionResponse)

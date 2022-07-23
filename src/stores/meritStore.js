@@ -13,6 +13,8 @@ export const stepOneComplete = writable(false);
 export const meritDateValue = writable(() => new Date().toLocaleDateString("en-CA"));
 export const behaviorList = writable('');
 export const meritBehaviors = writable([]);
+export const meritBehaviorsOther = writable('');
+export const meritboxIsChecked = writable(false);
 export const meritDetails = writable('');
 export const meritSearchTerm = writable('');
 export const meritFormSubmitted = writable(false);

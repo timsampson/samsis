@@ -1,5 +1,14 @@
 <script>
-  import { selectedCategory, behaviorList, meritBehaviors } from "../../stores/meritStore.js";
+  import {
+    selectedCategory,
+    behaviorList,
+    meritBehaviors,
+    meritBehaviorsOther,
+    meritboxIsChecked,
+  } from "../../stores/meritStore.js";
+  $: console.log(`meritBehaviors ${$meritBehaviors}`);
+  $: console.log(`meritBehaviorsOther ${$meritBehaviorsOther}`);
+  $: console.log(`meritboxIsChecked ${$meritboxIsChecked}`);
 </script>
 
 <div>
@@ -28,13 +37,19 @@
         <div class="ml-2">
           <label>
             <input
-              bind:group={$meritBehaviors}
+              on:change={meritboxIsChecked.set(!$meritboxIsChecked)}
               type="checkbox"
-              id="meritOther"
-              name="meritBehaviors"
+              id="meritBehaviorsOther"
+              name="meritBehaviorsOther"
             />
-            other</label
-          >
+            other
+            <input
+              type="text"
+              placeholder="type here"
+              disabled={!$meritboxIsChecked}
+              bind:value={$meritBehaviorsOther}
+            />
+          </label>
         </div>
       </fieldset>
     </div>
